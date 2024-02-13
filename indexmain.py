@@ -17,91 +17,6 @@ import threading
 import kivy.uix.screenmanager
 import pygad
 
-# class CollectCoinThread(threading.Thread):
-
-#     def __init__(self, screen):
-#         super().__init__()
-#         self.screen = screen
-
-#     def run(self):
-#         ga_instance = pygad.GA(num_generations=9999,
-#                                num_parents_mating=300, 
-#                                fitness_func=fitness_func,
-#                                sol_per_pop=1000, 
-#                                num_genes=2,
-#                                init_range_low=0.0,
-#                                init_range_high=1.0,
-#                                random_mutation_min_val=0.0,
-#                                random_mutation_max_val=1.0,
-#                                mutation_by_replacement=True,
-#                                callback_generation=callback_generation,
-#                                delay_after_gen=self.screen.char_anim_duration)
-#         ga_instance.run()
-
-# def fitness_func(solution, solution_idx):
-#     curr_screen = app.root.screens[lvl_num]
-
-#     coins = curr_screen.coins_ids
-#     if len(coins.items()) == 0:
-#         return 0
-
-#     curr_coin = coins[list(coins.keys())[0]]
-
-#     curr_coin_center = [curr_coin.pos_hint['x'], curr_coin.pos_hint['y']]
-
-#     output = abs(solution[0] - curr_coin_center[0]) + abs(solution[1] - curr_coin_center[1])
-#     output = 1.0 / output
-
-#     monsters_pos = []
-#     for i in range(curr_screen.num_monsters):
-#         monster_image = curr_screen.ids['monster'+str(i+1)+'_image_lvl'+str(lvl_num)]
-#         monsters_pos.append([monster_image.pos_hint['x'], monster_image.pos_hint['y']])
-
-#     for monst_pos in monsters_pos:
-#         char_monst_h_distance = abs(solution[0] - monst_pos[0])
-#         char_monst_v_distance = abs(solution[1] - monst_pos[1])
-#         if char_monst_h_distance <= 0.3 and char_monst_v_distance <= 0.3:
-#             output -= 300
-#         else:
-#             output += 100
-
-#     fires_pos = []
-#     for i in range(curr_screen.num_fires):
-#         fire_image = curr_screen.ids['fire'+str(i+1)+'_lvl'+str(lvl_num)]
-#         fires_pos.append([fire_image.pos_hint['x'], fire_image.pos_hint['y']])
-
-#     for fire_pos in fires_pos:
-#         char_fire_h_distance = abs(solution[0] - fire_pos[0])
-#         char_fire_v_distance = abs(solution[1] - fire_pos[1])
-#         if char_fire_h_distance <= 0.3 and char_fire_v_distance <= 0.3:
-#             output -= 300
-#         else:
-#             output += 100
-
-#     fitness = output
-#     return fitness
-
-# last_fitness = 0
-
-# def callback_generation(ga_instance):
-#     global last_fitness
-    
-#     best_sol_fitness = ga_instance.best_solution()[1]
-#     fitness_change = best_sol_fitness - last_fitness
-#     curr_screen = app.root.screens[lvl_num]
-
-#     last_fitness = best_sol_fitness
-
-#     coins = curr_screen.coins_ids
-
-#     if len(coins.items()) == 0 or curr_screen.character_killed:
-#         # After either the level is completed or the character is killed, then stop the GA by returning the string "stop".
-#         return "stop"
-#     elif len(coins.items()) != 0 and fitness_change != 0:
-#         best_sol = ga_instance.best_solution()[0]
-#         app.start_char_animation(lvl_num, [float(best_sol[0]),  float(best_sol[1])])
-
-
 
 # -- My code --
         
@@ -123,12 +38,15 @@ class GameCoinWidget(Widget):
         self.pressed_keys =set()
         Clock.schedule_interval(self.move_step, 0)
 
+        self.score = 0
+
         with self.canvas.before:
             # Set initial size of Image to match Window size
             self.image = Image(source='GrassMap1.png', size=Window.size, allow_stretch=True, keep_ratio=False)
             # Bind the size of Image to the Window size
             Window.bind(size=self.on_window_size)
 
+        #add character hero and coin
         with self.canvas:
             self.hero = Image(source="cat2.png", pos=(250, 250), size=(100, 100))
             self.coin = Image(source = "coin1.png" , pos = (400,400) , size = (50,50))
@@ -173,10 +91,10 @@ class GameCoinWidget(Widget):
             self.hero.pos = (cur_x, cur_y)
 
         if collides((self.hero.pos, self.hero.size), (self.coin.pos, self.coin.size)):
-            print("colliding")
-            self.canvas.remove(self.coin)
-        else:
-            print("not colliding")
+            self.coin.pos = (random.randint(0, Window.width - self.coin.width),random.randint(0, Window.height - self.coin.height))
+            self.score += 1
+            # Update the score label text
+            print(self.score)
 
 class MyGame(App):
     def build(self):
