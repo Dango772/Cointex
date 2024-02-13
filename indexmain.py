@@ -1,30 +1,41 @@
-import kivy.app
-import kivy.uix.screenmanager
-import kivy.uix.image
-import random
-import kivy.core.audio
-import os
-import functools
-import kivy.uix.behaviors
-import pickle
-import pygad
-import threading
-import kivy.base
+import kivy
+from kivy.app import App
+from kivy.uix.widget import Widget
+from kivy.graphics import Rectangle
+from kivy.core.window import Window
+from kivy.clock import Clock
 
-class CollectCoinThread(threading.Thread):
+kivy.require('2.0.0')  # Update this to the version you have installed
 
-    def __init__(self, screen):
-        super().__init__()
-        self.screen = screen
 
-    def run(self):
-        ga_instance = pygad.GA(num_generations=9999,
-                               num_parents_mating=300,
-                               sol_per_pop=1000, 
-                               num_genes=2,
-                               init_range_low=0.0,
-                               init_range_high=1.0,
-                               random_mutation_min_val=0.0,
-                               random_mutation_max_val=1.0,
-                               mutation_by_replacement=True)
-        ga_instance.run()
+class MarioGame(Widget):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
+        self._keyboard.bind(on_key_down=self._on_keyboard_down)
+        self.mario = Rectangle(pos=(0, 0), size=(50, 50))
+        #self.add_widget(self.mario)
+        Clock.schedule_interval(self.update, 1.0 / 60.0)
+
+    def _keyboard_closed(self):
+        self._keyboard.unbind(on_key_down=self._on_keyboard_down)
+        self._keyboard = None
+
+    def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
+        if keycode[1] == 'left':
+            self.mario.pos = (self.mario.pos[0] - 10, self.mario.pos[1])
+        elif keycode[1] == 'right':
+            self.mario.pos = (self.mario.pos[0] + 10, self.mario.pos[1])
+        return True
+
+    def update(self, dt):
+        pass
+
+
+class MarioGameApp(App):
+    def build(self):
+        return MarioGame()
+
+
+if __name__ == '__main__':
+    MarioGameApp().run()
