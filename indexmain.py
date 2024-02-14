@@ -8,6 +8,24 @@ from kivy.clock import Clock
 from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
+from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.button import Button
+
+
+class MainMenu(Screen):
+    def __init__(self, **kwargs):
+        super(MainMenu, self).__init__(**kwargs)
+        self.start_button = Button(text='Start', on_press=self.switch_to_game)
+        self.add_widget(self.start_button)
+
+    def switch_to_game(self, instance):
+        self.manager.current = 'game'
+
+class GameScreen(Screen):
+    def __init__(self, **kwargs):
+        super(GameScreen, self).__init__(**kwargs)
+        self.game_widget = GameCoinWidget()
+        self.add_widget(self.game_widget)
 
 
 def collides(rect1, rect2):
@@ -39,7 +57,7 @@ class GameCoinWidget(Widget):
 
         self.timer_label = Label(text="Time: 30", pos=(900, 950), size=(50, 50))
         self.add_widget(self.timer_label)
-        self.timer_seconds = 30
+        self.timer_seconds = 15
 
         self.timer_event = Clock.schedule_interval(self.update_timer, 1)
 
@@ -52,7 +70,7 @@ class GameCoinWidget(Widget):
         # add character hero and coin
         with self.canvas:
             self.hero = Image(source="cat2.png", pos=(250, 250), size=(100, 100))
-            self.monster = Image(source="monster.png", pos=(250, 250), size=(100, 100))
+            self.monster = Image(source="monster.png", pos=(1700, 250), size=(100, 100))
             self.coin1 = Image(source="coin1.png", pos=(400, 400), size=(50, 50))
             self.coin2 = Image(source="coin1.png", pos=(400, 400), size=(50, 50))
 
@@ -137,7 +155,7 @@ class GameCoinWidget(Widget):
             self.scorep2_label.text = "Score Player 2 : " + str(self.scorep2)
 
         if self.timer_seconds == 0 :
-            self.display_time_out_message()
+            self.display_time_out_message(self.scorep1,self.scorep2)
 
     def update_timer(self, dt):
         self.timer_seconds -= 1
@@ -146,15 +164,27 @@ class GameCoinWidget(Widget):
         if self.timer_seconds == 0:
             self.timer_event.cancel()  # Stop the timer when it reaches 0
 
-    def display_time_out_message(self):
+    def display_time_out_message(self,scp1,scp2):
         content = Label(text="Time Out", font_size=30)
-        popup = Popup(title='Game Over', content=content, size_hint=(None, None), size=(400, 200))
+        if scp1 > scp2 :
+            popup = Popup(title='Player 1 WIN !!!', content=content, size_hint=(None, None), size=(400, 200))
+        elif scp1 < scp2 :
+            popup = Popup(title='Player 2 WIN !!!', content=content, size_hint=(None, None), size=(400, 200))
+        else :
+            popup = Popup(title='Try again to find a BEST PLAYER !!!', content=content, size_hint=(None, None), size=(400, 200))
         popup.open()
 
 class MyGame(App):
     def build(self):
-        Window.size = (1920, 1600)
-        return GameCoinWidget()
+        self.screen_manager = ScreenManager()
+
+        main_menu = MainMenu(name='main_menu')
+        game_screen = GameScreen(name='game')
+
+        self.screen_manager.add_widget(main_menu)
+        self.screen_manager.add_widget(game_screen)
+
+        return self.screen_manager
 
 if __name__ == '__main__':
     app = MyGame()
