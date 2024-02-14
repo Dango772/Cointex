@@ -71,8 +71,8 @@ class GameCoinWidget(Widget):
         with self.canvas:
             self.hero = Image(source="cat2.png", pos=(250, 250), size=(100, 100))
             self.monster = Image(source="monster.png", pos=(1700, 250), size=(100, 100))
-            self.coin1 = Image(source="coin1.png", pos=(400, 400), size=(50, 50))
-            self.coin2 = Image(source="coin1.png", pos=(400, 400), size=(50, 50))
+            self.coin1 = Image(source="coin1.png", pos=(random.randint(0, 1000), random.randint(0, 1000)), size=(50, 50))
+            self.coin2 = Image(source="coin1.png", pos=(random.randint(0, 1000), random.randint(0, 1000)), size=(50, 50))
 
     def on_window_size(self, instance, value):
         # Update the size of Image when the Window size changes
@@ -155,7 +155,7 @@ class GameCoinWidget(Widget):
             self.scorep2_label.text = "Score Player 2 : " + str(self.scorep2)
 
         if self.timer_seconds == 0 :
-            self.display_time_out_message(self.scorep1,self.scorep2)
+            self.display_time_out_message(self.scorep1,self.scorep2)      
 
     def update_timer(self, dt):
         self.timer_seconds -= 1
