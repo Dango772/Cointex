@@ -73,6 +73,7 @@ class GameCoinWidget(Widget):
             self.monster = Image(source="monster.png", pos=(1700, 250), size=(100, 100))
             self.coin1 = Image(source="coin1.png", pos=(random.randint(0, 1000), random.randint(0, 1000)), size=(50, 50))
             self.coin2 = Image(source="coin1.png", pos=(random.randint(0, 1000), random.randint(0, 1000)), size=(50, 50))
+            self.coin3 = Image(source="coin1.png", pos=(random.randint(0, 1000), random.randint(0, 1000)), size=(50, 50))
 
     def on_window_size(self, instance, value):
         # Update the size of Image when the Window size changes
@@ -129,7 +130,7 @@ class GameCoinWidget(Widget):
 
         self.monster.pos = (cur_x2, cur_y2)
 
-        if collides((self.hero.pos, self.hero.size), (self.coin1.pos, self.coin1.size)) or collides((self.hero.pos, self.hero.size), (self.coin2.pos, self.coin2.size)):
+        if collides((self.hero.pos, self.hero.size), (self.coin1.pos, self.coin1.size)) or collides((self.hero.pos, self.hero.size), (self.coin2.pos, self.coin2.size)) or collides((self.hero.pos, self.hero.size), (self.coin3.pos, self.coin3.size)):
 
             if collides ((self.hero.pos, self.hero.size), (self.coin1.pos, self.coin1.size)) == True :
                 self.coin1.pos = (random.randint(0, Window.width - self.coin1.width),
@@ -137,12 +138,15 @@ class GameCoinWidget(Widget):
             if collides((self.hero.pos, self.hero.size), (self.coin2.pos, self.coin2.size)) :
                 self.coin2.pos = (random.randint(0, Window.width - self.coin2.width),
                              random.randint(0, Window.height - self.coin2.height))
+            if collides((self.hero.pos, self.hero.size), (self.coin3.pos, self.coin3.size)) :
+                self.coin3.pos = (random.randint(0, Window.width - self.coin3.width),
+                             random.randint(0, Window.height - self.coin3.height))
             
             self.scorep1 += 1
             self.scorep1_label.text = "Score Player 1 : " + str(self.scorep1)
 
     
-        if collides((self.monster.pos, self.monster.size), (self.coin1.pos, self.coin1.size)) or collides((self.monster.pos, self.monster.size), (self.coin2.pos, self.coin2.size)):
+        if collides((self.monster.pos, self.monster.size), (self.coin1.pos, self.coin1.size)) or collides((self.monster.pos, self.monster.size), (self.coin2.pos, self.coin2.size)) or collides((self.monster.pos, self.monster.size), (self.coin3.pos, self.coin3.size)):
 
             if collides ((self.monster.pos, self.monster.size), (self.coin1.pos, self.coin1.size)) == True :
                 self.coin1.pos = (random.randint(0, Window.width - self.coin1.width),
@@ -150,6 +154,9 @@ class GameCoinWidget(Widget):
             if collides((self.monster.pos, self.monster.size), (self.coin2.pos, self.coin2.size)) :
                 self.coin2.pos = (random.randint(0, Window.width - self.coin2.width),
                              random.randint(0, Window.height - self.coin2.height))
+            if collides((self.monster.pos, self.monster.size), (self.coin3.pos, self.coin3.size)) :
+                self.coin3.pos = (random.randint(0, Window.width - self.coin3.width),
+                             random.randint(0, Window.height - self.coin3.height))
                 
             self.scorep2 += 1
             self.scorep2_label.text = "Score Player 2 : " + str(self.scorep2)
