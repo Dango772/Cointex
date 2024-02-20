@@ -189,6 +189,8 @@ class GameMultiCoin45Screen(Screen) :
         self.game_multi_45_widget = GameMultiCoin45()
         self.add_widget(self.game_multi_45_widget)
 
+        
+
     
     def on_pre_enter(self, *args):
         # เริ่มต้นนับถอยหลังเมื่อเข้าหน้าจอ
@@ -227,19 +229,7 @@ class GameMultiCoin45(Widget) :
         self._keyboard.bind(on_key_up=self._on_key_up)
         self.pressed_keys = set()
         Clock.schedule_interval(self.move_step, 0)
-
-        self.popup_button = Button(text="Open Popup", on_press=self.show_popup, size_hint=(None, None), size=(200, 50), pos=(700, 800))
-        self.add_widget(self.popup_button)
-
-        # Initialize popup content
-        self.popup_content = BoxLayout(orientation='vertical')
-        self.popup_content.add_widget(Label(text='This is a popup!'))
-        self.popup_content.add_widget(Button(text='Close Popup', on_press=self.dismiss_popup))
-
-        # Create the popup
-        self.popup = Popup(title='Popup Title', content=self.popup_content, size_hint=(None, None), size=(400, 400))
-
-
+        
 
         with self.canvas.before:
             # Set initial size of Image to match Window size
@@ -263,14 +253,16 @@ class GameMultiCoin45(Widget) :
             self.coin2 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(50, 50))
             self.coin3 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(50, 50))
 
-    def show_popup(self, instance):
-        # Open the popup
-        self.popup.open()
+        layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
 
-    def dismiss_popup(self, instance):
-        # Dismiss the popup
-        self.popup.dismiss()
-            
+        self.button1 = Button(text='Menu', on_press=self.pause_menu, size_hint=(None, None), size=(200, 50))
+        layout.add_widget(self.button1)
+
+        self.add_widget(layout)
+
+    def pause_menu(self,instance) :
+        self.popup = Popup(title='Test popup',content=Label(text='Hello world'),size_hint=(None, None), size=(400, 400))
+        return self.popup
 
     def on_window_size(self, instance, value):
         # Update the size of Image when the Window size changes
