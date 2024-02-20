@@ -1,9 +1,5 @@
-#6410110141
-#899
 from kivy.app import App
-
 import random
-
 from kivy.uix.widget import Widget
 from kivy.core.window import Window
 from kivy.clock import Clock
@@ -12,7 +8,6 @@ from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.button import Button
-
 
 class MainMenu(Screen):
     def __init__(self, **kwargs):
@@ -59,7 +54,7 @@ class GameCoinWidget(Widget):
 
         self.timer_label = Label(text="Time: 30", pos=(900, 950), size=(50, 50))
         self.add_widget(self.timer_label)
-        self.timer_seconds = 15
+        self.timer_seconds = 45
 
         self.timer_event = Clock.schedule_interval(self.update_timer, 1)
 
@@ -72,10 +67,9 @@ class GameCoinWidget(Widget):
         # add character hero and coin
         with self.canvas:
             self.hero = Image(source="cat2.png", pos=(250, 250), size=(100, 100))
-            self.monster = Image(source="monster.png", pos=(1700, 250), size=(100, 100))
-            self.coin1 = Image(source="coin1.png", pos=(random.randint(0, 1000), random.randint(0, 1000)), size=(50, 50))
-            self.coin2 = Image(source="coin1.png", pos=(random.randint(0, 1000), random.randint(0, 1000)), size=(50, 50))
-            self.coin3 = Image(source="coin1.png", pos=(random.randint(0, 1000), random.randint(0, 1000)), size=(50, 50))
+            self.monster = Image(source="monster.png", pos=(250, 250), size=(100, 100))
+            self.coin1 = Image(source="coin1.png", pos=(400, 400), size=(50, 50))
+            self.coin2 = Image(source="coin1.png", pos=(400, 400), size=(50, 50))
 
     def on_window_size(self, instance, value):
         # Update the size of Image when the Window size changes
@@ -132,7 +126,7 @@ class GameCoinWidget(Widget):
 
         self.monster.pos = (cur_x2, cur_y2)
 
-        if collides((self.hero.pos, self.hero.size), (self.coin1.pos, self.coin1.size)) or collides((self.hero.pos, self.hero.size), (self.coin2.pos, self.coin2.size)) or collides((self.hero.pos, self.hero.size), (self.coin3.pos, self.coin3.size)):
+        if collides((self.hero.pos, self.hero.size), (self.coin1.pos, self.coin1.size)) or collides((self.hero.pos, self.hero.size), (self.coin2.pos, self.coin2.size)):
 
             if collides ((self.hero.pos, self.hero.size), (self.coin1.pos, self.coin1.size)) == True :
                 self.coin1.pos = (random.randint(0, Window.width - self.coin1.width),
@@ -140,15 +134,12 @@ class GameCoinWidget(Widget):
             if collides((self.hero.pos, self.hero.size), (self.coin2.pos, self.coin2.size)) :
                 self.coin2.pos = (random.randint(0, Window.width - self.coin2.width),
                              random.randint(0, Window.height - self.coin2.height))
-            if collides((self.hero.pos, self.hero.size), (self.coin3.pos, self.coin3.size)) :
-                self.coin3.pos = (random.randint(0, Window.width - self.coin3.width),
-                             random.randint(0, Window.height - self.coin3.height))
             
             self.scorep1 += 1
             self.scorep1_label.text = "Score Player 1 : " + str(self.scorep1)
 
     
-        if collides((self.monster.pos, self.monster.size), (self.coin1.pos, self.coin1.size)) or collides((self.monster.pos, self.monster.size), (self.coin2.pos, self.coin2.size)) or collides((self.monster.pos, self.monster.size), (self.coin3.pos, self.coin3.size)):
+        if collides((self.monster.pos, self.monster.size), (self.coin1.pos, self.coin1.size)) or collides((self.monster.pos, self.monster.size), (self.coin2.pos, self.coin2.size)):
 
             if collides ((self.monster.pos, self.monster.size), (self.coin1.pos, self.coin1.size)) == True :
                 self.coin1.pos = (random.randint(0, Window.width - self.coin1.width),
@@ -156,15 +147,12 @@ class GameCoinWidget(Widget):
             if collides((self.monster.pos, self.monster.size), (self.coin2.pos, self.coin2.size)) :
                 self.coin2.pos = (random.randint(0, Window.width - self.coin2.width),
                              random.randint(0, Window.height - self.coin2.height))
-            if collides((self.monster.pos, self.monster.size), (self.coin3.pos, self.coin3.size)) :
-                self.coin3.pos = (random.randint(0, Window.width - self.coin3.width),
-                             random.randint(0, Window.height - self.coin3.height))
                 
             self.scorep2 += 1
             self.scorep2_label.text = "Score Player 2 : " + str(self.scorep2)
 
         if self.timer_seconds == 0 :
-            self.display_time_out_message(self.scorep1,self.scorep2)      
+            self.display_time_out_message()
 
     def update_timer(self, dt):
         self.timer_seconds -= 1
@@ -173,14 +161,9 @@ class GameCoinWidget(Widget):
         if self.timer_seconds == 0:
             self.timer_event.cancel()  # Stop the timer when it reaches 0
 
-    def display_time_out_message(self,scp1,scp2):
+    def display_time_out_message(self):
         content = Label(text="Time Out", font_size=30)
-        if scp1 > scp2 :
-            popup = Popup(title='Player 1 WIN !!!', content=content, size_hint=(None, None), size=(400, 200))
-        elif scp1 < scp2 :
-            popup = Popup(title='Player 2 WIN !!!', content=content, size_hint=(None, None), size=(400, 200))
-        else :
-            popup = Popup(title='Try again to find a BEST PLAYER !!!', content=content, size_hint=(None, None), size=(400, 200))
+        popup = Popup(title='Game Over', content=content, size_hint=(None, None), size=(400, 200))
         popup.open()
 
 class MyGame(App):
