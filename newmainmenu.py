@@ -13,6 +13,15 @@ from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 
 
+#Check collides
+def collides(rect1, rect2):
+    r1x, r1y = rect1[0]
+    r2x, r2y = rect2[0]
+    r1w, r1h = rect1[1]
+    r2w, r2h = rect2[1]
+
+    return (r1x < r2x + r2w and r1x + r1w > r2x and r1y < r2y + r2h and r1y + r1h > r2y)
+
 
 #Class Main Menu
 class MainMenu(Screen):
@@ -87,7 +96,6 @@ class GameSingleCoin15Screen(Screen) :
 class GameSingleCoin15(Widget) :
     pass
 
-
 #Single 30 Mode
 class GameSingleCoin30Screen(Screen) :
     def __init__(self, **kw):
@@ -97,6 +105,7 @@ class GameSingleCoin30Screen(Screen) :
 
 class GameSingleCoin30(Widget) :
     pass
+
 
 #Single 45 Mode
 class GameSingleCoin45Screen(Screen) :
@@ -129,6 +138,9 @@ class GameMultiCoinScreen(Screen) :
         self.button3 = Button(text='15 Seconds', on_press=self.switch_to_Multi15, size_hint=(None, None), size=(200, 50))
         layout.add_widget(self.button3)
 
+        self.back_button = Button(text='Back', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50))
+        layout.add_widget(self.back_button)
+
         # เพิ่ม Layout เข้าไปใน Screen
         self.add_widget(layout)
 
@@ -142,6 +154,10 @@ class GameMultiCoinScreen(Screen) :
     def switch_to_Multi45(self, instance):
         self.manager.current = 'multi45'
 
+    def switch_to_previous_screen(self, instance):
+        self.manager.current = 'main_menu'
+        pass 
+
 #Multi 15 Mode
 class GameMultiCoin15Screen(Screen) :
     def __init__(self, **kw):
@@ -151,6 +167,7 @@ class GameMultiCoin15Screen(Screen) :
 
 class GameMultiCoin15(Widget) :
     pass
+
 
 
 #Multi 15 Mode
