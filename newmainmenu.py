@@ -121,7 +121,7 @@ class GameSingleCoin45(Widget) :
 #Muti Mode
 class GameMultiCoinScreen(Screen) :
     def __init__(self, **kwargs):
-        super(GameSingleCoinScreen, self).__init__(**kwargs)
+        super(GameMultiCoinScreen, self).__init__(**kwargs)
 
         # สร้าง Layout แนวตั้ง
         layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
@@ -188,8 +188,115 @@ class GameMultiCoin45Screen(Screen) :
         self.add_widget(self.game_multi_45_widget)
 
 class GameMultiCoin45(Widget) :
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
+        self._keyboard = Window.request_keyboard(self._on_keyboard_closed, self)
+        self._keyboard.bind(on_key_down=self._on_key_down)
+        self._keyboard.bind(on_key_up=self._on_key_up)
+        self.pressed_keys = set()
+        Clock.schedule_interval(self.move_step, 0)
+
+
+        with self.canvas.before:
+            # Set initial size of Image to match Window size
+            self.image = Image(source='GrassMap1.png', size=Window.size, allow_stretch=True, keep_ratio=False)
+            # Bind the size of Image to the Window size
+            Window.bind(size=self.on_window_size)
+
+        # add character hero and coin
+        with self.canvas:
+            #generate cat charector
+            self.hero = Image(source="cat2.png", pos=(250, 250), size=(100, 100))
+
+            #generate monster charector
+            self.monster = Image(source="monster.png", pos=(1700, 250), size=(100, 100))
+
+            #generate coins
+            self.coin1 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(50, 50))
+            self.coin2 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(50, 50))
+            self.coin3 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(50, 50))
+
+    def on_window_size(self, instance, value):
+        # Update the size of Image when the Window size changes
+        self.image.size = (value[0], value[0]/2.5)
+
+    def _on_keyboard_closed(self):
+        self._keyboard.unbind(on_key_down=self._on_key_down)
+        self._keyboard.unbind(on_key_up=self._on_key_up)
+        self._keyboard = None
+
+    def _on_key_down(self, keyboard, keycode, text, modifiers):
+        self.pressed_keys.add(text)
+
+    def _on_key_up(self, keyboard, keycode):
+        text = keycode[1]
+        if text in self.pressed_keys:
+            self.pressed_keys.remove(text)
+
+    def move_step(self, dt):
+        cur_x1 = self.hero.pos[0]
+        cur_y1 = self.hero.pos[1]
+        step1 = 500 * dt
+
+        # Adjust the hero's position based on key presses
+        if 'w' in self.pressed_keys and cur_y1 + step1 + self.hero.height < self.image.height:
+            cur_y1 += step1
+
+        if 's' in self.pressed_keys and cur_y1 - step1 > 0:
+            cur_y1 -= step1
+
+        if 'a' in self.pressed_keys and cur_x1 - step1 > 0:
+            cur_x1 -= step1
+
+        if 'd' in self.pressed_keys and cur_x1 + step1 + self.hero.width < self.image.width:
+            cur_x1 += step1
+
+        self.hero.pos = (cur_x1, cur_y1)
+
+        cur_x2 = self.monster.pos[0]
+        cur_y2 = self.monster.pos[1]
+        step2 = 500 * dt
+
+        if 'i' in self.pressed_keys and cur_y2 + step2 + self.monster.height < self.image.height:
+            cur_y2 += step2
+
+        if 'k' in self.pressed_keys and cur_y2 - step2 > 0:
+            cur_y2 -= step2
+
+        if 'j' in self.pressed_keys and cur_x2 - step2 > 0:
+            cur_x2 -= step2
+
+        if 'l' in self.pressed_keys and cur_x2 + step2 + self.monster.width < self.image.width:
+            cur_x2 += step2
+
+        self.monster.pos = (cur_x2, cur_y2)
+
+        if collides((self.hero.pos, self.hero.size), (self.coin1.pos, self.coin1.size)) or collides((self.hero.pos, self.hero.size), (self.coin2.pos, self.coin2.size)) or collides((self.hero.pos, self.hero.size), (self.coin3.pos, self.coin3.size)):
+
+            if collides ((self.hero.pos, self.hero.size), (self.coin1.pos, self.coin1.size)) == True :
+                self.coin1.pos = (random.randint(0, self.image.width - self.coin1.width),
+                             random.randint(0, self.image.height - self.coin1.height))
+            if collides((self.hero.pos, self.hero.size), (self.coin2.pos, self.coin2.size)) :
+                self.coin2.pos = (random.randint(0, self.image.width - self.coin2.width),
+                             random.randint(0, self.image.height - self.coin2.height))
+            if collides((self.hero.pos, self.hero.size), (self.coin3.pos, self.coin3.size)) :
+                self.coin3.pos = (random.randint(0, self.image.width - self.coin3.width),
+                             random.randint(0, self.image.height - self.coin3.height))
+
+    
+        if collides((self.monster.pos, self.monster.size), (self.coin1.pos, self.coin1.size)) or collides((self.monster.pos, self.monster.size), (self.coin2.pos, self.coin2.size)) or collides((self.monster.pos, self.monster.size), (self.coin3.pos, self.coin3.size)):
+
+            if collides ((self.monster.pos, self.monster.size), (self.coin1.pos, self.coin1.size)) == True :
+                self.coin1.pos = (random.randint(0, self.image.width - self.coin1.width),
+                             random.randint(0, self.image.height - self.coin1.height))
+            if collides((self.monster.pos, self.monster.size), (self.coin2.pos, self.coin2.size)) :
+                self.coin2.pos = (random.randint(0, self.image.width - self.coin2.width),
+                             random.randint(0, self.image.height - self.coin2.height))
+            if collides((self.monster.pos, self.monster.size), (self.coin3.pos, self.coin3.size)) :
+                self.coin3.pos = (random.randint(0, self.image.width - self.coin3.width),
+                             random.randint(0, self.image.height - self.coin3.height))
+                 
 
 
 class MyGame(App):
@@ -203,7 +310,7 @@ class MyGame(App):
         game_single_30 = GameSingleCoin30Screen(name = 'single30')
         game_single_45 = GameSingleCoin45Screen(name = 'single45')
 
-        game_multi = GameSingleCoinScreen(name='multi')
+        game_multi = GameMultiCoinScreen(name='multi')
         game_multi_15 = GameMultiCoin15Screen(name = 'multi15')
         game_multi_30 = GameMultiCoin30Screen(name = 'multi30')
         game_multi_45 = GameMultiCoin45Screen(name = 'multi45')
