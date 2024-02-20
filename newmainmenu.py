@@ -11,6 +11,8 @@ from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
+from kivy.graphics import Line
+
 
 
 #Check collides
@@ -191,6 +193,21 @@ class GameMultiCoin45(Widget) :
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        self.timer_label = Label(text="Time: 45", pos=(900, 950), size=(50, 50))
+        self.add_widget(self.timer_label)
+        self.timer_seconds = 45
+
+        self.timer_event = Clock.schedule_interval(self.update_timer, 1)
+
+        self.scorep1 = 0
+        self.scorep2 = 0
+
+        self.scorep1_label = Label(text="Score Player 1 : 0", pos=(100, 800), size=(200, 200),font_size=40)
+        self.add_widget(self.scorep1_label)
+
+        self.scorep2_label = Label(text="Score Player 2 : 0", pos=(500, 800), size=(200, 200),font_size=40)
+        self.add_widget(self.scorep2_label)
+
         self._keyboard = Window.request_keyboard(self._on_keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_key_down)
         self._keyboard.bind(on_key_up=self._on_key_up)
@@ -206,6 +223,9 @@ class GameMultiCoin45(Widget) :
 
         # add character hero and coin
         with self.canvas:
+
+            Line(rectangle=(30, 865, 345, 65), width=2)  # Rectangle around Score Player 1
+            Line(rectangle=(430, 865, 345, 65), width=2)
             #generate cat charector
             self.hero = Image(source="cat2.png", pos=(250, 250), size=(100, 100))
 
@@ -216,6 +236,24 @@ class GameMultiCoin45(Widget) :
             self.coin1 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(50, 50))
             self.coin2 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(50, 50))
             self.coin3 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(50, 50))
+
+    def update_timer(self, dt):
+        self.timer_seconds -= 1
+        self.timer_label.text = f"Time: {self.timer_seconds}"
+
+        if self.timer_seconds == 0:
+            self.timer_event.cancel()  # Stop the timer when it reaches 0
+
+    def display_time_out_message(self,scp1,scp2):
+        content = Label(text="Time Out", font_size=30)
+        if scp1 > scp2 :
+            popup = Popup(title='Player 1 WIN !!!', content=content, size_hint=(None, None), size=(400, 200))
+        elif scp1 < scp2 :
+            popup = Popup(title='Player 2 WIN !!!', content=content, size_hint=(None, None), size=(400, 200))
+        else :
+            popup = Popup(title='Try again to find a BEST PLAYER !!!', content=content, size_hint=(None, None), size=(400, 200))
+        popup.open()
+            
 
     def on_window_size(self, instance, value):
         # Update the size of Image when the Window size changes
@@ -283,6 +321,9 @@ class GameMultiCoin45(Widget) :
             if collides((self.hero.pos, self.hero.size), (self.coin3.pos, self.coin3.size)) :
                 self.coin3.pos = (random.randint(0, self.image.width - self.coin3.width),
                              random.randint(0, self.image.height - self.coin3.height))
+                
+            self.scorep1 += 1
+            self.scorep1_label.text = "Score Player 1 : " + str(self.scorep1)
 
     
         if collides((self.monster.pos, self.monster.size), (self.coin1.pos, self.coin1.size)) or collides((self.monster.pos, self.monster.size), (self.coin2.pos, self.coin2.size)) or collides((self.monster.pos, self.monster.size), (self.coin3.pos, self.coin3.size)):
@@ -296,7 +337,13 @@ class GameMultiCoin45(Widget) :
             if collides((self.monster.pos, self.monster.size), (self.coin3.pos, self.coin3.size)) :
                 self.coin3.pos = (random.randint(0, self.image.width - self.coin3.width),
                              random.randint(0, self.image.height - self.coin3.height))
+                
+            self.scorep2 += 1
+            self.scorep2_label.text = "Score Player 2 : " + str(self.scorep2)
                  
+        if self.timer_seconds == 0 :
+            self.display_time_out_message(self.scorep1,self.scorep2)      
+
 
 
 class MyGame(App):
