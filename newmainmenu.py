@@ -189,15 +189,29 @@ class GameMultiCoin45Screen(Screen) :
         self.game_multi_45_widget = GameMultiCoin45()
         self.add_widget(self.game_multi_45_widget)
 
+    
+    def on_pre_enter(self, *args):
+        # เริ่มต้นนับถอยหลังเมื่อเข้าหน้าจอ
+        self.countdown_time = 45  # ระบุเวลาถอยหลังในวินาที
+        self.schedule = Clock.schedule_interval(self.update_timer, 1)
+
+    def on_pre_leave(self, *args):
+        # หยุดนับถอยหลังเมื่อออกจากหน้าจอ
+        Clock.unschedule(self.schedule)
+
+    def update_timer(self, dt):
+        self.countdown_time -= 1
+        self.game_multi_45_widget.timer_label.text = f"Time left: {self.countdown_time} seconds"
+
+        if self.countdown_time <= 0:
+            self.manager.current = 'main_menu' 
+
 class GameMultiCoin45(Widget) :
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.timer_label = Label(text="Time: 45", pos=(900, 950), size=(50, 50))
+        self.timer_label = Label(text="Time left: 45 seconds", pos=(300, 700), size=(200, 200), font_size=20)
         self.add_widget(self.timer_label)
-        self.timer_seconds = 45
-
-        self.timer_event = Clock.schedule_interval(self.update_timer, 1)
 
         self.scorep1 = 0
         self.scorep2 = 0
@@ -213,6 +227,18 @@ class GameMultiCoin45(Widget) :
         self._keyboard.bind(on_key_up=self._on_key_up)
         self.pressed_keys = set()
         Clock.schedule_interval(self.move_step, 0)
+
+        self.popup_button = Button(text="Open Popup", on_press=self.show_popup, size_hint=(None, None), size=(200, 50), pos=(700, 800))
+        self.add_widget(self.popup_button)
+
+        # Initialize popup content
+        self.popup_content = BoxLayout(orientation='vertical')
+        self.popup_content.add_widget(Label(text='This is a popup!'))
+        self.popup_content.add_widget(Button(text='Close Popup', on_press=self.dismiss_popup))
+
+        # Create the popup
+        self.popup = Popup(title='Popup Title', content=self.popup_content, size_hint=(None, None), size=(400, 400))
+
 
 
         with self.canvas.before:
@@ -237,22 +263,13 @@ class GameMultiCoin45(Widget) :
             self.coin2 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(50, 50))
             self.coin3 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(50, 50))
 
-    def update_timer(self, dt):
-        self.timer_seconds -= 1
-        self.timer_label.text = f"Time: {self.timer_seconds}"
+    def show_popup(self, instance):
+        # Open the popup
+        self.popup.open()
 
-        if self.timer_seconds == 0:
-            self.timer_event.cancel()  # Stop the timer when it reaches 0
-
-    def display_time_out_message(self,scp1,scp2):
-        content = Label(text="Time Out", font_size=30)
-        if scp1 > scp2 :
-            popup = Popup(title='Player 1 WIN !!!', content=content, size_hint=(None, None), size=(400, 200))
-        elif scp1 < scp2 :
-            popup = Popup(title='Player 2 WIN !!!', content=content, size_hint=(None, None), size=(400, 200))
-        else :
-            popup = Popup(title='Try again to find a BEST PLAYER !!!', content=content, size_hint=(None, None), size=(400, 200))
-        popup.open()
+    def dismiss_popup(self, instance):
+        # Dismiss the popup
+        self.popup.dismiss()
             
 
     def on_window_size(self, instance, value):
@@ -339,10 +356,7 @@ class GameMultiCoin45(Widget) :
                              random.randint(0, self.image.height - self.coin3.height))
                 
             self.scorep2 += 1
-            self.scorep2_label.text = "Score Player 2 : " + str(self.scorep2)
-                 
-        if self.timer_seconds == 0 :
-            self.display_time_out_message(self.scorep1,self.scorep2)      
+            self.scorep2_label.text = "Score Player 2 : " + str(self.scorep2)   
 
 
 
