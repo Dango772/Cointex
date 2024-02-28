@@ -14,6 +14,7 @@ from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Line
+from kivy.core.audio import SoundLoader
 
 
 
@@ -31,6 +32,12 @@ def collides(rect1, rect2):
 class MainMenu(Screen):
     def __init__(self, **kwargs):
         super(MainMenu, self).__init__(**kwargs)
+
+        self.sound = SoundLoader.load('music1.mp3')
+        if self.sound:
+            self.sound.bind(on_stop=self.on_music_finish)
+            self.sound.volume = 0.2  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+            self.sound.play()
 
         layout1 = FloatLayout()
 
@@ -60,6 +67,10 @@ class MainMenu(Screen):
 
     def switch_to_Multi(self, instance):
         self.manager.current = 'multi'
+    
+    def on_music_finish(self, sound):
+        sound.seek(0)  # เลื่อนตำแหน่งการเล่นกลับไปที่จุดเริ่มต้น
+        sound.play()   # เล่นเพลงอีกครั้ง
 
 
 #Single Mode
