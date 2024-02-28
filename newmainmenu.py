@@ -12,6 +12,7 @@ from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Line
 
 
@@ -31,7 +32,15 @@ class MainMenu(Screen):
     def __init__(self, **kwargs):
         super(MainMenu, self).__init__(**kwargs)
 
+        layout1 = FloatLayout()
+
+        background = Image(source='GrassMap1.png', allow_stretch=True, keep_ratio=False)
+        layout1.add_widget(background)
+
         layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
+
+        background = Image(source='GrassMap1.png', allow_stretch=True, keep_ratio=False)
+        layout.add_widget(background)
 
         self.image = Image(source='alice-aris.gif', size_hint=(None, None), size=(200, 200))
         layout.add_widget(self.image)
@@ -42,6 +51,7 @@ class MainMenu(Screen):
         self.multi_button = Button(text='Multi Player', on_press=self.switch_to_Multi,size_hint=(None, None), size=(200, 50))
         layout.add_widget(self.multi_button)
 
+        self.add_widget(layout1)
         self.add_widget(layout)
 
 
