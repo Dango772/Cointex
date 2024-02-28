@@ -51,6 +51,9 @@ class MainMenu(Screen):
         self.multi_button = Button(text='Multi Player', on_press=self.switch_to_Multi,size_hint=(None, None), size=(200, 50))
         layout.add_widget(self.multi_button)
 
+        self.multi_button = Button(text='Setting')
+        layout.add_widget(self.multi_button)
+
         self.add_widget(layout1)
         self.add_widget(layout)
 
