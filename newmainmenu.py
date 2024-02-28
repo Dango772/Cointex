@@ -34,13 +34,10 @@ class MainMenu(Screen):
 
         layout1 = FloatLayout()
 
-        background = Image(source='GrassMap1.png', allow_stretch=True, keep_ratio=False)
+        background = Image(source='screen2.jpg', allow_stretch=True, keep_ratio=False)
         layout1.add_widget(background)
 
         layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
-
-        background = Image(source='GrassMap1.png', allow_stretch=True, keep_ratio=False)
-        layout.add_widget(background)
 
         self.image = Image(source='alice-aris.gif', size_hint=(None, None), size=(200, 200))
         layout.add_widget(self.image)
