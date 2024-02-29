@@ -11,6 +11,7 @@ from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.button import Button
+from kivy.utils import get_color_from_hex
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Line
@@ -50,13 +51,17 @@ class MainMenu(Screen):
         layout.add_widget(self.image)
 
         self.single_button = Button(text='Single Player', on_press=self.switch_to_Single,size_hint=(None, None), size=(200, 50))
+        self.single_button.background_color = get_color_from_hex('#9ec0e4')
         layout.add_widget(self.single_button)
 
         self.multi_button = Button(text='Multi Player', on_press=self.switch_to_Multi,size_hint=(None, None), size=(200, 50))
+        self.multi_button.background_color = get_color_from_hex('#9ec0e4')
         layout.add_widget(self.multi_button)
 
-        self.multi_button = Button(text='Setting', size_hint=(None, None), size=(200, 50))
-        layout.add_widget(self.multi_button)
+        self.setting_button = Button(text='Setting', size_hint=(None, None), size=(200, 50) )
+        self.setting_button.background_color = get_color_from_hex('#9ec0e4')
+        layout.add_widget(self.setting_button)
+        
 
         self.add_widget(layout1)
         self.add_widget(layout)
