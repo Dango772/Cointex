@@ -131,7 +131,7 @@ class GameSingleCoinScreen(Screen) :
 
     def switch_to_previous_screen(self, instance):
         self.manager.current = 'main_menu'
-        pass
+        
 
 
 #Single 15 Mode
@@ -245,9 +245,6 @@ class GameMultiCoin45Screen(Screen) :
         self.game_multi_45_widget = GameMultiCoin45()
         self.add_widget(self.game_multi_45_widget)
 
-        
-
-    
     def on_pre_enter(self, *args):
         # เริ่มต้นนับถอยหลังเมื่อเข้าหน้าจอ
         self.countdown_time = 45  # ระบุเวลาถอยหลังในวินาที
@@ -262,7 +259,11 @@ class GameMultiCoin45Screen(Screen) :
         self.game_multi_45_widget.timer_label.text = f"Time left: {self.countdown_time} seconds"
 
         if self.countdown_time <= 0:
-            self.manager.current = 'main_menu' 
+            self.manager.current = 'main_menu'
+
+    def change_character_image(self, new_image_source):
+        # ดำเนินการเปลี่ยนรูปภาพตัวละครตามข้อมูลที่รับมา
+        self.game_multi_45_widget.change_character_image(new_image_source) 
 
 class GameMultiCoin45(Widget) :
     def __init__(self, **kwargs):
@@ -404,17 +405,44 @@ class GameMultiCoin45(Widget) :
                              random.randint(0, self.image.height - self.coin3.height))
                 
             self.scorep2 += 1
-            self.scorep2_label.text = "Score Player 2 : " + str(self.scorep2)   
+            self.scorep2_label.text = "Score Player 2 : " + str(self.scorep2)
+
+    def change_character_image(self, new_image_source):
+        # ดำเนินการเปลี่ยนรูปภาพตัวละคร
+        self.hero.source = new_image_source  # สมมติว่าตัวละครมีชื่อว่า "hero"   
 
 #class หน้าเปรี่ยนตัวละคร
 class CharacterApp(Screen):
     def __init__(self, **kwargs):
         super(CharacterApp, self).__init__(**kwargs)
 
-    def change_character_image(self):
-        # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
-        self.manager.get_screen('game_multi_45').change_character_image("new_character_image.png")
+        layout1 = FloatLayout()
 
+        background = Image(source='screen4.jpg', allow_stretch=True, keep_ratio=False)
+        layout1.add_widget(background)
+
+        # สร้าง Layout แนวตั้ง
+        layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
+
+        # สร้างปุ่มแรก
+        self.button1 = Button(text='45 Seconds', on_press=self.change_character_image, size_hint=(None, None), size=(200, 50))
+        self.button1.background_color = get_color_from_hex('#9ec0e4')
+        layout.add_widget(self.button1)
+
+        self.back_button = Button(text='Back', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50))
+        self.back_button.background_color = get_color_from_hex('#9ec0e4')
+        layout.add_widget(self.back_button)
+
+        self.add_widget(layout1)
+        self.add_widget(layout)
+
+
+    def change_character_image(self, instance):
+        # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
+        self.manager.get_screen('multi45').change_character_image("character3.png")
+
+    def switch_to_previous_screen(self, instance):
+        self.manager.current = 'main_menu'
 
 
 class MyGame(App):
