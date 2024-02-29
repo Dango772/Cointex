@@ -35,7 +35,7 @@ class MainMenu(Screen):
 
         self.sound = SoundLoader.load('music1.mp3')
         if self.sound:
-            self.sound.bind(on_stop=self.on_music_finish)
+            #self.sound.bind(on_stop=self.on_music_finish)
             self.sound.volume = 0.2  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
             self.sound.play()
 
@@ -79,9 +79,18 @@ class MainMenu(Screen):
     def switch_to_Character(self, instance):
         self.manager.current = 'character'
 
-    def on_music_finish(self, sound):
+    '''def on_music_finish(self, sound):
         sound.seek(0)  # เลื่อนตำแหน่งการเล่นกลับไปที่จุดเริ่มต้น
-        sound.play()   # เล่นเพลงอีกครั้ง
+        sound.play()   # เล่นเพลงอีกครั้ง'''
+    
+    '''def on_enter(self):
+        # เริ่มเล่นเพลงใหม่
+        self.sound = SoundLoader.load('music1.mp3')
+        if self.sound:
+            pass
+        else:
+            self.sound.volume = 0.2  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+            self.sound.play()'''
 
 
 #Single Mode
@@ -445,7 +454,21 @@ class CharacterApp(Screen):
 
         self.add_widget(layout1)
         self.add_widget(layout)
+    
+    def on_enter(self):
+        if self.manager.get_screen('main_menu').sound:
+            self.manager.get_screen('main_menu').sound.stop()
+        # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
+        self.sound = SoundLoader.load('music2.mp3')
+        if self.sound:
+            self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
+            self.sound.play()
 
+    def on_leave(self):
+        # หยุดการเล่นเพลงเมื่อออกจากหน้า CharacterApp
+        if self.sound:
+            self.sound.stop()
+        self.manager.get_screen('main_menu').sound.play()
 
     def change_character_image(self, instance):
         # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
