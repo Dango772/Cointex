@@ -82,24 +82,34 @@ class GameSingleCoinScreen(Screen) :
     def __init__(self, **kwargs):
         super(GameSingleCoinScreen, self).__init__(**kwargs)
 
+        layout1 = FloatLayout()
+
+        background = Image(source='screen4.jpg', allow_stretch=True, keep_ratio=False)
+        layout1.add_widget(background)
+
         # สร้าง Layout แนวตั้ง
         layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
 
         # สร้างปุ่มแรก
         self.button1 = Button(text='45 Seconds', on_press=self.switch_to_Single45, size_hint=(None, None), size=(200, 50))
+        self.button1.background_color = get_color_from_hex('#9ec0e4')
         layout.add_widget(self.button1)
 
         # สร้างปุ่มที่สอง
         self.button2 = Button(text='30 Seconds', on_press=self.switch_to_Single30, size_hint=(None, None), size=(200, 50))
+        self.button2.background_color = get_color_from_hex('#9ec0e4')
         layout.add_widget(self.button2)
         
         # สร้างปุ่มที่สาม
         self.button3 = Button(text='15 Seconds', on_press=self.switch_to_Single15, size_hint=(None, None), size=(200, 50))
+        self.button3.background_color = get_color_from_hex('#9ec0e4')
         layout.add_widget(self.button3)
 
         self.back_button = Button(text='Back', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50))
+        self.back_button.background_color = get_color_from_hex('#9ec0e4')
         layout.add_widget(self.back_button)
 
+        self.add_widget(layout1)
         self.add_widget(layout)
 
 
@@ -154,25 +164,35 @@ class GameMultiCoinScreen(Screen) :
     def __init__(self, **kwargs):
         super(GameMultiCoinScreen, self).__init__(**kwargs)
 
+        layout1 = FloatLayout()
+
+        background = Image(source='screen4.jpg', allow_stretch=True, keep_ratio=False)
+        layout1.add_widget(background)
+
         # สร้าง Layout แนวตั้ง
         layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
 
         # สร้างปุ่มแรก
         self.button1 = Button(text='45 Seconds', on_press=self.switch_to_Multi45, size_hint=(None, None), size=(200, 50))
+        self.button1.background_color = get_color_from_hex('#9ec0e4')
         layout.add_widget(self.button1)
 
         # สร้างปุ่มที่สอง
         self.button2 = Button(text='30 Seconds', on_press=self.switch_to_Multi30, size_hint=(None, None), size=(200, 50))
+        self.button2.background_color = get_color_from_hex('#9ec0e4')
         layout.add_widget(self.button2)
 
         # สร้างปุ่มที่สาม
         self.button3 = Button(text='15 Seconds', on_press=self.switch_to_Multi15, size_hint=(None, None), size=(200, 50))
+        self.button3.background_color = get_color_from_hex('#9ec0e4')
         layout.add_widget(self.button3)
 
         self.back_button = Button(text='Back', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50))
+        self.back_button.background_color = get_color_from_hex('#9ec0e4')
         layout.add_widget(self.back_button)
 
         # เพิ่ม Layout เข้าไปใน Screen
+        self.add_widget(layout1)
         self.add_widget(layout)
 
 
@@ -272,15 +292,15 @@ class GameMultiCoin45(Widget) :
             Line(rectangle=(30, 865, 345, 65), width=2)  # Rectangle around Score Player 1
             Line(rectangle=(430, 865, 345, 65), width=2)
             #generate cat charector
-            self.hero = Image(source="cat2.png", pos=(250, 250), size=(100, 100))
+            self.hero = Image(source="character1.1.png", pos=(250, 250), size=(135, 135))
 
             #generate monster charector
-            self.monster = Image(source="monster.png", pos=(1700, 250), size=(100, 100))
+            self.monster = Image(source="monster.png", pos=(1700, 250), size=(135, 135))
 
             #generate coins
-            self.coin1 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(50, 50))
-            self.coin2 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(50, 50))
-            self.coin3 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(50, 50))
+            self.coin1 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
+            self.coin2 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
+            self.coin3 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
 
         layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
 
