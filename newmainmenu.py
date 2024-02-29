@@ -57,6 +57,10 @@ class MainMenu(Screen):
         self.multi_button.background_color = get_color_from_hex('#9ec0e4')
         layout.add_widget(self.multi_button)
 
+        self.character_button = Button(text='Character', on_press=self.switch_to_Character,size_hint=(None, None), size=(200, 50))
+        self.character_button.background_color = get_color_from_hex('#9ec0e4')
+        layout.add_widget(self.character_button)
+
         self.setting_button = Button(text='Setting', size_hint=(None, None), size=(200, 50) )
         self.setting_button.background_color = get_color_from_hex('#9ec0e4')
         layout.add_widget(self.setting_button)
@@ -72,6 +76,9 @@ class MainMenu(Screen):
     def switch_to_Multi(self, instance):
         self.manager.current = 'multi'
     
+    def switch_to_Character(self, instance):
+        self.manager.current = 'character'
+
     def on_music_finish(self, sound):
         sound.seek(0)  # เลื่อนตำแหน่งการเล่นกลับไปที่จุดเริ่มต้น
         sound.play()   # เล่นเพลงอีกครั้ง
@@ -292,7 +299,7 @@ class GameMultiCoin45(Widget) :
             Line(rectangle=(30, 865, 345, 65), width=2)  # Rectangle around Score Player 1
             Line(rectangle=(430, 865, 345, 65), width=2)
             #generate cat charector
-            self.hero = Image(source="character1.1.png", pos=(250, 250), size=(135, 135))
+            self.hero = Image(source="character1.png", pos=(250, 250), size=(135, 135))
 
             #generate monster charector
             self.monster = Image(source="monster.png", pos=(1700, 250), size=(135, 135))
@@ -399,6 +406,15 @@ class GameMultiCoin45(Widget) :
             self.scorep2 += 1
             self.scorep2_label.text = "Score Player 2 : " + str(self.scorep2)   
 
+#class หน้าเปรี่ยนตัวละคร
+class CharacterApp(Screen):
+    def __init__(self, **kwargs):
+        super(CharacterApp, self).__init__(**kwargs)
+
+    def change_character_image(self):
+        # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
+        self.manager.get_screen('game_multi_45').change_character_image("new_character_image.png")
+
 
 
 class MyGame(App):
@@ -417,6 +433,8 @@ class MyGame(App):
         game_multi_30 = GameMultiCoin30Screen(name = 'multi30')
         game_multi_45 = GameMultiCoin45Screen(name = 'multi45')
 
+        game_character = CharacterApp(name='character')
+
         self.screen_manager.add_widget(main_menu)
 
         self.screen_manager.add_widget(game_single)
@@ -429,6 +447,7 @@ class MyGame(App):
         self.screen_manager.add_widget(game_multi_30)
         self.screen_manager.add_widget(game_multi_45)
 
+        self.screen_manager.add_widget(game_character)
 
         return self.screen_manager
 
