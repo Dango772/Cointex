@@ -16,7 +16,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Line
 from kivy.core.audio import SoundLoader
 
-
+from kivy.uix.popup import Popup #ใช้สำหรับปุ่มหยุดเกม
 
 #Check collides
 def collides(rect1, rect2):
@@ -255,6 +255,8 @@ class GameMultiCoin30(Widget) :
     pass
 
 #Multi 45 Mode
+from kivy.uix.popup import Popup
+
 class GameMultiCoin45Screen(Screen):
     def __init__(self, **kw):
         super(GameMultiCoin45Screen, self).__init__(**kw)
@@ -271,9 +273,36 @@ class GameMultiCoin45Screen(Screen):
         self.manager.current = 'main_menu'
 
     def stop_game(self, instance):
-        # Add any actions you want to perform when stopping the game
-        # For example, you can switch to another screen or reset the game state
+        # Create a Popup for the player to choose whether to restart the game or go to the main menu
+        popup = Popup(title='Game Over', size_hint=(None, None), size=(400, 200))
+        
+        # Create buttons for Restart Game and Main Menu
+        restart_button = Button(text='Restart Game')
+        restart_button.bind(on_press=self.restart_game)
+        
+        main_menu_button = Button(text='Main Menu')
+        main_menu_button.bind(on_press=self.switch_to_main_menu)
+        
+        # Add buttons to the Popup
+        popup.add_widget(restart_button)
+        popup.add_widget(main_menu_button)
+        
+        # Open the Popup
+        popup.open()
+
+    def restart_game(self, instance):
+        # Close the Popup
+        instance.parent.parent.dismiss()
+        
+        # Implement any actions needed to restart the game, such as resetting scores, positions, etc.
         pass
+
+    def switch_to_main_menu(self, instance):
+        # Close the Popup
+        instance.parent.parent.dismiss()
+        
+        # Switch to the main menu screen
+        self.manager.current = 'main_menu'
 
     def on_pre_enter(self, *args):
         # Start the countdown timer when entering the screen
