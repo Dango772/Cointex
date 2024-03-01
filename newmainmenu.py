@@ -310,6 +310,10 @@ class GameMultiCoin45(Widget) :
         self._keyboard.bind(on_key_up=self._on_key_up)
         self.pressed_keys = set()
         Clock.schedule_interval(self.move_step, 0)
+
+        self.keepcoinsound = SoundLoader.load('coinkeep.mp3')
+        if self.keepcoinsound:
+            self.keepcoinsound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
         
 
         with self.canvas.before:
@@ -402,6 +406,9 @@ class GameMultiCoin45(Widget) :
 
         if collides((self.hero.pos, self.hero.size), (self.coin1.pos, self.coin1.size)) or collides((self.hero.pos, self.hero.size), (self.coin2.pos, self.coin2.size)) or collides((self.hero.pos, self.hero.size), (self.coin3.pos, self.coin3.size)):
 
+
+            self.keepcoinsound.play()
+
             if collides ((self.hero.pos, self.hero.size), (self.coin1.pos, self.coin1.size)) == True :
                 self.coin1.pos = (random.randint(0, self.image.width - self.coin1.width),
                              random.randint(0, self.image.height - self.coin1.height))
@@ -417,6 +424,9 @@ class GameMultiCoin45(Widget) :
 
     
         if collides((self.monster.pos, self.monster.size), (self.coin1.pos, self.coin1.size)) or collides((self.monster.pos, self.monster.size), (self.coin2.pos, self.coin2.size)) or collides((self.monster.pos, self.monster.size), (self.coin3.pos, self.coin3.size)):
+
+            self.keepcoinsound.play()
+
 
             if collides ((self.monster.pos, self.monster.size), (self.coin1.pos, self.coin1.size)) == True :
                 self.coin1.pos = (random.randint(0, self.image.width - self.coin1.width),
