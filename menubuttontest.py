@@ -47,7 +47,7 @@ class MainMenu(Screen):
 
         layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
 
-        self.image = Image(source='alice-aris.gif', size_hint=(None, None), size=(200, 200))
+        self.image = Image(source='fixcharacter.png', size_hint=(None, None), size=(200, 200))
         layout.add_widget(self.image)
 
         self.single_button = Button(text='Single Player', on_press=self.switch_to_Single,size_hint=(None, None), size=(200, 50))
