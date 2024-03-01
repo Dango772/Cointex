@@ -488,11 +488,10 @@ class CharacterApp(Screen):
             self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
             self.sound.play()
 
-    '''def on_leave(self):
+    def on_leave(self):
         # หยุดการเล่นเพลงเมื่อออกจากหน้า CharacterApp
         if self.sound:
             self.sound.stop()
-        #self.manager.get_screen('main_menu').sound.play()'''
 
     def switch_to_P1(self, instance):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
@@ -505,6 +504,8 @@ class CharacterApp(Screen):
         self.manager.current = 'characterP2'
 
     def switch_to_previous_screen(self, instance):
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
         self.sound.stop()
         self.manager.get_screen('main_menu').sound.play()
         self.manager.current = 'main_menu'
@@ -515,9 +516,11 @@ class CharacterAppP1(Screen):
     def __init__(self, **kwargs):
         super(CharacterAppP1, self).__init__(**kwargs)
 
+        self.soundButton = SoundLoader.load('button1.mp3')
+
         layout1 = FloatLayout()
 
-        background = Image(source='screen4.jpg', allow_stretch=True, keep_ratio=False)
+        background = Image(source='screen6.jpg', allow_stretch=True, keep_ratio=False)
         layout1.add_widget(background)
 
         # สร้าง Layout แนวตั้ง
@@ -536,10 +539,10 @@ class CharacterAppP1(Screen):
         self.add_widget(layout)
     
     def on_enter(self):
-        if self.manager.get_screen('main_menu').sound:
-            self.manager.get_screen('main_menu').sound.stop()
+        '''if self.manager.get_screen('character').sound:
+            self.manager.get_screen('character').sound.stop()'''
         # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
-        self.sound = SoundLoader.load('music2.mp3')
+        self.sound = SoundLoader.load('music3.mp3')
         if self.sound:
             self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
             self.sound.play()
@@ -548,23 +551,26 @@ class CharacterAppP1(Screen):
         # หยุดการเล่นเพลงเมื่อออกจากหน้า CharacterApp
         if self.sound:
             self.sound.stop()
-        self.manager.get_screen('main_menu').sound.play()
 
     def change_character_image(self, instance):
         # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
         self.manager.get_screen('multi45').change_character_image("character3.png")
 
     def switch_to_previous_screen(self, instance):
-        self.manager.current = 'main_menu'
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
+        self.manager.current = 'character'
 
 #class หน้าเปรี่ยนตัวละครP2
 class CharacterAppP2(Screen):
     def __init__(self, **kwargs):
         super(CharacterAppP2, self).__init__(**kwargs)
 
+        self.soundButton = SoundLoader.load('button1.mp3')
+
         layout1 = FloatLayout()
 
-        background = Image(source='screen4.jpg', allow_stretch=True, keep_ratio=False)
+        background = Image(source='screen7.jpg', allow_stretch=True, keep_ratio=False)
         layout1.add_widget(background)
 
         # สร้าง Layout แนวตั้ง
@@ -582,26 +588,27 @@ class CharacterAppP2(Screen):
         self.add_widget(layout1)
         self.add_widget(layout)
     
-    '''def on_enter(self):
-        if self.manager.get_screen('main_menu').sound:
-            self.manager.get_screen('main_menu').sound.stop()
+    def on_enter(self):
+        '''if self.manager.get_screen('character').sound:
+            self.manager.get_screen('character').sound.stop()'''
         # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
-        self.sound = SoundLoader.load('music2.mp3')
+        self.sound = SoundLoader.load('music3.mp3')
         if self.sound:
             self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
-            self.sound.play()'''
+            self.sound.play()
 
-    '''def on_leave(self):
+    def on_leave(self):
         # หยุดการเล่นเพลงเมื่อออกจากหน้า CharacterApp
         if self.sound:
             self.sound.stop()
-        #self.manager.get_screen('main_menu').sound.play()'''
 
     def change_character_image(self, instance):
         # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
         self.manager.get_screen('multi45').change_character_image("character3.png")
 
     def switch_to_previous_screen(self, instance):
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
         self.manager.current = 'character'
 
 class MyGame(App):
