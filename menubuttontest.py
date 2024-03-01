@@ -278,15 +278,19 @@ class GameMultiCoin45Screen(Screen):
         popup = Popup(title='Game Over', size_hint=(None, None), size=(400, 200))
         
         # Create buttons for Restart Game and Main Menu
-        restart_button = Button(text='Restart Game')
+        restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
         restart_button.bind(on_press=self.restart_game)
         
-        main_menu_button = Button(text='Main Menu')
+        main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
         main_menu_button.bind(on_press=self.switch_to_main_menu)
         
-        # Add buttons to the Popup
-        popup.add_widget(restart_button)
-        popup.add_widget(main_menu_button)
+        # Add buttons to a layout
+        button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
+        button_layout.add_widget(restart_button)
+        button_layout.add_widget(main_menu_button)
+        
+        # Add the layout to the Popup
+        popup.content = button_layout
         
         # Open the Popup
         popup.open()
@@ -330,7 +334,6 @@ class GameMultiCoin45Screen(Screen):
     def stop_countdown(self):
         # Unschedule the function responsible for updating the countdown timer
         Clock.unschedule(self.schedule)
-
 
 class GameMultiCoin45(Widget) :
     def __init__(self, **kwargs):
