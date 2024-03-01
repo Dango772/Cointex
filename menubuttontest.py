@@ -255,39 +255,47 @@ class GameMultiCoin30(Widget) :
     pass
 
 #Multi 45 Mode
-class GameMultiCoin45Screen(Screen) :
+class GameMultiCoin45Screen(Screen):
     def __init__(self, **kw):
         super(GameMultiCoin45Screen, self).__init__(**kw)
         self.game_multi_45_widget = GameMultiCoin45()
         self.add_widget(self.game_multi_45_widget)
 
-    #ก้อนปุ่มกลับไป main menu เอาไว้เทส 
+        # Add a "Stop Game" button
         layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
-        self.button1 = Button(text='Back to Menu', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50))
-        layout.add_widget(self.button1)
+        self.button_stop_game = Button(text='Stop Game', on_press=self.stop_game, size_hint=(None, None), size=(200, 50))
+        layout.add_widget(self.button_stop_game)
         self.add_widget(layout)
+
     def switch_to_previous_screen(self, instance):
         self.manager.current = 'main_menu'
 
+    def stop_game(self, instance):
+        # Add any actions you want to perform when stopping the game
+        # For example, you can switch to another screen or reset the game state
+        pass
+
     def on_pre_enter(self, *args):
-        # เริ่มต้นนับถอยหลังเมื่อเข้าหน้าจอ
-        self.countdown_time = 45  # ระบุเวลาถอยหลังในวินาที
+        # Start the countdown timer when entering the screen
+        self.countdown_time = 45  # Set the countdown time in seconds
         self.schedule = Clock.schedule_interval(self.update_timer, 1)
 
     def on_pre_leave(self, *args):
-        # หยุดนับถอยหลังเมื่อออกจากหน้าจอ
+        # Stop the countdown timer when leaving the screen
         Clock.unschedule(self.schedule)
 
     def update_timer(self, dt):
+        # Update the timer label every second
         self.countdown_time -= 1
         self.game_multi_45_widget.timer_label.text = f"Time left: {self.countdown_time} seconds"
 
         if self.countdown_time <= 0:
+            # If time runs out, switch back to the main menu
             self.manager.current = 'main_menu'
 
     def change_character_image(self, new_image_source):
-        # ดำเนินการเปลี่ยนรูปภาพตัวละครตามข้อมูลที่รับมา
-        self.game_multi_45_widget.change_character_image(new_image_source) 
+        # Change the character's image
+        self.game_multi_45_widget.change_character_image(new_image_source)
 
 class GameMultiCoin45(Widget) :
     def __init__(self, **kwargs):
