@@ -34,6 +34,7 @@ class MainMenu(Screen):
         super(MainMenu, self).__init__(**kwargs)
 
         self.sound = SoundLoader.load('music1.mp3')
+        self.soundButton = SoundLoader.load('button1.mp3')
         if self.sound:
             #self.sound.bind(on_stop=self.on_music_finish)
             self.sound.volume = 0.2  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
@@ -71,12 +72,18 @@ class MainMenu(Screen):
 
 
     def switch_to_Single(self, instance):
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
         self.manager.current = 'single'
 
     def switch_to_Multi(self, instance):
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
         self.manager.current = 'multi'
     
     def switch_to_Character(self, instance):
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
         self.manager.current = 'character'
 
     '''def on_music_finish(self, sound):
