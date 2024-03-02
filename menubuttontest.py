@@ -297,15 +297,14 @@ class GameMultiCoin45Screen(Screen):
  
     def restart_game(self, instance):
         # Close the Popup
-        instance.parent.parent.parent.dismiss()
+        instance.parent.parent.dismiss()
         
         # Implement any actions needed to restart the game, such as resetting scores, positions, etc.
         pass
  
     def switch_to_main_menu(self, instance):
         # Close the Popup
-        instance.parent.parent.parent.dismiss()
-        
+      
         # Switch to the main menu screen
         self.manager.current = 'main_menu'
  
@@ -334,6 +333,8 @@ class GameMultiCoin45Screen(Screen):
     def stop_countdown(self):
         # Unschedule the function responsible for updating the countdown timer
         Clock.unschedule(self.schedule)
+
+
 
 class GameMultiCoin45(Widget) :
     def __init__(self, **kwargs):
