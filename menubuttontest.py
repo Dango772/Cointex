@@ -265,12 +265,11 @@ class GameMultiCoin45Screen(Screen):
         self.add_widget(self.game_multi_45_widget)
  
         # Add a "Stop Game" button
-        layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), size=(200, 50), pos_hint={'top': 1, 'right': 1})
         self.button_stop_game = Button(text='Stop Game', on_press=self.stop_game, size_hint=(None, None), size=(200, 50))
         layout.add_widget(self.button_stop_game)
-     
         self.add_widget(layout)
-    
+ 
     def switch_to_previous_screen(self, instance):
         self.manager.current = 'main_menu'
  
@@ -282,9 +281,8 @@ class GameMultiCoin45Screen(Screen):
         restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
         restart_button.bind(on_press=self.restart_game)
         
-        main_menu_button = Button(text='Main Menu', on_press=self.switch_to_previous_screen,size_hint=(None, None), size=(200, 50))
-        
-        
+        main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
+        main_menu_button.bind(on_press=self.switch_to_main_menu)
         
         # Add buttons to a layout
         button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
@@ -298,18 +296,18 @@ class GameMultiCoin45Screen(Screen):
         popup.open()
  
     def restart_game(self, instance):
-        self.manager.current = 'main_menu'
-        self.manager.current = 'multi45'
+        # Close the Popup
+        instance.parent.parent.dismiss()
         
         # Implement any actions needed to restart the game, such as resetting scores, positions, etc.
-        
+        pass
  
     def switch_to_main_menu(self, instance):
         # Close the Popup
+        instance.parent.parent.dismiss()
       
         # Switch to the main menu screen
         self.manager.current = 'main_menu'
-        
  
     def on_pre_enter(self, *args):
         # Start the countdown timer when entering the screen
@@ -336,6 +334,7 @@ class GameMultiCoin45Screen(Screen):
     def stop_countdown(self):
         # Unschedule the function responsible for updating the countdown timer
         Clock.unschedule(self.schedule)
+
 
 
 
