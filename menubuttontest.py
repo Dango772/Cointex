@@ -297,14 +297,14 @@ class GameMultiCoin45Screen(Screen):
  
     def restart_game(self, instance):
         # Close the Popup
-        instance.parent.parent.dismiss()
+        instance.parent.parent.parent.dismiss()
         
         # Implement any actions needed to restart the game, such as resetting scores, positions, etc.
         pass
  
     def switch_to_main_menu(self, instance):
         # Close the Popup
-        instance.parent.parent.dismiss()
+        instance.parent.parent.parent.dismiss()
         
         # Switch to the main menu screen
         self.manager.current = 'main_menu'
