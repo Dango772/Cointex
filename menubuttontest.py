@@ -275,7 +275,7 @@ class GameMultiCoin45Screen(Screen):
  
     def stop_game(self, instance):
         # Create a Popup for the player to choose whether to restart the game or go to the main menu
-        popup = Popup(title='Game Over', size_hint=(None, None), size=(400, 200))
+        self.popup = Popup(title='Game Over', size_hint=(None, None), size=(400, 200))
         
         # Create buttons for Restart Game and Main Menu
         restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
@@ -290,10 +290,10 @@ class GameMultiCoin45Screen(Screen):
         button_layout.add_widget(main_menu_button)
         
         # Add the layout to the Popup
-        popup.content = button_layout
+        self.popup.content = button_layout
         
         # Open the Popup
-        popup.open()
+        self.popup.open()
  
     def restart_game(self, instance):
         # Close the Popup
@@ -304,11 +304,13 @@ class GameMultiCoin45Screen(Screen):
  
     def switch_to_main_menu(self, instance):
         # Close the Popup
-        instance.parent.parent.dismiss()
+        
       
         # Switch to the main menu screen
         self.manager.current = 'main_menu'
- 
+        self.popup.dismiss()
+        
+
     def on_pre_enter(self, *args):
         # Start the countdown timer when entering the screen
         self.countdown_time = 45  # Set the countdown time in seconds
