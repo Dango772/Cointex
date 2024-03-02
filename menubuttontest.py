@@ -324,7 +324,7 @@ class GameMultiCoin45Screen(Screen):
         self.game_multi_45_widget.scorep1_label.text = "Score Player 1 : 0"
         self.game_multi_45_widget.scorep2_label.text = "Score Player 2 : 0"
 
-        
+        self.game_multi_45_widget.monster.pos = (1700, 250)
         self.game_multi_45_widget.hero.pos = (250, 250)
     # Restart the countdown timer
         self.start_countdown()
