@@ -312,8 +312,20 @@ class GameMultiCoin45Screen(Screen):
             self.start_countdown()
         
         # Close the Popup
-        instance.parent.parent.dismiss()
-        
+        self.popup.dismiss()
+        # Reset the countdown time
+        self.countdown_time = 45
+    
+    # Reset the scores
+        self.game_multi_45_widget.scorep1 = 0
+        self.game_multi_45_widget.scorep2 = 0
+    
+    # Update the score labels
+        self.game_multi_45_widget.scorep1_label.text = "Score Player 1 : 0"
+        self.game_multi_45_widget.scorep2_label.text = "Score Player 2 : 0"
+    
+    # Restart the countdown timer
+        self.start_countdown()
         # Implement any actions needed to restart the game, such as resetting scores, positions, etc.
         pass
  
