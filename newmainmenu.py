@@ -605,7 +605,7 @@ class CharacterAppP2(Screen):
 
         layout1 = FloatLayout()
 
-        background = Image(source='screen6.jpg', allow_stretch=True, keep_ratio=False)
+        background = Image(source='screen7.jpg', allow_stretch=True, keep_ratio=False)
         layout1.add_widget(background)
 
         # สร้าง Layout แนวนอน
@@ -617,21 +617,21 @@ class CharacterAppP2(Screen):
         #layout6 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None))
 
         # สร้างปุ่มแรก
-        self.image = Image(source='character1.png', size_hint=(None, None), size=(250, 250))
+        self.image = Image(source='character2.png', size_hint=(None, None), size=(250, 250))
         layout3.add_widget(self.image)
-        self.button1 = Button(text='Wakamo', on_press=self.change_character_image1, size_hint=(None, None), size=(250, 50))
+        self.button1 = Button(text='Arisu', on_press=self.change_character_image1, size_hint=(None, None), size=(250, 50))
         self.button1.background_color = get_color_from_hex('#9ec0e4')
         layout3.add_widget(self.button1)
 
-        self.image = Image(source='character3.png', size_hint=(None, None), size=(250, 250))
+        self.image = Image(source='character4.png', size_hint=(None, None), size=(250, 250))
         layout4.add_widget(self.image)
-        self.button1 = Button(text='Momoi', on_press=self.change_character_image2, size_hint=(None, None), size=(250, 50))
+        self.button1 = Button(text='Midori', on_press=self.change_character_image2, size_hint=(None, None), size=(250, 50))
         self.button1.background_color = get_color_from_hex('#9ec0e4')
         layout4.add_widget(self.button1)
 
-        self.image = Image(source='character6.png', size_hint=(None, None), size=(250, 250))
+        self.image = Image(source='character5.png', size_hint=(None, None), size=(250, 250))
         layout5.add_widget(self.image)
-        self.button1 = Button(text='Yuuka', on_press=self.change_character_image3, size_hint=(None, None), size=(250, 50))
+        self.button1 = Button(text='Yuzu', on_press=self.change_character_image3, size_hint=(None, None), size=(250, 50))
         self.button1.background_color = get_color_from_hex('#9ec0e4')
         layout5.add_widget(self.button1)
 
@@ -641,7 +641,7 @@ class CharacterAppP2(Screen):
         layout1.add_widget(back_button)
 
         #head line
-        my_label = Label(text='[b]Player 1[/b]', size_hint=(None, None), size=(200, 50), pos_hint={'x': 0.45, 'y': 0.8}, markup=True)
+        my_label = Label(text='[b]Player 2[/b]', size_hint=(None, None), size=(200, 50), pos_hint={'x': 0.45, 'y': 0.8}, markup=True)
         my_label.font_size = '70sp'
         my_label.color = get_color_from_hex('#1e2925')
         layout1.add_widget(my_label)
