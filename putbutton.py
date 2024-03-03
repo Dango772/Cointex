@@ -372,8 +372,23 @@ class GameMultiCoin45Screen(Screen):
                 # Stop the countdown timer when time runs out
                 self.stop_countdown()
                 # Switch to the main menu screen
-                self.manager.current = 'main_menu'
- 
+                self.show_timeout_popup()
+                
+                
+    def show_timeout_popup(self):
+        # Create a Popup for timeout
+        timeout_popup = Popup(title='Timeout',
+                              content=Label(text='Time is up!'),
+                              size_hint=(None, None), size=(400, 200))
+        # Add a button to dismiss the popup
+        dismiss_button = Button(text='OK', size_hint=(None, None), size=(150, 50))
+        dismiss_button.bind(on_press=timeout_popup.dismiss)
+        timeout_popup.content.add_widget(dismiss_button)
+
+
+
+
+
     def stop_countdown(self):
         if self.schedule is not None:
             # Unschedule the function responsible for updating the countdown timer
