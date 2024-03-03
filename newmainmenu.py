@@ -286,9 +286,9 @@ class GameMultiCoin45Screen(Screen) :
         if self.countdown_time <= 0:
             self.manager.current = 'main_menu'
 
-    def change_character_image(self, new_image_source):
+    def change_character_imageP1(self, new_image_source):
         # ดำเนินการเปลี่ยนรูปภาพตัวละครตามข้อมูลที่รับมา
-        self.game_multi_45_widget.change_character_image(new_image_source) 
+        self.game_multi_45_widget.change_character_imageP1(new_image_source) 
 
 class GameMultiCoin45(Widget) :
     def __init__(self, **kwargs):
@@ -432,7 +432,7 @@ class GameMultiCoin45(Widget) :
             self.scorep2 += 1
             self.scorep2_label.text = "Score Player 2 : " + str(self.scorep2)
 
-    def change_character_image(self, new_image_source):
+    def change_character_imageP1(self, new_image_source):
         # ดำเนินการเปลี่ยนรูปภาพตัวละคร
         self.hero.source = new_image_source  # สมมติว่าตัวละครมีชื่อว่า "hero"
 
@@ -577,19 +577,19 @@ class CharacterAppP1(Screen):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
         self.soundButton.play() 
         # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
-        self.manager.get_screen('multi45').change_character_image("character1.png")
+        self.manager.get_screen('multi45').change_character_imageP1("character1.png")
     
     def change_character_image2(self, instance):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
         self.soundButton.play() 
         # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
-        self.manager.get_screen('multi45').change_character_image("character3.png")
+        self.manager.get_screen('multi45').change_character_imageP1("character3.png")
 
     def change_character_image3(self, instance):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
         self.soundButton.play() 
         # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
-        self.manager.get_screen('multi45').change_character_image("character6.png")
+        self.manager.get_screen('multi45').change_character_imageP1("character6.png")
 
     def switch_to_previous_screen(self, instance):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
