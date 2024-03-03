@@ -288,7 +288,10 @@ class GameMultiCoin45Screen(Screen) :
 
     def change_character_imageP1(self, new_image_source):
         # ดำเนินการเปลี่ยนรูปภาพตัวละครตามข้อมูลที่รับมา
-        self.game_multi_45_widget.change_character_imageP1(new_image_source) 
+        self.game_multi_45_widget.change_character_imageP1(new_image_source)
+    def change_character_imageP2(self, new_image_source):
+        # ดำเนินการเปลี่ยนรูปภาพตัวละครตามข้อมูลที่รับมา
+        self.game_multi_45_widget.change_character_imageP2(new_image_source)  
 
 class GameMultiCoin45(Widget) :
     def __init__(self, **kwargs):
@@ -329,10 +332,10 @@ class GameMultiCoin45(Widget) :
             Line(rectangle=(30, 865, 345, 65), width=2)  # Rectangle around Score Player 1
             Line(rectangle=(430, 865, 345, 65), width=2)
             #generate cat charector
-            self.hero = Image(source="character1.png", pos=(250, 250), size=(135, 135))
+            self.hero = Image(source="character1.png", pos=(250, 250), size=(140, 140))
 
             #generate monster charector
-            self.monster = Image(source="monster.png", pos=(1700, 250), size=(135, 135))
+            self.monster = Image(source="character2.png", pos=(1700, 250), size=(140, 140))
 
             #generate coins
             self.coin1 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
@@ -435,6 +438,9 @@ class GameMultiCoin45(Widget) :
     def change_character_imageP1(self, new_image_source):
         # ดำเนินการเปลี่ยนรูปภาพตัวละคร
         self.hero.source = new_image_source  # สมมติว่าตัวละครมีชื่อว่า "hero"
+    def change_character_imageP2(self, new_image_source):
+        # ดำเนินการเปลี่ยนรูปภาพตัวละคร
+        self.monster.source = new_image_source  # สมมติว่าตัวละครมีชื่อว่า "monster"
 
        
 
@@ -605,7 +611,7 @@ class CharacterAppP2(Screen):
 
         layout1 = FloatLayout()
 
-        background = Image(source='screen6.jpg', allow_stretch=True, keep_ratio=False)
+        background = Image(source='screen7.jpg', allow_stretch=True, keep_ratio=False)
         layout1.add_widget(background)
 
         # สร้าง Layout แนวนอน
@@ -617,21 +623,21 @@ class CharacterAppP2(Screen):
         #layout6 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None))
 
         # สร้างปุ่มแรก
-        self.image = Image(source='character1.png', size_hint=(None, None), size=(250, 250))
+        self.image = Image(source='character2.png', size_hint=(None, None), size=(250, 250))
         layout3.add_widget(self.image)
-        self.button1 = Button(text='Wakamo', on_press=self.change_character_image1, size_hint=(None, None), size=(250, 50))
+        self.button1 = Button(text='Arisu', on_press=self.change_character_image1, size_hint=(None, None), size=(250, 50))
         self.button1.background_color = get_color_from_hex('#9ec0e4')
         layout3.add_widget(self.button1)
 
-        self.image = Image(source='character3.png', size_hint=(None, None), size=(250, 250))
+        self.image = Image(source='character4.png', size_hint=(None, None), size=(250, 250))
         layout4.add_widget(self.image)
-        self.button1 = Button(text='Momoi', on_press=self.change_character_image2, size_hint=(None, None), size=(250, 50))
+        self.button1 = Button(text='Midori', on_press=self.change_character_image2, size_hint=(None, None), size=(250, 50))
         self.button1.background_color = get_color_from_hex('#9ec0e4')
         layout4.add_widget(self.button1)
 
-        self.image = Image(source='character6.png', size_hint=(None, None), size=(250, 250))
+        self.image = Image(source='character5.png', size_hint=(None, None), size=(250, 250))
         layout5.add_widget(self.image)
-        self.button1 = Button(text='Yuuka', on_press=self.change_character_image3, size_hint=(None, None), size=(250, 50))
+        self.button1 = Button(text='Yuzu', on_press=self.change_character_image3, size_hint=(None, None), size=(250, 50))
         self.button1.background_color = get_color_from_hex('#9ec0e4')
         layout5.add_widget(self.button1)
 
@@ -641,7 +647,7 @@ class CharacterAppP2(Screen):
         layout1.add_widget(back_button)
 
         #head line
-        my_label = Label(text='[b]Player 1[/b]', size_hint=(None, None), size=(200, 50), pos_hint={'x': 0.45, 'y': 0.8}, markup=True)
+        my_label = Label(text='[b]Player 2[/b]', size_hint=(None, None), size=(200, 50), pos_hint={'x': 0.45, 'y': 0.8}, markup=True)
         my_label.font_size = '70sp'
         my_label.color = get_color_from_hex('#1e2925')
         layout1.add_widget(my_label)
@@ -671,19 +677,19 @@ class CharacterAppP2(Screen):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
         self.soundButton.play() 
         # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
-        self.manager.get_screen('multi45').change_character_imageP1("character1.png")
+        self.manager.get_screen('multi45').change_character_imageP2("character2.png")
     
     def change_character_image2(self, instance):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
         self.soundButton.play() 
         # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
-        self.manager.get_screen('multi45').change_character_imageP1("character3.png")
+        self.manager.get_screen('multi45').change_character_imageP2("character4.png")
 
     def change_character_image3(self, instance):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
         self.soundButton.play() 
         # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
-        self.manager.get_screen('multi45').change_character_imageP1("character6.png")
+        self.manager.get_screen('multi45').change_character_imageP2("character5.png")
 
     def switch_to_previous_screen(self, instance):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
