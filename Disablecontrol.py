@@ -273,7 +273,8 @@ class GameMultiCoin45Screen(Screen):
         
         self.is_game_running = True  # Flag to track the state of the game
         self.schedule = None  # Initialize the schedule variable
- 
+    def is_game_running(self):
+        return self.is_game_running
     def switch_to_previous_screen(self, instance):
         self.manager.current = 'main_menu'
  
@@ -446,7 +447,7 @@ class GameMultiCoin45(Widget) :
             self.pressed_keys.remove(text)
 
     def move_step(self, dt):
-     if self.game_running:  # Check if the game is running
+     if self.screen.is_game_running():  # Check if the game is running
         cur_x1 = self.hero.pos[0]
         cur_y1 = self.hero.pos[1]
         step1 = 500 * dt
@@ -516,11 +517,6 @@ class GameMultiCoin45(Widget) :
                 
             self.scorep2 += 1
             self.scorep2_label.text = "Score Player 2 : " + str(self.scorep2)
-
-    def change_character_image(self, new_image_source):
-        # ดำเนินการเปลี่ยนรูปภาพตัวละคร
-        self.hero.source = new_image_source  # สมมติว่าตัวละครมีชื่อว่า "hero"
-
        
 
 #class หน้าเปรี่ยนตัวละครเลือกระหว่าง P1 เเละ P2
