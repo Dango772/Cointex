@@ -574,6 +574,8 @@ class CharacterAppP1(Screen):
             self.sound.stop()
 
     def change_character_image(self, instance):
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
         # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
         self.manager.get_screen('multi45').change_character_image("character3.png")
 
