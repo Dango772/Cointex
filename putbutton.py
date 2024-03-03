@@ -261,7 +261,58 @@ class GameMultiCoin45Screen(Screen):
         self.game_multi_45_widget = GameMultiCoin45()
         self.add_widget(self.game_multi_45_widget)
  
-        # Add a "Stop Game" button
+        
+ 
+    
+
+class GameMultiCoin45(Widget) :
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.timer_label = Label(text="Time left: 45 seconds", pos=(300, 700), size=(200, 200), font_size=20)
+        self.add_widget(self.timer_label)
+
+        self.scorep1 = 0
+        self.scorep2 = 0
+
+        self.scorep1_label = Label(text="Score Player 1 : 0", pos=(100, 800), size=(200, 200),font_size=40)
+        self.add_widget(self.scorep1_label)
+
+        self.scorep2_label = Label(text="Score Player 2 : 0", pos=(500, 800), size=(200, 200),font_size=40)
+        self.add_widget(self.scorep2_label)
+
+        self._keyboard = Window.request_keyboard(self._on_keyboard_closed, self)
+        self._keyboard.bind(on_key_down=self._on_key_down)
+        self._keyboard.bind(on_key_up=self._on_key_up)
+        self.pressed_keys = set()
+        Clock.schedule_interval(self.move_step, 0)
+
+        self.keepcoinsound = SoundLoader.load('coinkeep.mp3')
+        if self.keepcoinsound:
+            self.keepcoinsound.volume = 0.7  # ตั้งระดับเสียงเพลงใหม่
+        
+
+        with self.canvas.before:
+            # Set initial size of Image to match Window size
+            self.image = Image(source='GrassMap1.png', size=Window.size, allow_stretch=True, keep_ratio=False)
+            # Bind the size of Image to the Window size
+            Window.bind(size=self.on_window_size)
+
+        # add character hero and coin
+        with self.canvas:
+
+            Line(rectangle=(30, 865, 345, 65), width=2)  # Rectangle around Score Player 1
+            Line(rectangle=(430, 865, 345, 65), width=2)
+            #generate cat charector
+            self.hero = Image(source="character1.png", pos=(250, 250), size=(135, 135))
+
+            #generate monster charector
+            self.monster = Image(source="monster.png", pos=(1700, 250), size=(135, 135))
+
+            #generate coins
+            self.coin1 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
+            self.coin2 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
+            self.coin3 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
         layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), size=(200, 50), pos_hint={'top': 1, 'right': 1})
         self.button_stop_game = Button(text='Stop Game', on_press=self.stop_game, size_hint=(None, None), size=(200, 50))
         layout.add_widget(self.button_stop_game)
@@ -273,7 +324,7 @@ class GameMultiCoin45Screen(Screen):
         
         self.is_game_running = True  # Flag to track the state of the game
         self.schedule = None  # Initialize the schedule variable
- 
+    
     def switch_to_previous_screen(self, instance):
         self.manager.current = 'main_menu'
  
@@ -288,10 +339,10 @@ class GameMultiCoin45Screen(Screen):
         self.popup = Popup(title='Game Over', size_hint=(None, None), size=(400, 200))
             
             # Create buttons for Restart Game and Main Menu
-        restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
+        restart_button = Button(text='Restart Game', size_hint=(None, None), size=(180, 50))
         restart_button.bind(on_press=self.restart_game)
             
-        main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
+        main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(180, 50))
         main_menu_button.bind(on_press=self.switch_to_main_menu)
             
             # Add buttons to a layout
@@ -378,55 +429,6 @@ class GameMultiCoin45Screen(Screen):
         if self.schedule is not None:
             # Unschedule the function responsible for updating the countdown timer
             self.schedule.cancel()
-
-class GameMultiCoin45(Widget) :
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-        self.timer_label = Label(text="Time left: 45 seconds", pos=(300, 700), size=(200, 200), font_size=20)
-        self.add_widget(self.timer_label)
-
-        self.scorep1 = 0
-        self.scorep2 = 0
-
-        self.scorep1_label = Label(text="Score Player 1 : 0", pos=(100, 800), size=(200, 200),font_size=40)
-        self.add_widget(self.scorep1_label)
-
-        self.scorep2_label = Label(text="Score Player 2 : 0", pos=(500, 800), size=(200, 200),font_size=40)
-        self.add_widget(self.scorep2_label)
-
-        self._keyboard = Window.request_keyboard(self._on_keyboard_closed, self)
-        self._keyboard.bind(on_key_down=self._on_key_down)
-        self._keyboard.bind(on_key_up=self._on_key_up)
-        self.pressed_keys = set()
-        Clock.schedule_interval(self.move_step, 0)
-
-        self.keepcoinsound = SoundLoader.load('coinkeep.mp3')
-        if self.keepcoinsound:
-            self.keepcoinsound.volume = 0.7  # ตั้งระดับเสียงเพลงใหม่
-        
-
-        with self.canvas.before:
-            # Set initial size of Image to match Window size
-            self.image = Image(source='GrassMap1.png', size=Window.size, allow_stretch=True, keep_ratio=False)
-            # Bind the size of Image to the Window size
-            Window.bind(size=self.on_window_size)
-
-        # add character hero and coin
-        with self.canvas:
-
-            Line(rectangle=(30, 865, 345, 65), width=2)  # Rectangle around Score Player 1
-            Line(rectangle=(430, 865, 345, 65), width=2)
-            #generate cat charector
-            self.hero = Image(source="character1.png", pos=(250, 250), size=(135, 135))
-
-            #generate monster charector
-            self.monster = Image(source="monster.png", pos=(1700, 250), size=(135, 135))
-
-            #generate coins
-            self.coin1 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
-            self.coin2 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
-            self.coin3 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
 
     def on_window_size(self, instance, value):
         # Update the size of Image when the Window size changes
