@@ -350,28 +350,15 @@ class GameMultiCoin45Screen(Screen):
         if self.is_game_running:  # Check if the game is running
             # Schedule a function to update the countdown timer every second
             self.schedule = Clock.schedule_interval(self.update_timer, 1)
-        if self.is_game_running:  # Check if the game is running
-            # Schedule a function to update the countdown timer every second
-            self.schedule = Clock.schedule_interval(self.update_timer, 1)
  
     def update_timer(self, dt):
-        # Decrement the countdown time if the game is running
-        if self.is_game_running:
-            self.countdown_time -= 1
         # Decrement the countdown time if the game is running
         if self.is_game_running:
             self.countdown_time -= 1
         
             # Update the timer label in your game widget
             self.game_multi_45_widget.timer_label.text = f"Time left: {self.countdown_time} seconds"
-            # Update the timer label in your game widget
-            self.game_multi_45_widget.timer_label.text = f"Time left: {self.countdown_time} seconds"
  
-            if self.countdown_time <= 0:
-                # Stop the countdown timer when time runs out
-                self.stop_countdown()
-                # Switch to the main menu screen
-                self.manager.current = 'main_menu'
             if self.countdown_time <= 0:
                 # Stop the countdown timer when time runs out
                 self.stop_countdown()
