@@ -15,6 +15,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Line
 from kivy.core.audio import SoundLoader
+from kivy.graphics import Color, Rectangle
 
 
 
@@ -263,8 +264,8 @@ class GameMultiCoin45Screen(Screen) :
 
     #ก้อนปุ่มกลับไป main menu เอาไว้เทส 
         layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
-        # self.button1 = Button(text='Back to Menu', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50))
-        # layout.add_widget(self.button1)
+        self.button1 = Button(text='Back to Menu', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50))
+        layout.add_widget(self.button1)
         self.add_widget(layout)
 
     def switch_to_previous_screen(self, instance):
@@ -552,20 +553,50 @@ class CharacterAppP1(Screen):
         background = Image(source='screen6.jpg', allow_stretch=True, keep_ratio=False)
         layout1.add_widget(background)
 
-        # สร้าง Layout แนวตั้ง
-        layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        # สร้าง Layout แนวนอน
+        layout2 = BoxLayout(orientation='horizontal', spacing=300, size_hint=(None, None), pos_hint={'center_x': 0.25, 'center_y': 0.4})
+
+        layout3 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        layout4 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        layout5 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        #layout6 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None))
 
         # สร้างปุ่มแรก
-        self.button1 = Button(text='45 Seconds', on_press=self.change_character_image, size_hint=(None, None), size=(200, 50))
+        self.image = Image(source='character1.png', size_hint=(None, None), size=(250, 250))
+        layout3.add_widget(self.image)
+        self.button1 = Button(text='wakamo', on_press=self.change_character_image, size_hint=(None, None), size=(250, 50))
         self.button1.background_color = get_color_from_hex('#9ec0e4')
-        layout.add_widget(self.button1)
+        layout3.add_widget(self.button1)
 
-        self.back_button = Button(text='Back', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50))
-        self.back_button.background_color = get_color_from_hex('#9ec0e4')
-        layout.add_widget(self.back_button)
+        self.image = Image(source='character1.png', size_hint=(None, None), size=(250, 250))
+        layout4.add_widget(self.image)
+        self.button1 = Button(text='wakamo', on_press=self.change_character_image, size_hint=(None, None), size=(250, 50))
+        self.button1.background_color = get_color_from_hex('#9ec0e4')
+        layout4.add_widget(self.button1)
+
+        self.image = Image(source='character1.png', size_hint=(None, None), size=(250, 250))
+        layout5.add_widget(self.image)
+        self.button1 = Button(text='wakamo', on_press=self.change_character_image, size_hint=(None, None), size=(250, 50))
+        self.button1.background_color = get_color_from_hex('#9ec0e4')
+        layout5.add_widget(self.button1)
+
+        # สร้างปุ่มและระบุตำแหน่งด้วย pos_hint
+        back_button = Button(text='Back', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50), pos_hint={'x': 0.1, 'y': 0.1})
+        back_button.background_color = get_color_from_hex('#9ec0e4')
+        layout1.add_widget(back_button)
+
+        #head line
+        my_label = Label(text='[b]Player 1[/b]', size_hint=(None, None), size=(200, 50), pos_hint={'x': 0.45, 'y': 0.8}, markup=True)
+        my_label.font_size = '70sp'
+        my_label.color = get_color_from_hex('#1e2925')
+        layout1.add_widget(my_label)
+
+        layout2.add_widget(layout3)
+        layout2.add_widget(layout4)
+        layout2.add_widget(layout5)
 
         self.add_widget(layout1)
-        self.add_widget(layout)
+        self.add_widget(layout2)
     
     def on_enter(self):
         '''if self.manager.get_screen('character').sound:
