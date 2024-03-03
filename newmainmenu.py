@@ -106,6 +106,8 @@ class GameSingleCoinScreen(Screen) :
     def __init__(self, **kwargs):
         super(GameSingleCoinScreen, self).__init__(**kwargs)
 
+        self.soundButton = SoundLoader.load('button1.mp3')
+
         layout1 = FloatLayout()
 
         background = Image(source='screen4.jpg', allow_stretch=True, keep_ratio=False)
@@ -137,18 +139,41 @@ class GameSingleCoinScreen(Screen) :
         self.add_widget(layout)
 
 
+    def on_enter(self):
+        if self.manager.get_screen('main_menu').sound:
+            self.manager.get_screen('main_menu').sound.stop()
+        # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
+        self.sound = SoundLoader.load('music2.mp3')
+        if self.sound:
+            self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
+            self.sound.play()
+
+    def on_leave(self):
+        # หยุดการเล่นเพลงเมื่อออกจากหน้า CharacterApp
+        if self.sound:
+            self.sound.stop()
+
     def switch_to_Single15(self, instance):
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
         self.manager.current = 'single15'
 
     def switch_to_Single30(self, instance):
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
         self.manager.current = 'single30'
 
     def switch_to_Single45(self, instance):
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
         self.manager.current = 'single45'
 
     def switch_to_previous_screen(self, instance):
-        self.manager.current = 'main_menu'
-        
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
+        self.sound.stop()
+        self.manager.get_screen('main_menu').sound.play()
+        self.manager.current = 'main_menu'   
 
 
 #Single 15 Mode
