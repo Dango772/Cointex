@@ -525,19 +525,19 @@ class CharacterAppP1(Screen):
         # สร้างปุ่มแรก
         self.image = Image(source='character1.png', size_hint=(None, None), size=(250, 250))
         layout3.add_widget(self.image)
-        self.button1 = Button(text='Wakamo', on_press=self.change_character_image, size_hint=(None, None), size=(250, 50))
+        self.button1 = Button(text='Wakamo', on_press=self.change_character_image1, size_hint=(None, None), size=(250, 50))
         self.button1.background_color = get_color_from_hex('#9ec0e4')
         layout3.add_widget(self.button1)
 
         self.image = Image(source='character3.png', size_hint=(None, None), size=(250, 250))
         layout4.add_widget(self.image)
-        self.button1 = Button(text='Momoi', on_press=self.change_character_image, size_hint=(None, None), size=(250, 50))
+        self.button1 = Button(text='Momoi', on_press=self.change_character_image2, size_hint=(None, None), size=(250, 50))
         self.button1.background_color = get_color_from_hex('#9ec0e4')
         layout4.add_widget(self.button1)
 
         self.image = Image(source='character6.png', size_hint=(None, None), size=(250, 250))
         layout5.add_widget(self.image)
-        self.button1 = Button(text='Yuuka', on_press=self.change_character_image, size_hint=(None, None), size=(250, 50))
+        self.button1 = Button(text='Yuuka', on_press=self.change_character_image3, size_hint=(None, None), size=(250, 50))
         self.button1.background_color = get_color_from_hex('#9ec0e4')
         layout5.add_widget(self.button1)
 
@@ -573,11 +573,23 @@ class CharacterAppP1(Screen):
         if self.sound:
             self.sound.stop()
 
-    def change_character_image(self, instance):
+    def change_character_image1(self, instance):
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
+        # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
+        self.manager.get_screen('multi45').change_character_image("character1.png")
+    
+    def change_character_image2(self, instance):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
         self.soundButton.play() 
         # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
         self.manager.get_screen('multi45').change_character_image("character3.png")
+
+    def change_character_image3(self, instance):
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
+        # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
+        self.manager.get_screen('multi45').change_character_image("character6.png")
 
     def switch_to_previous_screen(self, instance):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
