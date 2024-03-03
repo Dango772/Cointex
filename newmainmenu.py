@@ -262,7 +262,6 @@ class GameMultiCoin45Screen(Screen) :
         self.game_multi_45_widget = GameMultiCoin45()
         self.add_widget(self.game_multi_45_widget)
 
-    #ก้อนปุ่มกลับไป main menu เอาไว้เทส 
         layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
         self.button1 = Button(text='Back to Menu', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50))
         layout.add_widget(self.button1)
@@ -340,44 +339,6 @@ class GameMultiCoin45(Widget) :
             self.coin2 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
             self.coin3 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
 
-            layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
-
-    #         self.button_stop_game = Button(text='Stop Game', on_press=self.stop_game, size_hint=(None, None), size=(200, 50))
-    #         layout.add_widget(self.button_stop_game)
-
-    #         self.add_widget(layout)
-
-    # def stop_game(self, instance):
-    #     # Create a Popup for the player to choose whether to restart the game or go to the main menu
-    #     popup = Popup(title='Game Over', size_hint=(None, None), size=(400, 200))
-        
-    #     # Create buttons for Restart Game and Main Menu
-    #     restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
-    #     restart_button.bind(on_press=self.restart_game)
-        
-    #     main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
-    #     main_menu_button.bind(on_press=self.switch_to_main_menu)
-        
-    #     # Add buttons to a layout
-    #     button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
-    #     button_layout.add_widget(restart_button)
-    #     button_layout.add_widget(main_menu_button)
-        
-    #     # Add the layout to the Popup
-    #     popup.content = button_layout
-        
-    #     # Open the Popup
-    #     popup.open()
- 
-    # def restart_game(self, instance):
-    #     # Close the Popup
-    #     self.manager.current = 'multi45'
- 
-    # def switch_to_main_menu(self, instance):
-    #     # Close the Popup
-      
-    #     # Switch to the main menu screen
-    #     self.manager.current = 'main_menu'
 
     def on_window_size(self, instance, value):
         # Update the size of Image when the Window size changes
