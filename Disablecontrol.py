@@ -258,7 +258,7 @@ class GameMultiCoin30(Widget) :
 class GameMultiCoin45Screen(Screen):
     def __init__(self, **kw):
         super(GameMultiCoin45Screen, self).__init__(**kw)
-        self.game_multi_45_widget = GameMultiCoin45()
+        self.game_multi_45_widget = GameMultiCoin45(screen=self)
         self.add_widget(self.game_multi_45_widget)
  
         # Add a "Stop Game" button
@@ -386,7 +386,7 @@ class GameMultiCoin45(Widget) :
 
         self.timer_label = Label(text="Time left: 45 seconds", pos=(300, 700), size=(200, 200), font_size=20)
         self.add_widget(self.timer_label)
-
+        self.screen = screen
         self.scorep1 = 0
         self.scorep2 = 0
 
