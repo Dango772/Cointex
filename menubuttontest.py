@@ -269,46 +269,64 @@ class GameMultiCoin45Screen(Screen):
         self.button_stop_game = Button(text='Stop Game', on_press=self.stop_game, size_hint=(None, None), size=(200, 50))
         layout.add_widget(self.button_stop_game)
         self.add_widget(layout)
+        
+        self.is_game_running = True  # Flag to track the state of the game
+        self.schedule = None  # Initialize the schedule variable
  
     def switch_to_previous_screen(self, instance):
         self.manager.current = 'main_menu'
  
     def stop_game(self, instance):
-        # Create a Popup for the player to choose whether to restart the game or go to the main menu
-        self.popup = Popup(title='Game Over', size_hint=(None, None), size=(400, 200))
-        
-        # Create buttons for Restart Game and Main Menu
-        restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
-        restart_button.bind(on_press=self.restart_game)
-        
-        main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
-        main_menu_button.bind(on_press=self.switch_to_main_menu)
-        
-        # Add buttons to a layout
-        button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
-        button_layout.add_widget(restart_button)
-        button_layout.add_widget(main_menu_button)
-        
-        # Add the layout to the Popup
-        self.popup.content = button_layout
-        
-        # Open the Popup
-        self.popup.open()
+        if self.is_game_running:  # Check if the game is running
+            # Pause the game
+            self.is_game_running = False
+            # Stop the countdown timer
+            self.stop_countdown()
+            
+            # Create a Popup for the player to choose whether to restart the game or go to the main menu
+            self.popup = Popup(title='Game Over', size_hint=(None, None), size=(400, 200))
+            
+            # Create buttons for Restart Game and Main Menu
+            restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
+            restart_button.bind(on_press=self.restart_game)
+            
+            main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
+            main_menu_button.bind(on_press=self.switch_to_main_menu)
+            
+            # Add buttons to a layout
+            button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
+            button_layout.add_widget(restart_button)
+            button_layout.add_widget(main_menu_button)
+            
+            # Add the layout to the Popup
+            self.popup.content = button_layout
+            
+            # Open the Popup
+            self.popup.open()
  
     def restart_game(self, instance):
-        # Close the Popup
-        instance.parent.parent.dismiss()
-        
-        # Implement any actions needed to restart the game, such as resetting scores, positions, etc.
-        pass
+        if not self.is_game_running:  # Check if the game is paused
+            # Resume the game
+            self.is_game_running = True
+            # Restart the countdown timer
+            self.start_countdown()
+        self.popup.dismiss()
+
+        self.manager.current = 'multi45'
+    
  
     def switch_to_main_menu(self, instance):
-        # Close the Popup
-        
+        if not self.is_game_running:  # Check if the game is paused
+            # Resume the game
+            self.is_game_running = True
+            # Restart the countdown timer
+            self.start_countdown()
       
+        # Close the Popup
+        self.popup.dismiss()
+        
         # Switch to the main menu screen
         self.manager.current = 'main_menu'
-        self.popup.dismiss()
         
 
     def on_pre_enter(self, *args):
@@ -317,28 +335,28 @@ class GameMultiCoin45Screen(Screen):
         self.start_countdown()
  
     def start_countdown(self):
-        # Schedule a function to update the countdown timer every second
-        self.schedule = Clock.schedule_interval(self.update_timer, 1)
+        if self.is_game_running:  # Check if the game is running
+            # Schedule a function to update the countdown timer every second
+            self.schedule = Clock.schedule_interval(self.update_timer, 1)
  
     def update_timer(self, dt):
-        # Decrement the countdown time
-        self.countdown_time -= 1
+        # Decrement the countdown time if the game is running
+        if self.is_game_running:
+            self.countdown_time -= 1
         
-        # Update the timer label in your game widget
-        self.game_multi_45_widget.timer_label.text = f"Time left: {self.countdown_time} seconds"
+            # Update the timer label in your game widget
+            self.game_multi_45_widget.timer_label.text = f"Time left: {self.countdown_time} seconds"
  
-        if self.countdown_time <= 0:
-            # Stop the countdown timer when time runs out
-            self.stop_countdown()
-            # Switch to the main menu screen
-            self.manager.current = 'main_menu'
+            if self.countdown_time <= 0:
+                # Stop the countdown timer when time runs out
+                self.stop_countdown()
+                # Switch to the main menu screen
+                self.manager.current = 'main_menu'
  
     def stop_countdown(self):
-        # Unschedule the function responsible for updating the countdown timer
-        Clock.unschedule(self.schedule)
-
-
-
+        if self.schedule is not None:
+            # Unschedule the function responsible for updating the countdown timer
+            self.schedule.cancel()
 
 class GameMultiCoin45(Widget) :
     def __init__(self, **kwargs):
