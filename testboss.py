@@ -47,7 +47,7 @@ class MainMenu(Screen):
 
         layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
 
-        self.image = Image(source='fixcharacter.png', size_hint=(None, None), size=(200, 200))
+        self.image = Image(source='alice-aris.gif', size_hint=(None, None), size=(200, 200))
         layout.add_widget(self.image)
 
         self.single_button = Button(text='Single Player', on_press=self.switch_to_Single,size_hint=(None, None), size=(200, 50))
@@ -285,25 +285,25 @@ class GameMultiCoin45Screen(Screen):
             self.stop_countdown()
             
             # Create a Popup for the player to choose whether to restart the game or go to the main menu
-            self.popup = Popup(title='Game Over', size_hint=(None, None), size=(400, 200))
+        self.popup = Popup(title='Game Over', size_hint=(None, None), size=(400, 200))
             
             # Create buttons for Restart Game and Main Menu
-            restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
-            restart_button.bind(on_press=self.restart_game)
+        restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
+        restart_button.bind(on_press=self.restart_game)
             
-            main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
-            main_menu_button.bind(on_press=self.switch_to_main_menu)
+        main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
+        main_menu_button.bind(on_press=self.switch_to_main_menu)
             
             # Add buttons to a layout
-            button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
-            button_layout.add_widget(restart_button)
-            button_layout.add_widget(main_menu_button)
+        button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
+        button_layout.add_widget(restart_button)
+        button_layout.add_widget(main_menu_button)
             
             # Add the layout to the Popup
-            self.popup.content = button_layout
+        self.popup.content = button_layout
             
             # Open the Popup
-            self.popup.open()
+        self.popup.open()
  
     def restart_game(self, instance):
         if not self.is_game_running:  # Check if the game is paused
@@ -311,7 +311,18 @@ class GameMultiCoin45Screen(Screen):
             self.is_game_running = True
             # Restart the countdown timer
             self.start_countdown()
+
         self.popup.dismiss()
+        self.game_multi_45_widget.hero.pos = (250,250)
+        self.game_multi_45_widget.monster.pos = (1700,250)
+
+        self.game_multi_45_widget.scorep1 = 0
+        self.game_multi_45_widget.scorep1_label.text = "Score Player 1 : 0"
+        self.game_multi_45_widget.scorep2 = 0
+        self.game_multi_45_widget.scorep2_label.text = "Score Player 2 : 0"
+
+        self.game_multi_45_widget.timer_label.text = "Time left: 45 seconds"
+        self.countdown_time = 45
 
         self.manager.current = 'multi45'
     
@@ -320,19 +331,20 @@ class GameMultiCoin45Screen(Screen):
         if not self.is_game_running:  # Check if the game is paused
             # Resume the game
             self.is_game_running = True
-            # Restart the countdown timer
-            self.start_countdown()
-      
-        if not self.is_game_running:  # Check if the game is paused
-            # Resume the game
-            self.is_game_running = True
-            # Restart the countdown timer
-            self.start_countdown()
       
         # Close the Popup
         self.popup.dismiss()
-        
-        self.popup.dismiss()
+        self.game_multi_45_widget.hero.pos = (250,250)
+        self.game_multi_45_widget.monster.pos = (1700,250)
+
+        self.game_multi_45_widget.scorep1 = 0
+        self.game_multi_45_widget.scorep1_label.text = "Score Player 1 : 0"
+        self.game_multi_45_widget.scorep2 = 0
+        self.game_multi_45_widget.scorep2_label.text = "Score Player 2 : 0"
+
+        self.game_multi_45_widget.timer_label.text = "Time left: 45 seconds"
+        self.countdown_time = 45
+    
         
         # Switch to the main menu screen
         self.manager.current = 'main_menu'
@@ -416,17 +428,6 @@ class GameMultiCoin45(Widget) :
             self.coin2 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
             self.coin3 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
 
-            layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
-
-            self.button1 = Button(text='Menu', on_press=self.pause_menu, size_hint=(None, None), size=(200, 50))
-            layout.add_widget(self.button1)
-
-            self.add_widget(layout)
-
-    def pause_menu(self,instance) :
-        self.popup = Popup(title='Test popup',content=Label(text='Hello world'),size_hint=(None, None), size=(400, 400))
-        return self.popup
-
     def on_window_size(self, instance, value):
         # Update the size of Image when the Window size changes
         self.image.size = (value[0], value[0]/2.5)
@@ -444,7 +445,7 @@ class GameMultiCoin45(Widget) :
         if text in self.pressed_keys:
             self.pressed_keys.remove(text)
 
-    def move_step(self, dt):
+    def move_step(self, dt):        
         cur_x1 = self.hero.pos[0]
         cur_y1 = self.hero.pos[1]
         step1 = 500 * dt
