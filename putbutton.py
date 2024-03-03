@@ -367,24 +367,37 @@ class GameMultiCoin45Screen(Screen):
         
             # Update the timer label in your game widget
             self.game_multi_45_widget.timer_label.text = f"Time left: {self.countdown_time} seconds"
- 
+            
+            #fix
             if self.countdown_time <= 0:
                 # Stop the countdown timer when time runs out
                 self.stop_countdown()
                 # Switch to the main menu screen
                 self.show_timeout_popup()
                 
-                
+    #fix            
     def show_timeout_popup(self):
-        # Create a Popup for timeout
-        timeout_popup = Popup(title='Timeout',
-                              content=Label(text='Time is up!'),
-                              size_hint=(None, None), size=(400, 200))
-        # Add a button to dismiss the popup
-        dismiss_button = Button(text='OK', size_hint=(None, None), size=(150, 50))
-        dismiss_button.bind(on_press=timeout_popup.dismiss)
-        timeout_popup.content.add_widget(dismiss_button)
+    # Create a Popup for timeout
+     timeout_popup = Popup(title='Timeout',
+                          size_hint=(None, None), size=(400, 200))
 
+    # Create a layout to hold the label and button
+     layout = BoxLayout(orientation='vertical')
+
+    # Add a label with the timeout message to the layout
+     timeout_label = Label(text='Time is up!')
+     layout.add_widget(timeout_label)
+
+    # Add a button to dismiss the popup to the layout
+     dismiss_button = Button(text='OK', size_hint=(None, None), size=(150, 50))
+     dismiss_button.bind(on_press=timeout_popup.dismiss)
+     layout.add_widget(dismiss_button)
+
+    # Set the layout as the content of the popup
+     timeout_popup.content = layout
+
+    # Open the popup
+     timeout_popup.open()
 
 
 
