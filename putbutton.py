@@ -389,9 +389,11 @@ class GameMultiCoin45Screen(Screen):
      layout.add_widget(timeout_label)
 
     # Add a button to dismiss the popup to the layout
-     dismiss_button = Button(text='OK', size_hint=(None, None), size=(150, 50))
-     dismiss_button.bind(on_press=timeout_popup.dismiss)
-     layout.add_widget(dismiss_button)
+     restart_button = Button(text='Restart Game', size_hint=(None, None), size=(180, 50))
+     restart_button.bind(on_press=self.restart_game)
+            
+     main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(180, 50))
+     main_menu_button.bind(on_press=self.switch_to_main_menu)
 
     # Set the layout as the content of the popup
      timeout_popup.content = layout
