@@ -285,13 +285,13 @@ class GameMultiCoin45Screen(Screen):
             self.stop_countdown()
             
             # Create a Popup for the player to choose whether to restart the game or go to the main menu
-        self.popup = Popup(title='Game Over', size_hint=(None, None), size=(400, 200))
+        self.popup = Popup(title='Pause Game', size_hint=(None, None), size=(400, 200))
             
             # Create buttons for Restart Game and Main Menu
-        restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
+        restart_button = Button(text='Restart Game', size_hint=(None, None), size=(180, 50))
         restart_button.bind(on_press=self.restart_game)
             
-        main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
+        main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(180, 50))
         main_menu_button.bind(on_press=self.switch_to_main_menu)
             
             # Add buttons to a layout
