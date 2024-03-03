@@ -515,7 +515,7 @@ class CharacterAppP1(Screen):
         layout1.add_widget(background)
 
         # สร้าง Layout แนวนอน
-        layout2 = BoxLayout(orientation='horizontal', spacing=300, size_hint=(None, None), pos_hint={'center_x': 0.25, 'center_y': 0.4})
+        layout2 = BoxLayout(orientation='horizontal', spacing=300, size_hint=(None, None), pos_hint={'center_x': 0.25, 'center_y': 0.35})
 
         layout3 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
         layout4 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
@@ -525,19 +525,19 @@ class CharacterAppP1(Screen):
         # สร้างปุ่มแรก
         self.image = Image(source='character1.png', size_hint=(None, None), size=(250, 250))
         layout3.add_widget(self.image)
-        self.button1 = Button(text='wakamo', on_press=self.change_character_image, size_hint=(None, None), size=(250, 50))
+        self.button1 = Button(text='Wakamo', on_press=self.change_character_image, size_hint=(None, None), size=(250, 50))
         self.button1.background_color = get_color_from_hex('#9ec0e4')
         layout3.add_widget(self.button1)
 
-        self.image = Image(source='character1.png', size_hint=(None, None), size=(250, 250))
+        self.image = Image(source='character3.png', size_hint=(None, None), size=(250, 250))
         layout4.add_widget(self.image)
-        self.button1 = Button(text='wakamo', on_press=self.change_character_image, size_hint=(None, None), size=(250, 50))
+        self.button1 = Button(text='Momoi', on_press=self.change_character_image, size_hint=(None, None), size=(250, 50))
         self.button1.background_color = get_color_from_hex('#9ec0e4')
         layout4.add_widget(self.button1)
 
-        self.image = Image(source='character1.png', size_hint=(None, None), size=(250, 250))
+        self.image = Image(source='character6.png', size_hint=(None, None), size=(250, 250))
         layout5.add_widget(self.image)
-        self.button1 = Button(text='wakamo', on_press=self.change_character_image, size_hint=(None, None), size=(250, 50))
+        self.button1 = Button(text='Yuuka', on_press=self.change_character_image, size_hint=(None, None), size=(250, 50))
         self.button1.background_color = get_color_from_hex('#9ec0e4')
         layout5.add_widget(self.button1)
 
