@@ -262,8 +262,8 @@ class GameMultiCoin45Screen(Screen):
         self.add_widget(self.game_multi_45_widget)
  
         # Add a "Stop Game" button
-        layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), size=(200, 50), pos_hint={'top': 1, 'right': 1})
-        self.button_stop_game = Button(text='Stop Game', on_press=self.stop_game, size_hint=(None, None), size=(200, 50))
+        layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), size=(200, 50), pos_hint={'top': 0.95, 'right': 1})
+        self.button_stop_game = Button(text='Stop Game', on_press=self.stop_game, size_hint=(None, None), size=(180, 50))
         layout.add_widget(self.button_stop_game)
         self.add_widget(layout)
         
@@ -285,7 +285,7 @@ class GameMultiCoin45Screen(Screen):
             self.stop_countdown()
             
             # Create a Popup for the player to choose whether to restart the game or go to the main menu
-        self.popup = Popup(title='Game Over', size_hint=(None, None), size=(400, 200))
+        self.popup = Popup(title='Game Over', size_hint=(None, None), size=(450, 200))
             
             # Create buttons for Restart Game and Main Menu
         restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
@@ -372,7 +372,7 @@ class GameMultiCoin45Screen(Screen):
                 # Stop the countdown timer when time runs out
                 self.stop_countdown()
                 # Switch to the main menu screen
-                self.manager.current = 'main_menu'
+                # self.manager.current = 'main_menu'
  
     def stop_countdown(self):
         if self.schedule is not None:
@@ -408,7 +408,8 @@ class GameMultiCoin45(Widget) :
 
         with self.canvas.before:
             # Set initial size of Image to match Window size
-            self.image = Image(source='GrassMap1.png', size=Window.size, allow_stretch=True, keep_ratio=False)
+            self.pika = Image(source='bluescreen0.jpg', size=Window.size, allow_stretch=True, keep_ratio=False)
+            self.image = Image(source = 'GrassMap1.png',size = Window.size,allow_stretch=True, keep_ratio=False)
             # Bind the size of Image to the Window size
             Window.bind(size=self.on_window_size)
 
@@ -431,6 +432,8 @@ class GameMultiCoin45(Widget) :
     def on_window_size(self, instance, value):
         # Update the size of Image when the Window size changes
         self.image.size = (value[0], value[0]/2.5)
+        self.pika.size = (value[0], value[0]/1.5)
+
 
     def _on_keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_key_down)
@@ -519,6 +522,21 @@ class GameMultiCoin45(Widget) :
                 
             self.scorep2 += 1
             self.scorep2_label.text = "Score Player 2 : " + str(self.scorep2)
+
+    #     if self.timer_seconds == 0 :
+    #         self.display_time_out_message(self.scorep1,self.scorep2)  
+
+    # def display_time_out_message(self,scp1,scp2):
+    #     content = Label(text="Time Out", font_size=30)
+    #     if scp1 > scp2 :
+    #         popup = Popup(title='Player 1 WIN !!!', content=content, size_hint=(None, None), size=(400, 200))
+    #     elif scp1 < scp2 :
+    #         popup = Popup(title='Player 2 WIN !!!', content=content, size_hint=(None, None), size=(400, 200))
+    #     else :
+    #         popup = Popup(title='Try again to find a BEST PLAYER !!!', content=content, size_hint=(None, None), size=(400, 200))
+    #     popup.open()   
+
+
 
     def change_character_image(self, new_image_source):
         # ดำเนินการเปลี่ยนรูปภาพตัวละคร
