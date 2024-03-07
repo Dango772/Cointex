@@ -15,9 +15,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Line
 from kivy.core.audio import SoundLoader
-from kivy.graphics import Color, Rectangle
 
-
+from kivy.uix.popup import Popup #ใช้สำหรับปุ่มหยุดเกม
 
 #Check collides
 def collides(rect1, rect2):
@@ -106,8 +105,6 @@ class GameSingleCoinScreen(Screen) :
     def __init__(self, **kwargs):
         super(GameSingleCoinScreen, self).__init__(**kwargs)
 
-        self.soundButton = SoundLoader.load('button1.mp3')
-
         layout1 = FloatLayout()
 
         background = Image(source='screen4.jpg', allow_stretch=True, keep_ratio=False)
@@ -139,41 +136,18 @@ class GameSingleCoinScreen(Screen) :
         self.add_widget(layout)
 
 
-    def on_enter(self):
-        if self.manager.get_screen('main_menu').sound:
-            self.manager.get_screen('main_menu').sound.stop()
-        # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
-        self.sound = SoundLoader.load('music2.mp3')
-        if self.sound:
-            self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
-            self.sound.play()
-
-    def on_leave(self):
-        # หยุดการเล่นเพลงเมื่อออกจากหน้า CharacterApp
-        if self.sound:
-            self.sound.stop()
-
     def switch_to_Single15(self, instance):
-        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
-        self.soundButton.play() 
         self.manager.current = 'single15'
 
     def switch_to_Single30(self, instance):
-        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
-        self.soundButton.play() 
         self.manager.current = 'single30'
 
     def switch_to_Single45(self, instance):
-        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
-        self.soundButton.play() 
         self.manager.current = 'single45'
 
     def switch_to_previous_screen(self, instance):
-        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
-        self.soundButton.play() 
-        self.sound.stop()
-        self.manager.get_screen('main_menu').sound.play()
-        self.manager.current = 'main_menu'   
+        self.manager.current = 'main_menu'
+        
 
 
 #Single 15 Mode
@@ -213,8 +187,6 @@ class GameMultiCoinScreen(Screen) :
     def __init__(self, **kwargs):
         super(GameMultiCoinScreen, self).__init__(**kwargs)
 
-        self.soundButton = SoundLoader.load('button1.mp3')
-
         layout1 = FloatLayout()
 
         background = Image(source='screen4.jpg', allow_stretch=True, keep_ratio=False)
@@ -246,41 +218,19 @@ class GameMultiCoinScreen(Screen) :
         self.add_widget(layout1)
         self.add_widget(layout)
 
-    def on_enter(self):
-        if self.manager.get_screen('main_menu').sound:
-            self.manager.get_screen('main_menu').sound.stop()
-        # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
-        self.sound = SoundLoader.load('music2.mp3')
-        if self.sound:
-            self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
-            self.sound.play()
-
-    def on_leave(self):
-        # หยุดการเล่นเพลงเมื่อออกจากหน้า CharacterApp
-        if self.sound:
-            self.sound.stop()
 
     def switch_to_Multi15(self, instance):
-        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
-        self.soundButton.play() 
         self.manager.current = 'multi15'
 
     def switch_to_Multi30(self, instance):
-        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
-        self.soundButton.play() 
         self.manager.current = 'multi30'
 
     def switch_to_Multi45(self, instance):
-        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
-        self.soundButton.play() 
         self.manager.current = 'multi45'
 
     def switch_to_previous_screen(self, instance):
-        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
-        self.soundButton.play() 
-        self.sound.stop()
-        self.manager.get_screen('main_menu').sound.play()
-        self.manager.current = 'main_menu'   
+        self.manager.current = 'main_menu'
+        pass 
 
 #Multi 15 Mode
 class GameMultiCoin15Screen(Screen) :
@@ -305,42 +255,159 @@ class GameMultiCoin30(Widget) :
     pass
 
 #Multi 45 Mode
-class GameMultiCoin45Screen(Screen) :
+class GameMultiCoin45Screen(Screen):
     def __init__(self, **kw):
         super(GameMultiCoin45Screen, self).__init__(**kw)
         self.game_multi_45_widget = GameMultiCoin45()
         self.add_widget(self.game_multi_45_widget)
-
-        layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
-        self.button1 = Button(text='Back to Menu', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50))
-        layout.add_widget(self.button1)
+ 
+        # Add a "Stop Game" button
+        layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), size=(200, 50), pos_hint={'top': 1, 'right': 1})
+        self.button_stop_game = Button(text='Stop Game', on_press=self.stop_game, size_hint=(None, None), size=(200, 50))
+        layout.add_widget(self.button_stop_game)
         self.add_widget(layout)
-
+        
+        self.is_game_running = True  # Flag to track the state of the game
+        self.schedule = None  # Initialize the schedule variable
+ 
+        
+        self.is_game_running = True  # Flag to track the state of the game
+        self.schedule = None  # Initialize the schedule variable
+ 
     def switch_to_previous_screen(self, instance):
         self.manager.current = 'main_menu'
+ 
+    def stop_game(self, instance):
+        if self.is_game_running:  # Check if the game is running
+            # Pause the game
+            self.is_game_running = False
+            # Stop the countdown timer
+            self.stop_countdown()
+            
+            # Create a Popup for the player to choose whether to restart the game or go to the main menu
+        self.popup = Popup(title='Pause Game', size_hint=(None, None), size=(400, 200))
+            
+            # Create buttons for Restart Game and Main Menu
+        restart_button = Button(text='Restart Game', size_hint=(None, None), size=(180, 50))
+        restart_button.bind(on_press=self.restart_game)
+            
+        main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(180, 50))
+        main_menu_button.bind(on_press=self.switch_to_main_menu)
+            
+            # Add buttons to a layout
+        button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
+        button_layout.add_widget(restart_button)
+        button_layout.add_widget(main_menu_button)
+            
+            # Add the layout to the Popup
+        self.popup.content = button_layout
+            
+            # Open the Popup
+        self.popup.open()
+ 
+    def restart_game(self, instance):
+        if not self.is_game_running:  # Check if the game is paused
+            # Resume the game
+            self.is_game_running = True
+            # Restart the countdown timer
+            self.start_countdown()
+
+        self.popup.dismiss()
+        self.game_multi_45_widget.hero.pos = (250,250)
+        self.game_multi_45_widget.monster.pos = (1700,250)
+
+        self.game_multi_45_widget.scorep1 = 0
+        self.game_multi_45_widget.scorep1_label.text = "Score Player 1 : 0"
+        self.game_multi_45_widget.scorep2 = 0
+        self.game_multi_45_widget.scorep2_label.text = "Score Player 2 : 0"
+
+        self.game_multi_45_widget.timer_label.text = "Time left: 45 seconds"
+        self.countdown_time = 45
+
+        self.manager.current = 'multi45'
+    
+ 
+    def switch_to_main_menu(self, instance):
+        if not self.is_game_running:  # Check if the game is paused
+            # Resume the game
+            self.is_game_running = True
+      
+        # Close the Popup
+        self.popup.dismiss()
+        self.game_multi_45_widget.hero.pos = (250,250)
+        self.game_multi_45_widget.monster.pos = (1700,250)
+
+        self.game_multi_45_widget.scorep1 = 0
+        self.game_multi_45_widget.scorep1_label.text = "Score Player 1 : 0"
+        self.game_multi_45_widget.scorep2 = 0
+        self.game_multi_45_widget.scorep2_label.text = "Score Player 2 : 0"
+
+        self.game_multi_45_widget.timer_label.text = "Time left: 45 seconds"
+        self.countdown_time = 45
+    
+        
+        # Switch to the main menu screen
+        self.manager.current = 'main_menu'
+        
 
     def on_pre_enter(self, *args):
-        # เริ่มต้นนับถอยหลังเมื่อเข้าหน้าจอ
-        self.countdown_time = 45  # ระบุเวลาถอยหลังในวินาที
-        self.schedule = Clock.schedule_interval(self.update_timer, 1)
-
-    def on_pre_leave(self, *args):
-        # หยุดนับถอยหลังเมื่อออกจากหน้าจอ
-        Clock.unschedule(self.schedule)
-
+        # Start the countdown timer when entering the screen
+        self.countdown_time = 45  # Set the countdown time in seconds
+        self.start_countdown()
+ 
+    def start_countdown(self):
+        if self.is_game_running:  # Check if the game is running
+            # Schedule a function to update the countdown timer every second
+            self.schedule = Clock.schedule_interval(self.update_timer, 1)
+ 
     def update_timer(self, dt):
-        self.countdown_time -= 1
-        self.game_multi_45_widget.timer_label.text = f"Time left: {self.countdown_time} seconds"
+        # Decrement the countdown time if the game is running
+        if self.is_game_running:
+            self.countdown_time -= 1
+        
+            # Update the timer label in your game widget
+            self.game_multi_45_widget.timer_label.text = f"Time left: {self.countdown_time} seconds"
+            
+            #fix
+            if self.countdown_time <= 0:
+                # Stop the countdown timer when time runs out
+                self.stop_countdown()
+                # Switch to the main menu screen
+                self.show_timeout_popup()
+                
+    #fix            
+    def show_timeout_popup(self):
+    # Create a Popup for timeout
+     timeout_popup = Popup(title='Timeout',
+                          size_hint=(None, None), size=(400, 200))
 
-        if self.countdown_time <= 0:
-            self.manager.current = 'main_menu'
+    # Create a layout to hold the label and button
+     layout = BoxLayout(orientation='vertical')
 
-    def change_character_imageP1(self, new_image_source):
-        # ดำเนินการเปลี่ยนรูปภาพตัวละครตามข้อมูลที่รับมา
-        self.game_multi_45_widget.change_character_imageP1(new_image_source)
-    def change_character_imageP2(self, new_image_source):
-        # ดำเนินการเปลี่ยนรูปภาพตัวละครตามข้อมูลที่รับมา
-        self.game_multi_45_widget.change_character_imageP2(new_image_source)  
+    # Add a label with the timeout message to the layout
+     timeout_label = Label(text='Time is up!')
+     layout.add_widget(timeout_label)
+
+    # Add a button to dismiss the popup to the layout
+     restart_button = Button(text='Restart Game', size_hint=(None, None), size=(180, 50))
+     restart_button.bind(on_press=self.restart_game)
+            
+     main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(180, 50))
+     main_menu_button.bind(on_press=self.switch_to_main_menu)
+
+    # Set the layout as the content of the popup
+     timeout_popup.content = layout
+
+    # Open the popup
+     timeout_popup.open()
+
+
+
+
+    def stop_countdown(self):
+        if self.schedule is not None:
+            # Unschedule the function responsible for updating the countdown timer
+            self.schedule.cancel()
 
 class GameMultiCoin45(Widget) :
     def __init__(self, **kwargs):
@@ -381,16 +448,15 @@ class GameMultiCoin45(Widget) :
             Line(rectangle=(30, 865, 345, 65), width=2)  # Rectangle around Score Player 1
             Line(rectangle=(430, 865, 345, 65), width=2)
             #generate cat charector
-            self.hero = Image(source="character1.png", pos=(250, 250), size=(140, 140))
+            self.hero = Image(source="character1.png", pos=(250, 250), size=(135, 135))
 
             #generate monster charector
-            self.monster = Image(source="character2.png", pos=(1700, 250), size=(140, 140))
+            self.monster = Image(source="monster.png", pos=(1700, 250), size=(135, 135))
 
             #generate coins
             self.coin1 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
             self.coin2 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
             self.coin3 = Image(source="coin1.png", pos=(random.randint(0, 700), random.randint(0, 700)), size=(40, 40))
-
 
     def on_window_size(self, instance, value):
         # Update the size of Image when the Window size changes
@@ -409,7 +475,7 @@ class GameMultiCoin45(Widget) :
         if text in self.pressed_keys:
             self.pressed_keys.remove(text)
 
-    def move_step(self, dt):
+    def move_step(self, dt):        
         cur_x1 = self.hero.pos[0]
         cur_y1 = self.hero.pos[1]
         step1 = 500 * dt
@@ -484,12 +550,9 @@ class GameMultiCoin45(Widget) :
             self.scorep2 += 1
             self.scorep2_label.text = "Score Player 2 : " + str(self.scorep2)
 
-    def change_character_imageP1(self, new_image_source):
+    def change_character_image(self, new_image_source):
         # ดำเนินการเปลี่ยนรูปภาพตัวละคร
         self.hero.source = new_image_source  # สมมติว่าตัวละครมีชื่อว่า "hero"
-    def change_character_imageP2(self, new_image_source):
-        # ดำเนินการเปลี่ยนรูปภาพตัวละคร
-        self.monster.source = new_image_source  # สมมติว่าตัวละครมีชื่อว่า "monster"
 
        
 
@@ -569,50 +632,20 @@ class CharacterAppP1(Screen):
         background = Image(source='screen6.jpg', allow_stretch=True, keep_ratio=False)
         layout1.add_widget(background)
 
-        # สร้าง Layout แนวนอน
-        layout2 = BoxLayout(orientation='horizontal', spacing=300, size_hint=(None, None), pos_hint={'center_x': 0.25, 'center_y': 0.35})
-
-        layout3 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
-        layout4 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
-        layout5 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
-        #layout6 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None))
+        # สร้าง Layout แนวตั้ง
+        layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
 
         # สร้างปุ่มแรก
-        self.image = Image(source='character1.png', size_hint=(None, None), size=(250, 250))
-        layout3.add_widget(self.image)
-        self.button1 = Button(text='Wakamo', on_press=self.change_character_image1, size_hint=(None, None), size=(250, 50))
+        self.button1 = Button(text='45 Seconds', on_press=self.change_character_image, size_hint=(None, None), size=(200, 50))
         self.button1.background_color = get_color_from_hex('#9ec0e4')
-        layout3.add_widget(self.button1)
+        layout.add_widget(self.button1)
 
-        self.image = Image(source='character3.png', size_hint=(None, None), size=(250, 250))
-        layout4.add_widget(self.image)
-        self.button1 = Button(text='Momoi', on_press=self.change_character_image2, size_hint=(None, None), size=(250, 50))
-        self.button1.background_color = get_color_from_hex('#9ec0e4')
-        layout4.add_widget(self.button1)
-
-        self.image = Image(source='character6.png', size_hint=(None, None), size=(250, 250))
-        layout5.add_widget(self.image)
-        self.button1 = Button(text='Yuuka', on_press=self.change_character_image3, size_hint=(None, None), size=(250, 50))
-        self.button1.background_color = get_color_from_hex('#9ec0e4')
-        layout5.add_widget(self.button1)
-
-        # สร้างปุ่มและระบุตำแหน่งด้วย pos_hint
-        back_button = Button(text='Back', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50), pos_hint={'x': 0.1, 'y': 0.1})
-        back_button.background_color = get_color_from_hex('#9ec0e4')
-        layout1.add_widget(back_button)
-
-        #head line
-        my_label = Label(text='[b]Player 1[/b]', size_hint=(None, None), size=(200, 50), pos_hint={'x': 0.45, 'y': 0.8}, markup=True)
-        my_label.font_size = '70sp'
-        my_label.color = get_color_from_hex('#1e2925')
-        layout1.add_widget(my_label)
-
-        layout2.add_widget(layout3)
-        layout2.add_widget(layout4)
-        layout2.add_widget(layout5)
+        self.back_button = Button(text='Back', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50))
+        self.back_button.background_color = get_color_from_hex('#9ec0e4')
+        layout.add_widget(self.back_button)
 
         self.add_widget(layout1)
-        self.add_widget(layout2)
+        self.add_widget(layout)
     
     def on_enter(self):
         '''if self.manager.get_screen('character').sound:
@@ -628,23 +661,9 @@ class CharacterAppP1(Screen):
         if self.sound:
             self.sound.stop()
 
-    def change_character_image1(self, instance):
-        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
-        self.soundButton.play() 
+    def change_character_image(self, instance):
         # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
-        self.manager.get_screen('multi45').change_character_imageP1("character1.png")
-    
-    def change_character_image2(self, instance):
-        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
-        self.soundButton.play() 
-        # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
-        self.manager.get_screen('multi45').change_character_imageP1("character3.png")
-
-    def change_character_image3(self, instance):
-        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
-        self.soundButton.play() 
-        # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
-        self.manager.get_screen('multi45').change_character_imageP1("character6.png")
+        self.manager.get_screen('multi45').change_character_image("character3.png")
 
     def switch_to_previous_screen(self, instance):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
@@ -663,50 +682,20 @@ class CharacterAppP2(Screen):
         background = Image(source='screen7.jpg', allow_stretch=True, keep_ratio=False)
         layout1.add_widget(background)
 
-        # สร้าง Layout แนวนอน
-        layout2 = BoxLayout(orientation='horizontal', spacing=300, size_hint=(None, None), pos_hint={'center_x': 0.25, 'center_y': 0.35})
-
-        layout3 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
-        layout4 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
-        layout5 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
-        #layout6 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None))
+        # สร้าง Layout แนวตั้ง
+        layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
 
         # สร้างปุ่มแรก
-        self.image = Image(source='character2.png', size_hint=(None, None), size=(250, 250))
-        layout3.add_widget(self.image)
-        self.button1 = Button(text='Arisu', on_press=self.change_character_image1, size_hint=(None, None), size=(250, 50))
+        self.button1 = Button(text='45 Seconds', on_press=self.change_character_image, size_hint=(None, None), size=(200, 50))
         self.button1.background_color = get_color_from_hex('#9ec0e4')
-        layout3.add_widget(self.button1)
+        layout.add_widget(self.button1)
 
-        self.image = Image(source='character4.png', size_hint=(None, None), size=(250, 250))
-        layout4.add_widget(self.image)
-        self.button1 = Button(text='Midori', on_press=self.change_character_image2, size_hint=(None, None), size=(250, 50))
-        self.button1.background_color = get_color_from_hex('#9ec0e4')
-        layout4.add_widget(self.button1)
-
-        self.image = Image(source='character5.png', size_hint=(None, None), size=(250, 250))
-        layout5.add_widget(self.image)
-        self.button1 = Button(text='Yuzu', on_press=self.change_character_image3, size_hint=(None, None), size=(250, 50))
-        self.button1.background_color = get_color_from_hex('#9ec0e4')
-        layout5.add_widget(self.button1)
-
-        # สร้างปุ่มและระบุตำแหน่งด้วย pos_hint
-        back_button = Button(text='Back', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50), pos_hint={'x': 0.1, 'y': 0.1})
-        back_button.background_color = get_color_from_hex('#9ec0e4')
-        layout1.add_widget(back_button)
-
-        #head line
-        my_label = Label(text='[b]Player 2[/b]', size_hint=(None, None), size=(200, 50), pos_hint={'x': 0.45, 'y': 0.8}, markup=True)
-        my_label.font_size = '70sp'
-        my_label.color = get_color_from_hex('#1e2925')
-        layout1.add_widget(my_label)
-
-        layout2.add_widget(layout3)
-        layout2.add_widget(layout4)
-        layout2.add_widget(layout5)
+        self.back_button = Button(text='Back', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50))
+        self.back_button.background_color = get_color_from_hex('#9ec0e4')
+        layout.add_widget(self.back_button)
 
         self.add_widget(layout1)
-        self.add_widget(layout2)
+        self.add_widget(layout)
     
     def on_enter(self):
         '''if self.manager.get_screen('character').sound:
@@ -722,23 +711,9 @@ class CharacterAppP2(Screen):
         if self.sound:
             self.sound.stop()
 
-    def change_character_image1(self, instance):
-        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
-        self.soundButton.play() 
+    def change_character_image(self, instance):
         # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
-        self.manager.get_screen('multi45').change_character_imageP2("character2.png")
-    
-    def change_character_image2(self, instance):
-        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
-        self.soundButton.play() 
-        # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
-        self.manager.get_screen('multi45').change_character_imageP2("character4.png")
-
-    def change_character_image3(self, instance):
-        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
-        self.soundButton.play() 
-        # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
-        self.manager.get_screen('multi45').change_character_imageP2("character5.png")
+        self.manager.get_screen('multi45').change_character_image("character3.png")
 
     def switch_to_previous_screen(self, instance):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
