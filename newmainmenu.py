@@ -346,10 +346,38 @@ class GameMultiCoin45Screen(Screen) :
         button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
         button_layout.add_widget(restart_button)
         button_layout.add_widget(main_menu_button)
-        
         # Add the layout to the Popup
         self.popup.content = button_layout
+        # Open the Popup
+        self.popup.open()
+
+    def stop_gamep1win(self, instance):
+     if self.is_game_running:  # Check if the game is running
+        # Pause the game
+        self.is_game_running = False
+        # Stop the countdown timer
+        self.stop_countdown()
+
+        # Remove keyboard bindings to stop character movement
+        self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
+        self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
         
+        # Create a Popup for the player to choose whether to restart the game or go to the main menu
+        self.popup = Popup(title='Player1 Win!!!', size_hint=(None, None), size=(450, 200))
+        
+        # Create buttons for Restart Game and Main Menu
+        restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
+        restart_button.bind(on_press=self.restart_game)
+        
+        main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
+        main_menu_button.bind(on_press=self.switch_to_main_menu)
+        
+        # Add buttons to a layout
+        button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
+        button_layout.add_widget(restart_button)
+        button_layout.add_widget(main_menu_button)
+        # Add the layout to the Popup
+        self.popup.content = button_layout
         # Open the Popup
         self.popup.open()
 
@@ -416,6 +444,9 @@ class GameMultiCoin45Screen(Screen) :
         Clock.unschedule(self.schedule)
 
     def update_timer(self, dt):
+        #เรียกใช้ scorep1 จาก class GameMultiCoin45
+        self.scorep1 = self.game_multi_45_widget.scorep1 
+        self.scorep2 = self.game_multi_45_widget.scorep2 
         # Decrement the countdown time if the game is running
         if self.is_game_running:
             self.countdown_time -= 1
@@ -426,8 +457,10 @@ class GameMultiCoin45Screen(Screen) :
             if self.countdown_time <= 0:
                 # Stop the countdown timer when time runs out
                 self.stop_countdown()
-                self.stop_game(None)
-                #self.popup = Popup(title='Pause', size_hint=(None, None), size=(450, 200))
+                if self.scorep1 > self.scorep2 :
+                    self.stop_gamep1win(None)
+                #self.popup1 = Popup(title='Pause', size_hint=(None, None), size=(450, 200))
+                #self.popup1.open()
                 # Switch to the main menu screen
                 #self.manager.current = 'main_menu'
  
