@@ -511,7 +511,7 @@ class GameMultiCoin45Screen(Screen) :
 
     def on_pre_enter(self, *args):
         # เริ่มต้นนับถอยหลังเมื่อเข้าหน้าจอ
-        self.countdown_time = 10  # ระบุเวลาถอยหลังในวินาที
+        self.countdown_time = 45  # ระบุเวลาถอยหลังในวินาที
         self.schedule = Clock.schedule_interval(self.update_timer, 1)
 
     def on_pre_leave(self, *args):
