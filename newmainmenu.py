@@ -293,7 +293,7 @@ class GameMultiCoin15(Widget) :
 
 
 
-#Multi 15 Mode
+#Multi 30 Mode
 class GameMultiCoin30Screen(Screen) :
     def __init__(self, **kw):
         super(GameMultiCoin30Screen, self).__init__(**kw)
@@ -313,6 +313,8 @@ class GameMultiCoin45Screen(Screen) :
 
         self.soundButton = SoundLoader.load('button1.mp3')
         self.soundButton.volume = 0.3  # ตั้งระดับเสียงเพลงใหม่
+        self.soundwin = SoundLoader.load('winsound.mp3')
+        self.soundwin.volume = 1  # ตั้งระดับเสียงเพลงใหม่
 
         # Add a "Stop Game" button
         layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), size=(200, 50), pos_hint={'top': 0.95, 'right': 1})
@@ -533,10 +535,13 @@ class GameMultiCoin45Screen(Screen) :
                 # Stop the countdown timer when time runs out
                 self.stop_countdown()
                 if self.scorep1 > self.scorep2 :
+                    self.soundwin.play()
                     self.stop_gamep1win(None)
                 if self.scorep1 < self.scorep2 :
+                    self.soundwin.play()
                     self.stop_gamep2win(None)
                 if self.scorep1 == self.scorep2 :
+                    self.soundwin.play()
                     self.stop_gameDraw(None)
  
     def stop_countdown(self):
