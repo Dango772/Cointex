@@ -34,12 +34,12 @@ class MainMenu(Screen):
     def __init__(self, **kwargs):
         super(MainMenu, self).__init__(**kwargs)
 
-        self.sound = SoundLoader.load('music1.mp3')
+        #self.sound = SoundLoader.load('music1.mp3')
         self.soundButton = SoundLoader.load('button1.mp3')
-        if self.sound:
+        '''if self.sound:
             #self.sound.bind(on_stop=self.on_music_finish)
             self.sound.volume = 0.2  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
-            self.sound.play()
+            self.sound.play()'''
 
         layout1 = FloatLayout()
 
@@ -87,18 +87,17 @@ class MainMenu(Screen):
         self.soundButton.play() 
         self.manager.current = 'character'
 
-    '''def on_music_finish(self, sound):
-        sound.seek(0)  # เลื่อนตำแหน่งการเล่นกลับไปที่จุดเริ่มต้น
-        sound.play()   # เล่นเพลงอีกครั้ง'''
-    
-    '''def on_enter(self):
-        # เริ่มเล่นเพลงใหม่
+    def on_enter(self):
+        # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
         self.sound = SoundLoader.load('music1.mp3')
         if self.sound:
-            pass
-        else:
-            self.sound.volume = 0.2  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
-            self.sound.play()'''
+            self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
+            self.sound.play()
+
+    def on_leave(self):
+        # หยุดการเล่นเพลงเมื่อออกจากหน้า CharacterApp
+        if self.sound:
+            self.sound.stop()
 
 
 #Single Mode
@@ -172,7 +171,7 @@ class GameSingleCoinScreen(Screen) :
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
         self.soundButton.play() 
         self.sound.stop()
-        self.manager.get_screen('main_menu').sound.play()
+        #self.manager.get_screen('main_menu').sound.play()
         self.manager.current = 'main_menu'   
 
 
@@ -247,8 +246,8 @@ class GameMultiCoinScreen(Screen) :
         self.add_widget(layout)
 
     def on_enter(self):
-        if self.manager.get_screen('main_menu').sound:
-            self.manager.get_screen('main_menu').sound.stop()
+        '''if self.manager.get_screen('main_menu').sound:
+            self.manager.get_screen('main_menu').sound.stop()'''
         # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
         self.sound = SoundLoader.load('music2.mp3')
         if self.sound:
@@ -279,7 +278,7 @@ class GameMultiCoinScreen(Screen) :
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
         self.soundButton.play() 
         self.sound.stop()
-        self.manager.get_screen('main_menu').sound.play()
+        #self.manager.get_screen('main_menu').sound.play()
         self.manager.current = 'main_menu'   
 
 #Multi 15 Mode
@@ -312,6 +311,9 @@ class GameMultiCoin45Screen(Screen) :
         self.game_multi_45_widget = GameMultiCoin45()
         self.add_widget(self.game_multi_45_widget)
 
+        self.soundButton = SoundLoader.load('button1.mp3')
+        self.soundButton.volume = 0.3  # ตั้งระดับเสียงเพลงใหม่
+
         # Add a "Stop Game" button
         layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), size=(200, 50), pos_hint={'top': 0.95, 'right': 1})
         self.button_stop_game = Button(text='Stop Game', on_press=self.stop_game, size_hint=(None, None), size=(180, 50))
@@ -322,158 +324,170 @@ class GameMultiCoin45Screen(Screen) :
         self.schedule = None  # Initialize the schedule variable
 
     def stop_game(self, instance):
-     if self.is_game_running:  # Check if the game is running
-        # Pause the game
-        self.is_game_running = False
-        # Stop the countdown timer
-        self.stop_countdown()
+        self.soundButton.play() 
+        if self.sound:
+            self.sound.stop()
+        if self.is_game_running:  # Check if the game is running
+            # Pause the game
+            self.is_game_running = False
+            # Stop the countdown timer
+            self.stop_countdown()
 
-        # Remove keyboard bindings to stop character movement
-        self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
-        self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
-        
-        # Create a Popup for the player to choose whether to restart the game or go to the main menu
-        self.popup = Popup(title='Pause', size_hint=(None, None), size=(450, 200))
-        
-        # Create buttons for Restart Game and Main Menu
-        restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
-        restart_button.bind(on_press=self.restart_game)
-        
-        main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
-        main_menu_button.bind(on_press=self.switch_to_main_menu)
-        
-        # Add buttons to a layout
-        button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
-        button_layout.add_widget(restart_button)
-        button_layout.add_widget(main_menu_button)
-        # Add the layout to the Popup
-        self.popup.content = button_layout
-        # Open the Popup
-        self.popup.open()
+            # Remove keyboard bindings to stop character movement
+            self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
+            self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
+            
+            # Create a Popup for the player to choose whether to restart the game or go to the main menu
+            self.popup = Popup(title='Pause', size_hint=(None, None), size=(450, 200))
+            
+            # Create buttons for Restart Game and Main Menu
+            restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
+            restart_button.bind(on_press=self.restart_game)
+            
+            main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
+            main_menu_button.bind(on_press=self.switch_to_main_menu)
+            
+            # Add buttons to a layout
+            button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
+            button_layout.add_widget(restart_button)
+            button_layout.add_widget(main_menu_button)
+            # Add the layout to the Popup
+            self.popup.content = button_layout
+            # Open the Popup
+            self.popup.open()
 
     def stop_gamep1win(self, instance):
-     if self.is_game_running:  # Check if the game is running
-        # Pause the game
-        self.is_game_running = False
-        # Stop the countdown timer
-        self.stop_countdown()
+        if self.sound:
+            self.sound.stop()
+        if self.is_game_running:  # Check if the game is running
+            # Pause the game
+            self.is_game_running = False
+            # Stop the countdown timer
+            self.stop_countdown()
 
-        # Remove keyboard bindings to stop character movement
-        self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
-        self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
-        
-        # Create a Popup for the player to choose whether to restart the game or go to the main menu
-        self.popup = Popup(title='Player1 Win!!!', size_hint=(None, None), size=(450, 200))
-        
-        # Create buttons for Restart Game and Main Menu
-        restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
-        restart_button.bind(on_press=self.restart_game)
-        
-        main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
-        main_menu_button.bind(on_press=self.switch_to_main_menu)
-        
-        # Add buttons to a layout
-        button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
-        button_layout.add_widget(restart_button)
-        button_layout.add_widget(main_menu_button)
-        # Add the layout to the Popup
-        self.popup.content = button_layout
-        # Open the Popup
-        self.popup.open()
+            # Remove keyboard bindings to stop character movement
+            self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
+            self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
+            
+            # Create a Popup for the player to choose whether to restart the game or go to the main menu
+            self.popup = Popup(title='Player1 Win!!!', size_hint=(None, None), size=(450, 200))
+            
+            # Create buttons for Restart Game and Main Menu
+            restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
+            restart_button.bind(on_press=self.restart_game)
+            
+            main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
+            main_menu_button.bind(on_press=self.switch_to_main_menu)
+            
+            # Add buttons to a layout
+            button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
+            button_layout.add_widget(restart_button)
+            button_layout.add_widget(main_menu_button)
+            # Add the layout to the Popup
+            self.popup.content = button_layout
+            # Open the Popup
+            self.popup.open()
 
     def stop_gamep2win(self, instance):
-     if self.is_game_running:  # Check if the game is running
-        # Pause the game
-        self.is_game_running = False
-        # Stop the countdown timer
-        self.stop_countdown()
+        if self.sound:
+            self.sound.stop()
+        if self.is_game_running:  # Check if the game is running
+            # Pause the game
+            self.is_game_running = False
+            # Stop the countdown timer
+            self.stop_countdown()
 
-        # Remove keyboard bindings to stop character movement
-        self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
-        self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
-        
-        # Create a Popup for the player to choose whether to restart the game or go to the main menu
-        self.popup = Popup(title='Player2 Win!!!', size_hint=(None, None), size=(450, 200))
-        
-        # Create buttons for Restart Game and Main Menu
-        restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
-        restart_button.bind(on_press=self.restart_game)
-        
-        main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
-        main_menu_button.bind(on_press=self.switch_to_main_menu)
-        
-        # Add buttons to a layout
-        button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
-        button_layout.add_widget(restart_button)
-        button_layout.add_widget(main_menu_button)
-        # Add the layout to the Popup
-        self.popup.content = button_layout
-        # Open the Popup
-        self.popup.open()
+            # Remove keyboard bindings to stop character movement
+            self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
+            self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
+            
+            # Create a Popup for the player to choose whether to restart the game or go to the main menu
+            self.popup = Popup(title='Player2 Win!!!', size_hint=(None, None), size=(450, 200))
+            
+            # Create buttons for Restart Game and Main Menu
+            restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
+            restart_button.bind(on_press=self.restart_game)
+            
+            main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
+            main_menu_button.bind(on_press=self.switch_to_main_menu)
+            
+            # Add buttons to a layout
+            button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
+            button_layout.add_widget(restart_button)
+            button_layout.add_widget(main_menu_button)
+            # Add the layout to the Popup
+            self.popup.content = button_layout
+            # Open the Popup
+            self.popup.open()
 
     def stop_gameDraw(self, instance):
-     if self.is_game_running:  # Check if the game is running
-        # Pause the game
-        self.is_game_running = False
-        # Stop the countdown timer
-        self.stop_countdown()
+        if self.sound:
+            self.sound.stop()
+        if self.is_game_running:  # Check if the game is running
+            # Pause the game
+            self.is_game_running = False
+            # Stop the countdown timer
+            self.stop_countdown()
 
-        # Remove keyboard bindings to stop character movement
-        self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
-        self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
-        
-        # Create a Popup for the player to choose whether to restart the game or go to the main menu
-        self.popup = Popup(title='Draw!!!', size_hint=(None, None), size=(450, 200))
-        
-        # Create buttons for Restart Game and Main Menu
-        restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
-        restart_button.bind(on_press=self.restart_game)
-        
-        main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
-        main_menu_button.bind(on_press=self.switch_to_main_menu)
-        
-        # Add buttons to a layout
-        button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
-        button_layout.add_widget(restart_button)
-        button_layout.add_widget(main_menu_button)
-        # Add the layout to the Popup
-        self.popup.content = button_layout
-        # Open the Popup
-        self.popup.open()
+            # Remove keyboard bindings to stop character movement
+            self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
+            self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
+            
+            # Create a Popup for the player to choose whether to restart the game or go to the main menu
+            self.popup = Popup(title='Draw!!!', size_hint=(None, None), size=(450, 200))
+            
+            # Create buttons for Restart Game and Main Menu
+            restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
+            restart_button.bind(on_press=self.restart_game)
+            
+            main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
+            main_menu_button.bind(on_press=self.switch_to_main_menu)
+            
+            # Add buttons to a layout
+            button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
+            button_layout.add_widget(restart_button)
+            button_layout.add_widget(main_menu_button)
+            # Add the layout to the Popup
+            self.popup.content = button_layout
+            # Open the Popup
+            self.popup.open()
 
     def restart_game(self, instance):
-     if not self.is_game_running:  # Check if the game is paused
-        # Resume the game
-        self.is_game_running = True
-        # Start the countdown timer
-        self.start_countdown()
+        self.soundButton.play() 
+        self.sound.play()
+        if not self.is_game_running:  # Check if the game is paused
+            # Resume the game
+            self.is_game_running = True
+            # Start the countdown timer
+            self.start_countdown()
 
-        # Dismiss the Popup
-        self.popup.dismiss()
+            # Dismiss the Popup
+            self.popup.dismiss()
 
-        # Reset character positions and scores
-        self.game_multi_45_widget.hero.pos = (250, 250)
-        self.game_multi_45_widget.monster.pos = (1700, 250)
-        self.game_multi_45_widget.scorep1 = 0
-        self.game_multi_45_widget.scorep1_label.text = "Score Player 1 : 0"
-        self.game_multi_45_widget.scorep2 = 0
-        self.game_multi_45_widget.scorep2_label.text = "Score Player 2 : 0"
+            # Reset character positions and scores
+            self.game_multi_45_widget.hero.pos = (250, 250)
+            self.game_multi_45_widget.monster.pos = (1700, 250)
+            self.game_multi_45_widget.scorep1 = 0
+            self.game_multi_45_widget.scorep1_label.text = "Score Player 1 : 0"
+            self.game_multi_45_widget.scorep2 = 0
+            self.game_multi_45_widget.scorep2_label.text = "Score Player 2 : 0"
 
-        # Reset timer label
-        self.game_multi_45_widget.timer_label.text = "Time left: 45 seconds"
-        self.countdown_time = 45
+            # Reset timer label
+            self.game_multi_45_widget.timer_label.text = "Time left: 45 seconds"
+            self.countdown_time = 45
 
-        # Rebind keyboard to allow character movement
-        self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
-        self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
-        self.game_multi_45_widget._keyboard = Window.request_keyboard(self.game_multi_45_widget._on_keyboard_closed, self.game_multi_45_widget)
-        self.game_multi_45_widget._keyboard.bind(on_key_down=self.game_multi_45_widget._on_key_down)
-        self.game_multi_45_widget._keyboard.bind(on_key_up=self.game_multi_45_widget._on_key_up)
+            # Rebind keyboard to allow character movement
+            self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
+            self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
+            self.game_multi_45_widget._keyboard = Window.request_keyboard(self.game_multi_45_widget._on_keyboard_closed, self.game_multi_45_widget)
+            self.game_multi_45_widget._keyboard.bind(on_key_down=self.game_multi_45_widget._on_key_down)
+            self.game_multi_45_widget._keyboard.bind(on_key_up=self.game_multi_45_widget._on_key_up)
 
-        # Switch back to the game screen
-        self.manager.current = 'multi45'
+            # Switch back to the game screen
+            self.manager.current = 'multi45'
 
     def switch_to_main_menu(self, instance):
+        self.soundButton.play() 
         self.restart_game(None)
         if not self.is_game_running:  # Check if the game is paused
             # Resume the game
@@ -534,6 +548,19 @@ class GameMultiCoin45Screen(Screen) :
             # Schedule a function to update the countdown timer every second
             self.schedule = Clock.schedule_interval(self.update_timer, 1)
 
+    def on_enter(self):
+        # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
+        self.sound = SoundLoader.load('music4.mp3')
+        self.sound.volume = 0.1  # ตั้งระดับเสียงเพลงใหม่
+        if self.sound:
+            #self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
+            self.sound.play()
+
+    def on_leave(self):
+        # หยุดการเล่นเพลงเมื่อออกจากหน้า CharacterApp
+        if self.sound:
+            self.sound.stop()
+
     def change_character_imageP1(self, new_image_source):
         # ดำเนินการเปลี่ยนรูปภาพตัวละครตามข้อมูลที่รับมา
         self.game_multi_45_widget.change_character_imageP1(new_image_source)
@@ -570,7 +597,7 @@ class GameMultiCoin45(Widget) :
 
         with self.canvas.before:
             # Set initial size of Image to match Window size
-            self.image = Image(source='GrassMap1.png', size=Window.size, allow_stretch=True, keep_ratio=False)
+            self.image = Image(source='screen10.jpeg', size=Window.size, allow_stretch=True, keep_ratio=False)
             # Bind the size of Image to the Window size
             Window.bind(size=self.on_window_size)
 
@@ -752,7 +779,7 @@ class CharacterApp(Screen):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
         self.soundButton.play() 
         self.sound.stop()
-        self.manager.get_screen('main_menu').sound.play()
+        #self.manager.get_screen('main_menu').sound.play()
         self.manager.current = 'main_menu'
 
 
@@ -908,8 +935,6 @@ class CharacterAppP2(Screen):
         self.add_widget(layout2)
     
     def on_enter(self):
-        '''if self.manager.get_screen('character').sound:
-            self.manager.get_screen('character').sound.stop()'''
         # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
         self.sound = SoundLoader.load('music3.mp3')
         if self.sound:
