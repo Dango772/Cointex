@@ -173,7 +173,7 @@ class GameMultiCoin45Screen(Screen):
         self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
         
         # Create a Popup for the player to choose whether to restart the game or go to the main menu
-        self.popup = Popup(title='Game Over', size_hint=(None, None), size=(450, 200))
+        self.popup = Popup(title='Pause', size_hint=(None, None), size=(450, 200))
         
         # Create buttons for Restart Game and Main Menu
         restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
