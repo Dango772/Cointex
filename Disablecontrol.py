@@ -194,25 +194,36 @@ class GameMultiCoin45Screen(Screen):
         self.popup.open()
  
     def restart_game(self, instance):
-        if not self.is_game_running:  # Check if the game is paused
-            # Resume the game
-            self.is_game_running = True
-            # Restart the countdown timer
-            self.start_countdown()
+     if not self.is_game_running:  # Check if the game is paused
+        # Resume the game
+        self.is_game_running = True
+        # Start the countdown timer
+        self.start_countdown()
 
+        # Dismiss the Popup
         self.popup.dismiss()
-        self.game_multi_45_widget.hero.pos = (250,250)
-        self.game_multi_45_widget.monster.pos = (1700,250)
 
+        # Reset character positions and scores
+        self.game_multi_45_widget.hero.pos = (250, 250)
+        self.game_multi_45_widget.monster.pos = (1700, 250)
         self.game_multi_45_widget.scorep1 = 0
         self.game_multi_45_widget.scorep1_label.text = "Score Player 1 : 0"
         self.game_multi_45_widget.scorep2 = 0
         self.game_multi_45_widget.scorep2_label.text = "Score Player 2 : 0"
 
+        # Reset timer label
         self.game_multi_45_widget.timer_label.text = "Time left: 45 seconds"
         self.countdown_time = 45
 
-        self.manager.current = 'multi45'
+        # Rebind keyboard to allow character movement
+        self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
+        self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
+        self.game_multi_45_widget._keyboard = Window.request_keyboard(self.game_multi_45_widget._on_keyboard_closed, self.game_multi_45_widget)
+        self.game_multi_45_widget._keyboard.bind(on_key_down=self.game_multi_45_widget._on_key_down)
+        self.game_multi_45_widget._keyboard.bind(on_key_up=self.game_multi_45_widget._on_key_up)
+
+    # Switch back to the game screen
+     self.manager.current = 'multi45'
     
  
     def switch_to_main_menu(self, instance):
