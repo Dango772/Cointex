@@ -312,17 +312,103 @@ class GameMultiCoin45Screen(Screen) :
         self.game_multi_45_widget = GameMultiCoin45()
         self.add_widget(self.game_multi_45_widget)
 
-        layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
-        self.button1 = Button(text='Back to Menu', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50))
-        layout.add_widget(self.button1)
+        # Add a "Stop Game" button
+        layout = BoxLayout(orientation='vertical', spacing=10, size_hint=(None, None), size=(200, 50), pos_hint={'top': 0.95, 'right': 1})
+        self.button_stop_game = Button(text='Stop Game', on_press=self.stop_game, size_hint=(None, None), size=(180, 50))
+        layout.add_widget(self.button_stop_game)
         self.add_widget(layout)
+        
+        self.is_game_running = True  # Flag to track the state of the game
+        self.schedule = None  # Initialize the schedule variable
 
-    def switch_to_previous_screen(self, instance):
+    def stop_game(self, instance):
+     if self.is_game_running:  # Check if the game is running
+        # Pause the game
+        self.is_game_running = False
+        # Stop the countdown timer
+        self.stop_countdown()
+
+        # Remove keyboard bindings to stop character movement
+        self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
+        self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
+        
+        # Create a Popup for the player to choose whether to restart the game or go to the main menu
+        self.popup = Popup(title='Pause', size_hint=(None, None), size=(450, 200))
+        
+        # Create buttons for Restart Game and Main Menu
+        restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
+        restart_button.bind(on_press=self.restart_game)
+        
+        main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
+        main_menu_button.bind(on_press=self.switch_to_main_menu)
+        
+        # Add buttons to a layout
+        button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
+        button_layout.add_widget(restart_button)
+        button_layout.add_widget(main_menu_button)
+        
+        # Add the layout to the Popup
+        self.popup.content = button_layout
+        
+        # Open the Popup
+        self.popup.open()
+
+    def restart_game(self, instance):
+     if not self.is_game_running:  # Check if the game is paused
+        # Resume the game
+        self.is_game_running = True
+        # Start the countdown timer
+        self.start_countdown()
+
+        # Dismiss the Popup
+        self.popup.dismiss()
+
+        # Reset character positions and scores
+        self.game_multi_45_widget.hero.pos = (250, 250)
+        self.game_multi_45_widget.monster.pos = (1700, 250)
+        self.game_multi_45_widget.scorep1 = 0
+        self.game_multi_45_widget.scorep1_label.text = "Score Player 1 : 0"
+        self.game_multi_45_widget.scorep2 = 0
+        self.game_multi_45_widget.scorep2_label.text = "Score Player 2 : 0"
+
+        # Reset timer label
+        self.game_multi_45_widget.timer_label.text = "Time left: 45 seconds"
+        self.countdown_time = 45
+
+        # Rebind keyboard to allow character movement
+        self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
+        self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
+        self.game_multi_45_widget._keyboard = Window.request_keyboard(self.game_multi_45_widget._on_keyboard_closed, self.game_multi_45_widget)
+        self.game_multi_45_widget._keyboard.bind(on_key_down=self.game_multi_45_widget._on_key_down)
+        self.game_multi_45_widget._keyboard.bind(on_key_up=self.game_multi_45_widget._on_key_up)
+
+        # Switch back to the game screen
+        self.manager.current = 'multi45'
+
+    def switch_to_main_menu(self, instance):
+        if not self.is_game_running:  # Check if the game is paused
+            # Resume the game
+            self.is_game_running = True
+      
+        # Close the Popup
+        self.popup.dismiss()
+        self.game_multi_45_widget.hero.pos = (250,250)
+        self.game_multi_45_widget.monster.pos = (1700,250)
+
+        self.game_multi_45_widget.scorep1 = 0
+        self.game_multi_45_widget.scorep1_label.text = "Score Player 1 : 0"
+        self.game_multi_45_widget.scorep2 = 0
+        self.game_multi_45_widget.scorep2_label.text = "Score Player 2 : 0"
+
+        self.game_multi_45_widget.timer_label.text = "Time left: 45 seconds"
+        self.countdown_time = 45
+    
+        # Switch to the main menu screen
         self.manager.current = 'main_menu'
 
     def on_pre_enter(self, *args):
         # เริ่มต้นนับถอยหลังเมื่อเข้าหน้าจอ
-        self.countdown_time = 45  # ระบุเวลาถอยหลังในวินาที
+        self.countdown_time = 5  # ระบุเวลาถอยหลังในวินาที
         self.schedule = Clock.schedule_interval(self.update_timer, 1)
 
     def on_pre_leave(self, *args):
@@ -330,11 +416,29 @@ class GameMultiCoin45Screen(Screen) :
         Clock.unschedule(self.schedule)
 
     def update_timer(self, dt):
-        self.countdown_time -= 1
-        self.game_multi_45_widget.timer_label.text = f"Time left: {self.countdown_time} seconds"
-
-        if self.countdown_time <= 0:
-            self.manager.current = 'main_menu'
+        # Decrement the countdown time if the game is running
+        if self.is_game_running:
+            self.countdown_time -= 1
+        
+            # Update the timer label in your game widget
+            self.game_multi_45_widget.timer_label.text = f"Time left: {self.countdown_time} seconds"
+ 
+            if self.countdown_time <= 0:
+                # Stop the countdown timer when time runs out
+                self.stop_countdown()
+                self.stop_game(None)
+                #self.popup = Popup(title='Pause', size_hint=(None, None), size=(450, 200))
+                # Switch to the main menu screen
+                #self.manager.current = 'main_menu'
+ 
+    def stop_countdown(self):
+        if self.schedule is not None:
+            # Unschedule the function responsible for updating the countdown timer
+            self.schedule.cancel()
+    def start_countdown(self):
+        if self.is_game_running:  # Check if the game is running
+            # Schedule a function to update the countdown timer every second
+            self.schedule = Clock.schedule_interval(self.update_timer, 1)
 
     def change_character_imageP1(self, new_image_source):
         # ดำเนินการเปลี่ยนรูปภาพตัวละครตามข้อมูลที่รับมา
