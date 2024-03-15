@@ -304,6 +304,7 @@ class GameMultiCoin30Screen(Screen) :
 class GameMultiCoin30(Widget) :
     pass
 
+
 #Multi 45 Mode
 class GameMultiCoin45Screen(Screen) :
     def __init__(self, **kw):
