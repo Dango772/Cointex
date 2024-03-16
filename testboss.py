@@ -245,19 +245,16 @@ class GameMultiCoin30Screen(Screen) :
             # Stop the countdown timer
             self.stop_countdown()
 
-            # Remove keyboard bindings to stop character movement
-            self.game_multi_30_widget._keyboard.unbind(on_key_down=self.game_multi_30_widget._on_key_down)
-            self.game_multi_30_widget._keyboard.unbind(on_key_up=self.game_multi_30_widget._on_key_up)
             
             # Create a Popup for the player to choose whether to restart the game or go to the main menu
             self.popup = Popup(title='Pause', size_hint=(None, None), size=(450, 200))
             
             # Create buttons for Restart Game and Main Menu
             restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
-            restart_button.bind(on_press=self.restart_game)
+
             
             main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
-            main_menu_button.bind(on_press=self.switch_to_main_menu)
+
             
             # Add buttons to a layout
             button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
@@ -277,19 +274,17 @@ class GameMultiCoin30Screen(Screen) :
             # Stop the countdown timer
             self.stop_countdown()
 
-            # Remove keyboard bindings to stop character movement
-            self.game_multi_30_widget._keyboard.unbind(on_key_down=self.game_multi_30_widget._on_key_down)
-            self.game_multi_30_widget._keyboard.unbind(on_key_up=self.game_multi_30_widget._on_key_up)
+
             
             # Create a Popup for the player to choose whether to restart the game or go to the main menu
             self.popup = Popup(title='Player1 Win!!!', size_hint=(None, None), size=(450, 200))
             
             # Create buttons for Restart Game and Main Menu
             restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
-            restart_button.bind(on_press=self.restart_game)
+
             
             main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
-            main_menu_button.bind(on_press=self.switch_to_main_menu)
+
             
             # Add buttons to a layout
             button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
@@ -309,19 +304,16 @@ class GameMultiCoin30Screen(Screen) :
             # Stop the countdown timer
             self.stop_countdown()
 
-            # Remove keyboard bindings to stop character movement
-            self.game_multi_30_widget._keyboard.unbind(on_key_down=self.game_multi_30_widget._on_key_down)
-            self.game_multi_30_widget._keyboard.unbind(on_key_up=self.game_multi_30_widget._on_key_up)
             
             # Create a Popup for the player to choose whether to restart the game or go to the main menu
             self.popup = Popup(title='Player2 Win!!!', size_hint=(None, None), size=(450, 200))
             
             # Create buttons for Restart Game and Main Menu
             restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
-            restart_button.bind(on_press=self.restart_game)
+
             
             main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
-            main_menu_button.bind(on_press=self.switch_to_main_menu)
+ 
             
             # Add buttons to a layout
             button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
@@ -341,19 +333,17 @@ class GameMultiCoin30Screen(Screen) :
             # Stop the countdown timer
             self.stop_countdown()
 
-            # Remove keyboard bindings to stop character movement
-            self.game_multi_30_widget._keyboard.unbind(on_key_down=self.game_multi_30_widget._on_key_down)
-            self.game_multi_30_widget._keyboard.unbind(on_key_up=self.game_multi_30_widget._on_key_up)
+
             
             # Create a Popup for the player to choose whether to restart the game or go to the main menu
             self.popup = Popup(title='Draw!!!', size_hint=(None, None), size=(450, 200))
             
             # Create buttons for Restart Game and Main Menu
             restart_button = Button(text='Restart Game', size_hint=(None, None), size=(200, 50))
-            restart_button.bind(on_press=self.restart_game)
+ 
             
             main_menu_button = Button(text='Main Menu', size_hint=(None, None), size=(200, 50))
-            main_menu_button.bind(on_press=self.switch_to_main_menu)
+
             
             # Add buttons to a layout
             button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
@@ -388,12 +378,7 @@ class GameMultiCoin30Screen(Screen) :
             self.game_multi_30_widget.timer_label.text = "Time left: 30 seconds"
             self.countdown_time = 30
 
-            # Rebind keyboard to allow character movement
-            self.game_multi_30_widget._keyboard.unbind(on_key_down=self.game_multi_30_widget._on_key_down)
-            self.game_multi_30_widget._keyboard.unbind(on_key_up=self.game_multi_30_widget._on_key_up)
-            self.game_multi_30_widget._keyboard = Window.request_keyboard(self.game_multi_30_widget._on_keyboard_closed, self.game_multi_30_widget)
-            self.game_multi_30_widget._keyboard.bind(on_key_down=self.game_multi_30_widget._on_key_down)
-            self.game_multi_30_widget._keyboard.bind(on_key_up=self.game_multi_30_widget._on_key_up)
+ 
 
             # Switch back to the game screen
             self.manager.current = 'multi30'
@@ -492,9 +477,8 @@ class GameMultiCoin30(Widget) :
         self.scorep2_label = Label(text="Score Player 2 : 0", pos=(500, 800), size=(200, 200),font_size=40)
         self.add_widget(self.scorep2_label)
 
-        self._keyboard = Window.request_keyboard(self._on_keyboard_closed, self)
-        self._keyboard.bind(on_key_down=self._on_key_down)
-        self._keyboard.bind(on_key_up=self._on_key_up)
+        # self._keyboard = Window.request_keyboard(self._on_keyboard_closed, self)
+
         self.pressed_keys = set()
         Clock.schedule_interval(self.move_step, 0)
 
@@ -506,7 +490,7 @@ class GameMultiCoin30(Widget) :
         with self.canvas.before:
             # Set initial size of Image to match Window size
             self.image = Image(source='screen10.jpeg', size=Window.size, allow_stretch=True, keep_ratio=False)
-            # Bind the size of Image to the Window size
+            #Bind the size of Image to the Window size
             Window.bind(size=self.on_window_size)
 
         # add character hero30 and coin
@@ -530,10 +514,10 @@ class GameMultiCoin30(Widget) :
         # Update the size of Image when the Window size changes
         self.image.size = (value[0], value[0]/2.5)
 
-    def _on_keyboard_closed(self):
-        self._keyboard.unbind(on_key_down=self._on_key_down)
-        self._keyboard.unbind(on_key_up=self._on_key_up)
-        self._keyboard = None
+    # def _on_keyboard_closed(self):
+    #     self._keyboard.unbind(on_key_down=self._on_key_down)
+    #     self._keyboard.unbind(on_key_up=self._on_key_up)
+    #     self._keyboard = None
 
     def _on_key_down(self, keyboard, keycode, text, modifiers):
         self.pressed_keys.add(text)
@@ -551,6 +535,7 @@ class GameMultiCoin30(Widget) :
         # Adjust the hero30's position based on key presses
         if 'w' in self.pressed_keys and cur_y1 + step1 + self.hero30.height < self.image.height:
             cur_y1 += step1
+            print("w")
 
         if 's' in self.pressed_keys and cur_y1 - step1 > 0:
             cur_y1 -= step1
@@ -965,6 +950,7 @@ class GameMultiCoin45(Widget) :
         # Adjust the hero's position based on key presses
         if 'w' in self.pressed_keys and cur_y1 + step1 + self.hero.height < self.image.height:
             cur_y1 += step1
+            print("fuck")
 
         if 's' in self.pressed_keys and cur_y1 - step1 > 0:
             cur_y1 -= step1

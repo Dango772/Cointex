@@ -325,8 +325,8 @@ class GameMultiCoin30Screen(Screen) :
             self.stop_countdown()
 
             # Remove keyboard bindings to stop character movement
-            self.game_multi_30_widget._keyboard.unbind(on_key_down=self.game_multi_30_widget._on_key_down)
-            self.game_multi_30_widget._keyboard.unbind(on_key_up=self.game_multi_30_widget._on_key_up)
+            # self.game_multi_30_widget._keyboard.unbind(on_key_down=self.game_multi_30_widget._on_key_down)
+            # self.game_multi_30_widget._keyboard.unbind(on_key_up=self.game_multi_30_widget._on_key_up)
             
             # Create a Popup for the player to choose whether to restart the game or go to the main menu
             self.popup = Popup(title='Pause', size_hint=(None, None), size=(450, 200))
@@ -357,8 +357,8 @@ class GameMultiCoin30Screen(Screen) :
             self.stop_countdown()
 
             # Remove keyboard bindings to stop character movement
-            self.game_multi_30_widget._keyboard.unbind(on_key_down=self.game_multi_30_widget._on_key_down)
-            self.game_multi_30_widget._keyboard.unbind(on_key_up=self.game_multi_30_widget._on_key_up)
+            # self.game_multi_30_widget._keyboard.unbind(on_key_down=self.game_multi_30_widget._on_key_down)
+            # self.game_multi_30_widget._keyboard.unbind(on_key_up=self.game_multi_30_widget._on_key_up)
             
             # Create a Popup for the player to choose whether to restart the game or go to the main menu
             self.popup = Popup(title='Player1 Win!!!', size_hint=(None, None), size=(450, 200))
@@ -389,8 +389,8 @@ class GameMultiCoin30Screen(Screen) :
             self.stop_countdown()
 
             # Remove keyboard bindings to stop character movement
-            self.game_multi_30_widget._keyboard.unbind(on_key_down=self.game_multi_30_widget._on_key_down)
-            self.game_multi_30_widget._keyboard.unbind(on_key_up=self.game_multi_30_widget._on_key_up)
+            # self.game_multi_30_widget._keyboard.unbind(on_key_down=self.game_multi_30_widget._on_key_down)
+            # self.game_multi_30_widget._keyboard.unbind(on_key_up=self.game_multi_30_widget._on_key_up)
             
             # Create a Popup for the player to choose whether to restart the game or go to the main menu
             self.popup = Popup(title='Player2 Win!!!', size_hint=(None, None), size=(450, 200))
@@ -421,8 +421,8 @@ class GameMultiCoin30Screen(Screen) :
             self.stop_countdown()
 
             # Remove keyboard bindings to stop character movement
-            self.game_multi_30_widget._keyboard.unbind(on_key_down=self.game_multi_30_widget._on_key_down)
-            self.game_multi_30_widget._keyboard.unbind(on_key_up=self.game_multi_30_widget._on_key_up)
+            # self.game_multi_30_widget._keyboard.unbind(on_key_down=self.game_multi_30_widget._on_key_down)
+            # self.game_multi_30_widget._keyboard.unbind(on_key_up=self.game_multi_30_widget._on_key_up)
             
             # Create a Popup for the player to choose whether to restart the game or go to the main menu
             self.popup = Popup(title='Draw!!!', size_hint=(None, None), size=(450, 200))
@@ -468,11 +468,11 @@ class GameMultiCoin30Screen(Screen) :
             self.countdown_time = 30
 
             # Rebind keyboard to allow character movement
-            self.game_multi_30_widget._keyboard.unbind(on_key_down=self.game_multi_30_widget._on_key_down)
-            self.game_multi_30_widget._keyboard.unbind(on_key_up=self.game_multi_30_widget._on_key_up)
-            self.game_multi_30_widget._keyboard = Window.request_keyboard(self.game_multi_30_widget._on_keyboard_closed, self.game_multi_30_widget)
-            self.game_multi_30_widget._keyboard.bind(on_key_down=self.game_multi_30_widget._on_key_down)
-            self.game_multi_30_widget._keyboard.bind(on_key_up=self.game_multi_30_widget._on_key_up)
+            # self.game_multi_30_widget._keyboard.unbind(on_key_down=self.game_multi_30_widget._on_key_down)
+            # self.game_multi_30_widget._keyboard.unbind(on_key_up=self.game_multi_30_widget._on_key_up)
+            # self.game_multi_30_widget._keyboard = Window.request_keyboard(self.game_multi_30_widget._on_keyboard_closed, self.game_multi_30_widget)
+            # self.game_multi_30_widget._keyboard.bind(on_key_down=self.game_multi_30_widget._on_key_down)
+            # self.game_multi_30_widget._keyboard.bind(on_key_up=self.game_multi_30_widget._on_key_up)
 
             # Switch back to the game screen
             self.manager.current = 'multi30'
