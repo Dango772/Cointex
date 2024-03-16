@@ -54,6 +54,10 @@ class MainMenu(Screen):
         self.multi_button.background_color = get_color_from_hex('#9ec0e4')
         layout.add_widget(self.multi_button)
 
+        self.character_button = Button(text='Choose time', on_press=self.switch_to_Character,size_hint=(None, None), size=(200, 50))
+        self.character_button.background_color = get_color_from_hex('#9ec0e4')
+        layout.add_widget(self.character_button)
+
         self.setting_button = Button(text='Setting', size_hint=(None, None), size=(200, 50) )
         self.setting_button.background_color = get_color_from_hex('#9ec0e4')
         layout.add_widget(self.setting_button)
@@ -72,6 +76,11 @@ class MainMenu(Screen):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
         self.soundButton.play() 
         self.manager.current = 'multi'
+
+    def switch_to_Character(self, instance):
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
+        self.manager.current = 'choosetime'
 
     def on_enter(self):
         # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
@@ -514,18 +523,20 @@ class GameMultiCoin30(Widget) :
         # Update the size of Image when the Window size changes
         self.image.size = (value[0], value[0]/2.5)
 
-    # def _on_keyboard_closed(self):
-    #     self._keyboard.unbind(on_key_down=self._on_key_down)
-    #     self._keyboard.unbind(on_key_up=self._on_key_up)
-    #     self._keyboard = None
+    def _on_keyboard_closed(self):
+        self._keyboard.unbind(on_key_down=self._on_key_down)
+        self._keyboard.unbind(on_key_up=self._on_key_up)
+        self._keyboard = None
 
     def _on_key_down(self, keyboard, keycode, text, modifiers):
-        self.pressed_keys.add(text)
+        if self.parent.is_game_running and self.parent.manager.current == 'multi30':
+            self.pressed_keys.add(text)
 
     def _on_key_up(self, keyboard, keycode):
-        text = keycode[1]
-        if text in self.pressed_keys:
-            self.pressed_keys.remove(text)
+        if self.parent.is_game_running and self.parent.manager.current == 'multi30':
+            text = keycode[1]
+            if text in self.pressed_keys:
+                self.pressed_keys.remove(text)
 
     def move_step(self, dt):
         cur_x1 = self.hero30.pos[0]
@@ -539,6 +550,7 @@ class GameMultiCoin30(Widget) :
 
         if 's' in self.pressed_keys and cur_y1 - step1 > 0:
             cur_y1 -= step1
+            print("s")
 
         if 'a' in self.pressed_keys and cur_x1 - step1 > 0:
             cur_x1 -= step1
@@ -633,10 +645,6 @@ class GameMultiCoin45Screen(Screen) :
             self.is_game_running = False
             # Stop the countdown timer
             self.stop_countdown()
-
-            # Remove keyboard bindings to stop character movement
-            self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
-            self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
             
             # Create a Popup for the player to choose whether to restart the game or go to the main menu
             self.popup = Popup(title='Pause', size_hint=(None, None), size=(450, 200))
@@ -665,10 +673,6 @@ class GameMultiCoin45Screen(Screen) :
             self.is_game_running = False
             # Stop the countdown timer
             self.stop_countdown()
-
-            # Remove keyboard bindings to stop character movement
-            self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
-            self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
             
             # Create a Popup for the player to choose whether to restart the game or go to the main menu
             self.popup = Popup(title='Player1 Win!!!', size_hint=(None, None), size=(450, 200))
@@ -697,10 +701,6 @@ class GameMultiCoin45Screen(Screen) :
             self.is_game_running = False
             # Stop the countdown timer
             self.stop_countdown()
-
-            # Remove keyboard bindings to stop character movement
-            self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
-            self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
             
             # Create a Popup for the player to choose whether to restart the game or go to the main menu
             self.popup = Popup(title='Player2 Win!!!', size_hint=(None, None), size=(450, 200))
@@ -732,10 +732,6 @@ class GameMultiCoin45Screen(Screen) :
             self.is_game_running = False
             # Stop the countdown timer
             self.stop_countdown()
-
-            # Remove keyboard bindings to stop character movement
-            self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
-            self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
             
             # Create a Popup for the player to choose whether to restart the game or go to the main menu
             self.popup = Popup(title='Draw!!!', size_hint=(None, None), size=(450, 200))
@@ -780,9 +776,6 @@ class GameMultiCoin45Screen(Screen) :
             self.game_multi_45_widget.timer_label.text = "Time left: 45 seconds"
             self.countdown_time = 45
 
-            # Rebind keyboard to allow character movement
-            self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
-            self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
             self.game_multi_45_widget._keyboard = Window.request_keyboard(self.game_multi_45_widget._on_keyboard_closed, self.game_multi_45_widget)
             self.game_multi_45_widget._keyboard.bind(on_key_down=self.game_multi_45_widget._on_key_down)
             self.game_multi_45_widget._keyboard.bind(on_key_up=self.game_multi_45_widget._on_key_up)
@@ -935,12 +928,14 @@ class GameMultiCoin45(Widget) :
         self._keyboard = None
 
     def _on_key_down(self, keyboard, keycode, text, modifiers):
-        self.pressed_keys.add(text)
+        if self.parent.is_game_running and self.parent.manager.current == 'multi45':
+            self.pressed_keys.add(text)
 
     def _on_key_up(self, keyboard, keycode):
-        text = keycode[1]
-        if text in self.pressed_keys:
-            self.pressed_keys.remove(text)
+        if self.parent.is_game_running and self.parent.manager.current == 'multi45':
+            text = keycode[1]
+            if text in self.pressed_keys:
+                self.pressed_keys.remove(text)
 
     def move_step(self, dt):
         cur_x1 = self.hero.pos[0]
@@ -950,10 +945,11 @@ class GameMultiCoin45(Widget) :
         # Adjust the hero's position based on key presses
         if 'w' in self.pressed_keys and cur_y1 + step1 + self.hero.height < self.image.height:
             cur_y1 += step1
-            print("fuck")
+            print("w")
 
         if 's' in self.pressed_keys and cur_y1 - step1 > 0:
             cur_y1 -= step1
+            print("s")
 
         if 'a' in self.pressed_keys and cur_x1 - step1 > 0:
             cur_x1 -= step1
@@ -1018,6 +1014,93 @@ class GameMultiCoin45(Widget) :
             self.scorep2 += 1
             self.scorep2_label.text = "Score Player 2 : " + str(self.scorep2)
 
+class ChooseTimeApp(Screen) :
+    def __init__(self, **kwargs):
+        super(ChooseTimeApp,self).__init__(**kwargs)
+
+        layout1 = FloatLayout()
+
+        background = Image(source='screen6.jpg', allow_stretch=True, keep_ratio=False)
+        layout1.add_widget(background)
+
+        layout2 = BoxLayout(orientation='horizontal', spacing=300, size_hint=(None, None), pos_hint={'center_x': 0.25, 'center_y': 0.35})
+
+        layout3 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        layout4 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        layout5 = BoxLayout(orientation='vertical', spacing=20, size_hint=(None, None), pos_hint={'center_x': 0.5, 'center_y': 0.5})
+
+        self.image = Image(source='character1.png', size_hint=(None, None), size=(250, 250))
+        layout3.add_widget(self.image)
+        self.button1 = Button(text='Wakamo', on_press=self.change_character_image1, size_hint=(None, None), size=(250, 50))
+        self.button1.background_color = get_color_from_hex('#9ec0e4')
+        layout3.add_widget(self.button1)
+
+        self.image = Image(source='character3.png', size_hint=(None, None), size=(250, 250))
+        layout4.add_widget(self.image)
+        self.button1 = Button(text='Momoi', on_press=self.change_character_image2, size_hint=(None, None), size=(250, 50))
+        self.button1.background_color = get_color_from_hex('#9ec0e4')
+        layout4.add_widget(self.button1)
+
+        self.image = Image(source='character6.png', size_hint=(None, None), size=(250, 250))
+        layout5.add_widget(self.image)
+        self.button1 = Button(text='Yuuka', on_press=self.change_character_image3, size_hint=(None, None), size=(250, 50))
+        self.button1.background_color = get_color_from_hex('#9ec0e4')
+        layout5.add_widget(self.button1)
+
+        back_button = Button(text='Back', on_press=self.switch_to_previous_screen, size_hint=(None, None), size=(200, 50), pos_hint={'x': 0.1, 'y': 0.1})
+        back_button.background_color = get_color_from_hex('#9ec0e4')
+        layout1.add_widget(back_button)
+
+        #head line
+        my_label = Label(text='[b]Player 1[/b]', size_hint=(None, None), size=(200, 50), pos_hint={'x': 0.45, 'y': 0.8}, markup=True)
+        my_label.font_size = '70sp'
+        my_label.color = get_color_from_hex('#1e2925')
+        layout1.add_widget(my_label)
+
+        layout2.add_widget(layout3)
+        layout2.add_widget(layout4)
+        layout2.add_widget(layout5)
+
+        self.add_widget(layout1)
+        self.add_widget(layout2)
+    
+    def on_enter(self):
+        '''if self.manager.get_screen('character').sound:
+            self.manager.get_screen('character').sound.stop()'''
+        # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
+        self.sound = SoundLoader.load('music3.mp3')
+        if self.sound:
+            self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
+            self.sound.play()
+
+    def on_leave(self):
+        # หยุดการเล่นเพลงเมื่อออกจากหน้า CharacterApp
+        if self.sound:
+            self.sound.stop()
+
+    def change_character_image1(self, instance):
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
+        # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
+        self.manager.get_screen('multi45').change_character_imageP1("character1.png")
+    
+    def change_character_image2(self, instance):
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
+        # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
+        self.manager.get_screen('multi45').change_character_imageP1("character3.png")
+
+    def change_character_image3(self, instance):
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
+        # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
+        self.manager.get_screen('multi45').change_character_imageP1("character6.png")
+
+    def switch_to_previous_screen(self, instance):
+        self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
+        self.soundButton.play() 
+        self.manager.current = 'main_menu'
+
 
 class MyGame(App):
     def build(self):
@@ -1040,6 +1123,9 @@ class MyGame(App):
         self.screen_manager.add_widget(game_multi)
         self.screen_manager.add_widget(game_multi_30)
         self.screen_manager.add_widget(game_multi_45)
+
+        game_choosetime = ChooseTimeApp(name='choosetime')
+        self.screen_manager.add_widget(game_choosetime)
 
         return self.screen_manager
 
