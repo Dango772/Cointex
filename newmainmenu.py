@@ -2443,18 +2443,33 @@ class CharacterAppP1(Screen):
         self.soundButton.play() 
         # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
         self.manager.get_screen('multi45').change_character_imageP1("character1.png")
+        self.manager.get_screen('multi30').change_character_imageP1("character1.png")
+        self.manager.get_screen('multi15').change_character_imageP1("character1.png")
+        self.manager.get_screen('single45').change_character_imageP1("character1.png")
+        self.manager.get_screen('single30').change_character_imageP1("character1.png")
+        self.manager.get_screen('single15').change_character_imageP1("character1.png")
     
     def change_character_image2(self, instance):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
         self.soundButton.play() 
         # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
         self.manager.get_screen('multi45').change_character_imageP1("character3.png")
+        self.manager.get_screen('multi30').change_character_imageP1("character3.png")
+        self.manager.get_screen('multi15').change_character_imageP1("character3.png")
+        self.manager.get_screen('single45').change_character_imageP1("character3.png")
+        self.manager.get_screen('single30').change_character_imageP1("character3.png")
+        self.manager.get_screen('single15').change_character_imageP1("character3.png")
 
     def change_character_image3(self, instance):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
         self.soundButton.play() 
         # ส่งข้อมูลเกี่ยวกับการเปลี่ยนรูปภาพตัวละครไปยังหน้าเล่นเกมส์
         self.manager.get_screen('multi45').change_character_imageP1("character6.png")
+        self.manager.get_screen('multi30').change_character_imageP1("character6.png")
+        self.manager.get_screen('multi15').change_character_imageP1("character6.png")
+        self.manager.get_screen('single45').change_character_imageP1("character6.png")
+        self.manager.get_screen('single30').change_character_imageP1("character6.png")
+        self.manager.get_screen('single15').change_character_imageP1("character6.png")
 
     def switch_to_previous_screen(self, instance):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
