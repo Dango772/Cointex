@@ -626,6 +626,8 @@ class GameSingleCoin30Screen(Screen) :
         if self.sound:
             #self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
             self.sound.play()
+        self.stop_game(None)
+        self.restart_game(None)
 
     def on_leave(self):
         # หยุดการเล่นเพลงเมื่อออกจากหน้า CharacterApp
@@ -910,6 +912,8 @@ class GameSingleCoin45Screen(Screen) :
         if self.sound:
             #self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
             self.sound.play()
+        self.stop_game(None)
+        self.restart_game(None)
 
     def on_leave(self):
         # หยุดการเล่นเพลงเมื่อออกจากหน้า CharacterApp
@@ -1335,6 +1339,8 @@ class GameMultiCoin15Screen(Screen) :
         if self.sound:
             #self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
             self.sound.play()
+        self.stop_game(None)
+        self.restart_game(None)
 
     def on_leave(self):
         # หยุดการเล่นเพลงเมื่อออกจากหน้า CharacterApp
@@ -1738,6 +1744,8 @@ class GameMultiCoin30Screen(Screen) :
         if self.sound:
             #self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
             self.sound.play()
+        self.stop_game(None)
+        self.restart_game(None)
 
     def on_leave(self):
         # หยุดการเล่นเพลงเมื่อออกจากหน้า CharacterApp
@@ -2140,6 +2148,8 @@ class GameMultiCoin45Screen(Screen) :
         if self.sound:
             #self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
             self.sound.play()
+        self.stop_game(None)
+        self.restart_game(None)
 
     def on_leave(self):
         # หยุดการเล่นเพลงเมื่อออกจากหน้า CharacterApp
