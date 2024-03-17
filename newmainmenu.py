@@ -270,7 +270,7 @@ class GameSingleCoin15Screen(Screen) :
 
             # Reset timer label
             self.game_single_15_widget.timer_label.text = "Time left: 15 seconds"
-            self.countdown_time = 30
+            self.countdown_time = 15
 
             self.game_single_15_widget._keyboard = Window.request_keyboard(self.game_single_15_widget._on_keyboard_closed, self.game_single_15_widget)
             self.game_single_15_widget._keyboard.bind(on_key_down=self.game_single_15_widget._on_key_down)
@@ -340,6 +340,9 @@ class GameSingleCoin15Screen(Screen) :
         if self.sound:
             #self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
             self.sound.play()
+        #self.restart_game(None)
+        self.stop_game(None)
+        self.restart_game(None)
 
     def on_leave(self):
         # หยุดการเล่นเพลงเมื่อออกจากหน้า CharacterApp
