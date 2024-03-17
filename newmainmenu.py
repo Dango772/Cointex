@@ -787,7 +787,6 @@ class CharacterApp(Screen):
         #self.manager.get_screen('main_menu').sound.play()
         self.manager.current = 'main_menu'
 
-
 #class หน้าเปรี่ยนตัวละครP1
 class CharacterAppP1(Screen):
     def __init__(self, **kwargs):
