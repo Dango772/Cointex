@@ -11,10 +11,14 @@ My Kivy App is a simple application that demonstrates the usage of Kivy for crea
 - In 2-player mode, scores will be compared.
 - You can press to restart the game or return to the menu again.
 - You can change character(both player 1 and player 2)
+- 
 ## Screenshots
 menu : ![image](https://github.com/6410110236/Cointex/assets/125024335/2a2a2775-e8b1-4b49-bda1-95a1ed5c404f)
 single or multi mode : ![image](https://github.com/6410110236/Cointex/assets/125024335/a23df7fc-5a4d-4832-9a84-5fb11814ac46)
-game : ![image](https://github.com/6410110236/Cointex/assets/125024335/730870a6-a6f4-4868-b0db-90e097d2b520)
+single game : ![image](https://github.com/6410110236/Cointex/assets/125024335/48296548-96ce-46dc-93ed-f72ef75c5b3b)
+multi game : ![image](https://github.com/6410110236/Cointex/assets/148541889/6fa76c09-61cc-4ae0-9f27-33b36872f44f)
+Player1 character  : ![image](https://github.com/6410110236/Cointex/assets/148541889/6d34405d-2b38-443d-b5a0-d5bb45f8855d)
+Player2 character  : ![image](https://github.com/6410110236/Cointex/assets/148541889/2b4569ce-897b-4950-bedb-af6709c1a4ad)
 
 ## Installation
 
