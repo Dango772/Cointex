@@ -2565,6 +2565,7 @@ class CharacterAppP2(Screen):
         self.manager.get_screen('multi30').change_character_imageP2("character2.png")
         self.manager.get_screen('multi15').change_character_imageP2("character2.png")
 
+
     def change_character_image2(self, instance):
         self.soundButton.volume = 0.3  # กำหนดระดับเสียงเป็นครึ่งหนึ่งของระดับเสียงที่มีอยู่เต็มที่
         self.soundButton.play() 
