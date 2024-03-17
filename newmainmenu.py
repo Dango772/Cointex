@@ -621,8 +621,8 @@ class GameSingleCoin30Screen(Screen) :
 
     def on_enter(self):
         # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
-        self.sound = SoundLoader.load('music4.mp3')
-        self.sound.volume = 0.1  # ตั้งระดับเสียงเพลงใหม่
+        self.sound = SoundLoader.load('music5.mp3')
+        self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
         if self.sound:
             #self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
             self.sound.play()
@@ -661,7 +661,7 @@ class GameSingleCoin30(Widget) :
 
         with self.canvas.before:
             # Set initial size of Image to match Window size
-            self.image = Image(source='screen10.jpeg', size=Window.size, allow_stretch=True, keep_ratio=False)
+            self.image = Image(source='screen11.jpeg', size=Window.size, allow_stretch=True, keep_ratio=False)
             # Bind the size of Image to the Window size
             Window.bind(size=self.on_window_size)
 
@@ -905,8 +905,8 @@ class GameSingleCoin45Screen(Screen) :
 
     def on_enter(self):
         # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
-        self.sound = SoundLoader.load('music4.mp3')
-        self.sound.volume = 0.1  # ตั้งระดับเสียงเพลงใหม่
+        self.sound = SoundLoader.load('music6.mp3')
+        self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
         if self.sound:
             #self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
             self.sound.play()
@@ -945,7 +945,7 @@ class GameSingleCoin45(Widget) :
 
         with self.canvas.before:
             # Set initial size of Image to match Window size
-            self.image = Image(source='screen10.jpeg', size=Window.size, allow_stretch=True, keep_ratio=False)
+            self.image = Image(source='screen5.jpg', size=Window.size, allow_stretch=True, keep_ratio=False)
             # Bind the size of Image to the Window size
             Window.bind(size=self.on_window_size)
 
@@ -1733,8 +1733,8 @@ class GameMultiCoin30Screen(Screen) :
 
     def on_enter(self):
         # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
-        self.sound = SoundLoader.load('music4.mp3')
-        self.sound.volume = 0.1  # ตั้งระดับเสียงเพลงใหม่
+        self.sound = SoundLoader.load('music5.mp3')
+        self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
         if self.sound:
             #self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
             self.sound.play()
@@ -1780,7 +1780,7 @@ class GameMultiCoin30(Widget) :
 
         with self.canvas.before:
             # Set initial size of Image to match Window size
-            self.image = Image(source='screen10.jpeg', size=Window.size, allow_stretch=True, keep_ratio=False)
+            self.image = Image(source='screen11.jpeg', size=Window.size, allow_stretch=True, keep_ratio=False)
             # Bind the size of Image to the Window size
             Window.bind(size=self.on_window_size)
 
@@ -2135,8 +2135,8 @@ class GameMultiCoin45Screen(Screen) :
 
     def on_enter(self):
         # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
-        self.sound = SoundLoader.load('music4.mp3')
-        self.sound.volume = 0.1  # ตั้งระดับเสียงเพลงใหม่
+        self.sound = SoundLoader.load('music6.mp3')
+        self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
         if self.sound:
             #self.sound.volume = 0.2  # ตั้งระดับเสียงเพลงใหม่
             self.sound.play()
@@ -2182,7 +2182,7 @@ class GameMultiCoin45(Widget) :
 
         with self.canvas.before:
             # Set initial size of Image to match Window size
-            self.image = Image(source='screen10.jpeg', size=Window.size, allow_stretch=True, keep_ratio=False)
+            self.image = Image(source='screen5.jpg', size=Window.size, allow_stretch=True, keep_ratio=False)
             # Bind the size of Image to the Window size
             Window.bind(size=self.on_window_size)
 
