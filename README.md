@@ -18,7 +18,7 @@ single or multi mode : ![image](https://github.com/6410110236/Cointex/assets/125
 single game : ![image](https://github.com/6410110236/Cointex/assets/125024335/48296548-96ce-46dc-93ed-f72ef75c5b3b)
 multi game : ![image](https://github.com/6410110236/Cointex/assets/148541889/6fa76c09-61cc-4ae0-9f27-33b36872f44f)
 Player1 character  : ![image](https://github.com/6410110236/Cointex/assets/148541889/7f0428de-506b-439f-a190-bb2ab0b2dd77)
-Player2 character  : ![Uploading image.png…]()
+Player2 character  : ![image](https://github.com/6410110236/Cointex/assets/148541889/2b4569ce-897b-4950-bedb-af6709c1a4ad)
 
 ## Installation
 
