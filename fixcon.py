@@ -1926,8 +1926,11 @@ class GameMultiCoin45Screen(Screen) :
         if self.sound:
             self.sound.stop()
         if self.is_game_running:  # Check if the game is running
-            # Pause the game
-            self.is_game_running = False
+            #dis con
+            #self.game_multi_45_widget._keyboard = Window.request_keyboard(self.game_multi_45_widget._on_keyboard_closed, self.game_multi_45_widget)
+            #self.game_multi_45_widget._keyboard.unbind(on_key_down=self.game_multi_45_widget._on_key_down)
+            #self.game_multi_45_widget._keyboard.unbind(on_key_up=self.game_multi_45_widget._on_key_up)
+            
             # Stop the countdown timer
             self.stop_countdown()
             
@@ -1945,10 +1948,36 @@ class GameMultiCoin45Screen(Screen) :
             button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
             button_layout.add_widget(restart_button)
             button_layout.add_widget(main_menu_button)
-            # Add the layout to the Popup
+            
+        # Create a "Continue" button
+            continue_button = Button(text='Continue', size_hint=(None, None), size=(180, 50))
+            continue_button.bind(on_press=self.continue_game)
+
+        # Add the "Continue" button to the layout
+            button_layout.add_widget(continue_button)
+
+        # Add the layout to the Popup
             self.popup.content = button_layout
-            # Open the Popup
+
+        # Open the Popup
             self.popup.open()
+    
+    
+
+        
+    def continue_game(self, instance):
+        # Dismiss the Popup
+          self.popup.dismiss()
+    
+          self.countdown_time = self.remaining_time
+        
+        # Resume the game
+          
+          self.start_countdown()
+          self.game_multi_45_widget.timer_label.text = f"Time left: {self.countdown_time} seconds"
+
+
+
 
     def stop_gamep1win(self, instance):
         if self.sound:
@@ -2037,9 +2066,9 @@ class GameMultiCoin45Screen(Screen) :
     def restart_game(self, instance):
         self.soundButton.play() 
         self.sound.play()
-        if not self.is_game_running:  # Check if the game is paused
+        if self.is_game_running:  # Check if the game is paused
             # Resume the game
-            self.is_game_running = True
+            
             # Start the countdown timer
             self.start_countdown()
 
@@ -2121,15 +2150,20 @@ class GameMultiCoin45Screen(Screen) :
                     self.soundwin.play()
                     self.stop_gameDraw(None)
  
+    
     def stop_countdown(self):
         if self.schedule is not None:
+            # Store remaining time left in countdown
+            self.remaining_time = self.countdown_time
             # Unschedule the function responsible for updating the countdown timer
             self.schedule.cancel()
     def start_countdown(self):
         if self.is_game_running:  # Check if the game is running
-            # Schedule a function to update the countdown timer every second
-            self.schedule = Clock.schedule_interval(self.update_timer, 1)
+            # Calculate the delay before the first tick based on remaining time
+            initial_delay = 1 if hasattr(self, 'remaining_time') else 0
 
+            # Schedule a function to update the countdown timer every second
+            self.schedule = Clock.schedule_interval(self.update_timer, 1, initial=initial_delay)
     def on_enter(self):
         # เริ่มเล่นเพลงเมื่อเข้าหน้า CharacterApp
         self.sound = SoundLoader.load('music4.mp3')
@@ -2365,6 +2399,7 @@ class CharacterApp(Screen):
         self.sound.stop()
         #self.manager.get_screen('main_menu').sound.play()
         self.manager.current = 'main_menu'
+
 
 #class หน้าเปรี่ยนตัวละครP1
 class CharacterAppP1(Screen):
