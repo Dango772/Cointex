@@ -16,7 +16,7 @@ My Kivy App is a simple application that demonstrates the usage of Kivy for crea
 menu : ![image](https://github.com/6410110236/Cointex/assets/125024335/2a2a2775-e8b1-4b49-bda1-95a1ed5c404f)
 single or multi mode : ![image](https://github.com/6410110236/Cointex/assets/125024335/a23df7fc-5a4d-4832-9a84-5fb11814ac46)
 single game : ![image](https://github.com/6410110236/Cointex/assets/125024335/48296548-96ce-46dc-93ed-f72ef75c5b3b)
-multi game : ![image](https://github.com/6410110236/Cointex/assets/148541889/6fa76c09-61cc-4ae0-9f27-33b36872f44f)
+multi game : ![image](https://github.com/6410110236/Cointex/assets/148541889/6fa76c09-61cc-4ae0-9f27-33b36872f44f) ![image](https://github.com/6410110236/Cointex/assets/148541889/254a63ac-4709-4a08-98a5-d461d0569f35)
 Player1 character  : ![image](https://github.com/6410110236/Cointex/assets/148541889/6d34405d-2b38-443d-b5a0-d5bb45f8855d)
 Player2 character  : ![image](https://github.com/6410110236/Cointex/assets/148541889/2b4569ce-897b-4950-bedb-af6709c1a4ad)
 
