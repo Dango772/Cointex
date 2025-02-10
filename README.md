@@ -44,7 +44,7 @@ Player2 character  : ![image](https://github.com/6410110236/Cointex/assets/14854
 
 ## Contact
 
-For any inquiries, please contact me at 6410110236@psu.ac.th
+For any inquiries, please contact me at 6410110141@psu.ac.th
 
 ## Code
 
